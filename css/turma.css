@@ -1,0 +1,242 @@
+/* ======= CONFIGURAÇÕES GERAIS ======= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background-color: #fff;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ======= CABEÇALHO ======= */
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-bottom: 1px solid #e2e2e2;
+  background-color: white;
+}
+
+.header-logo img {
+  height: 70px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+.nav-link:hover {
+  color: #000;
+}
+
+.nav-link.active {
+  color: #000;
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+}
+
+.btn-conta {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-conta img {
+  width: 26px;
+  height: 26px;
+}
+
+.btn-sair {
+  background-color: #2f2f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-sair:hover {
+  background-color: #000;
+}
+
+/* ======= CONTEÚDO PRINCIPAL ======= */
+#main-content {
+  flex: 1;
+  margin-top: 40px;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+.page-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.turma-titulo {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f1a1a;
+}
+
+.btn-editar {
+  background-color: #1aa179;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.btn-editar:hover {
+  background-color: #148e69;
+}
+
+/* ======= GRELHA DE ALUNOS ======= */
+.alunos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.aluno-card {
+  background: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 16px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.aluno-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.aluno-nome {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.aluno-label {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.aluno-estado {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.aluno-estado.aguardando { color: #b68c0a; }
+.aluno-estado.aceite { color: #1aa179; }
+.aluno-estado.sem { color: #aaa; }
+
+/* ======= RODAPÉ (IGUAL AO INDEX) ======= */
+#footer {
+  background-color: #fff;
+  border-top: 1px solid #e2e2e2;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.contactos h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.contactos {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.contactos p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.contactos img {
+  width: 26px;
+  height: 26px;
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.logos img {
+  height: 70px;
+  width: auto;
+}
+
+/* ======= RESPONSIVO ======= */
+@media (max-width: 1100px) {
+  .alunos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  #main-content {
+    padding: 24px;
+  }
+  .page-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .btn-editar {
+    align-self: flex-end;
+  }
+  .alunos-grid {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+}

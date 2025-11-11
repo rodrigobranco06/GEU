@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+:root {
+  --panel: #ffffff;
+  --ink: #0f172a;
+  --muted: #6b7280;
+  --line: #e6e9ee;
+  --brand: #197d74;
+  --hero-1: #fff3e4;
+  --hero-2: #ffe6cc;
+}
+
+/* ===================== BASE ===================== */
+* {
+  box-sizing: border-box;
+}
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  background: #111;
+}
+
+/* ===================== LAYOUT PRINCIPAL ===================== */
+section {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  background: #111;
+}
+
+/* ===================== LADO ESQUERDO (IMAGEM) ===================== */
+.divImg {
+  position: relative;
+  background: radial-gradient(1400px 600px at -10% -20%, var(--hero-2), var(--hero-1) 40%, #fde6cf 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.divImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* ===================== LADO DIREITO (PAINEL LOGIN) ===================== */
+.divFormLogin {
+  background: #f7fafb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;   /* topo */
+  padding: 30px;
+  position: relative;
+}
+
+/* ===================== LOGO ===================== */
+.logo-login {
+  display: block;
+  width: 90%;
+  max-width: 360px;
+  height: auto;
+  margin: 0 auto 30px;
+  object-fit: contain;
+}
+
+/* ===================== FORM ===================== */
+.divFormLogin h2 {
+  text-align: center;
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f1a1a;
+}
+
+.divFormLogin form {
+  width: 80%;                    /* ocupa 80% da largura do painel */
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 22px 60px rgba(10, 32, 34, .12);
+  padding: 32px 28px 20px;
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #233;
+  margin: 0 0 8px;
+}
+
+input[type="email"],
+.password input[type="password"] {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  background: #fbfbfb;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--ink);
+  outline: 0;
+}
+input:focus {
+  border-color: #b5d9d4;
+  box-shadow: 0 0 0 4px #e6f6f4;
+}
+
+/* ===================== CAMPO PASSWORD ===================== */
+.password {
+  position: relative;
+  margin-top: 16px;
+}
+.password .reveal {
+  position: absolute;
+  right: 10px;
+  top: 34px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: .75;
+}
+.password .reveal:hover {
+  opacity: 1;
+}
+
+/* ===================== CHECKBOX / LINK ===================== */
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+}
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.link {
+  color: #5a7bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.link:hover {
+  text-decoration: underline;
+}
+
+/* ===================== BOTÕES ===================== */
+.btn,
+.btn-sair {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 18px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+.btn {
+  background: var(--brand);
+  box-shadow: 0 10px 24px rgba(25, 125, 116, .25);
+  margin-top: 18px;
+}
+.btn:hover { filter: brightness(.98); }
+.btn:active { transform: translateY(1px); }
+
+.btn-sair {
+  background: #ff4b4b;
+  box-shadow: 0 10px 24px rgba(255, 75, 75, .25);
+  margin-top: 16px;
+}
+.btn-sair:hover { filter: brightness(.95); }
+
+/* ===================== RODAPÉ (COFINANCIADO POR) ===================== */
+.funding {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0 0;
+  margin: 20px auto 0;
+}
+.funding img {
+  width: 320px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.06));
+}
+
+/* ===================== RESPONSIVO ===================== */
+@media (max-width:1080px) {
+  section {
+    grid-template-columns: 1fr;
+  }
+  .divImg {
+    display: none; /* esconde imagem no mobile */
+  }
+  .divFormLogin {
+    padding: 30px 20px;
+  }
+  .logo-login {
+    max-width: 280px;
+    margin: 0 auto 20px;
+  }
+  .divFormLogin form {
+    width: 90%;
+  }
+}
