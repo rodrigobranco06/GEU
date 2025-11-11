@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GEU — Pedido de estágio: escolha área e empresa</title>
+  <link rel="stylesheet" href="css/escolhaAreaEmpresa.css"/>
+</head>
+<body>
+
+  <!-- ======= CABEÇALHO ======= -->
+  <header id="header">
+    <div class="header-logo">
+      <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
+    </div>
+
+    <nav class="nav-menu">
+      <a href="#" class="nav-link">Alunos</a>
+      <a href="#" class="nav-link">Professores</a>
+      <a href="#" class="nav-link">Empresas</a>
+      <a href="index.html" class="nav-link active">Turmas</a>
+      <button class="btn-conta">
+        <img src="img/img_conta.png" alt="Conta">
+      </button>
+      <a href="login.html" class="btn-sair">Sair</a>
+    </nav>
+  </header>
+
+  <!-- ======= CONTEÚDO ======= -->
+  <main id="main-content">
+
+    <!-- Abas (iguais a confirmarDados) -->
+    <nav class="steps">
+      <a class="step" href="confirmarDados.html">Confirmar Dados</a>
+      <a class="step active" href="escolhaAreaEmpresa.html">Escolha de área e empresa</a>
+      <a class="step" href="envioEmail.html">Envio de email</a>
+      <a class="step" href="respostaEmail.html">Resposta ao email</a>
+      <a class="step" href="planoEstagio.html">Plano estágio</a>
+      <a class="step" href="avaliacao.html">Avaliação</a>
+    </nav>
+
+    <!-- Título + ações -->
+    <div class="page-head">
+      <h1 class="titulo">Rodrigo Branco - 240001087</h1>
+      <div class="acoes">
+        <a class="btn-outline" href="confirmarDados.html">Voltar</a>
+        <a class="btn-primary" href="envioEmail.html">Definir área e empresa</a>
+      </div>
+    </div>
+
+    <!-- Cartão de dados (key/value como no confirmarDados) -->
+    <section class="card">
+      <ul class="kv">
+        <li>
+          <span class="k">Número de pedido de estágio:</span>
+          <input class="v" value="2400010871" readonly>
+        </li>
+
+        <li>
+          <span class="k">Área científica</span>
+          <span class="select-wrap">
+            <select class="v select">
+              <option>Programação Web</option>
+              <option>Ciência de Dados</option>
+              <option>Administração de Sistemas</option>
+              <option>Redes e Comunicações</option>
+            </select>
+            <span class="chev" aria-hidden="true">▾</span>
+          </span>
+        </li>
+
+        <li>
+          <span class="k">Código professor orientador:</span>
+          <input class="v" value="240001462" readonly>
+        </li>
+        <li>
+          <span class="k">Nome professor orientador:</span>
+          <input class="v" value="Tomás Cordeiro Ribeiro" readonly>
+        </li>
+        <li>
+          <span class="k">Código empresa:</span>
+          <input class="v" value="90012111" readonly>
+        </li>
+        <li>
+          <span class="k">Nome empresa:</span>
+          <input class="v" value="Web Teq" readonly>
+        </li>
+        <li>
+          <span class="k">Cidade:</span>
+          <input class="v" value="Santarém" readonly>
+        </li>
+        <li>
+          <span class="k">Estado de definição:</span>
+          <input class="v" value="Definido" readonly>
+        </li>
+        <li>
+          <span class="k">Data de definição:</span>
+          <input class="v" value="18/10/2025 17:37:41" readonly>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- ======= RODAPÉ ======= -->
+  <footer id="footer"> 
+    <div class="contactos">
+      <h3>Contactos</h3>
+      <p><img src="img/img_email.png" alt="Email"><strong>Email:</strong> geral@ipsantarem.pt</p>
+      <p><img src="img/img_telemovel.png" alt="Telefone"><strong>Telefone:</strong> +351 243 309 520</p>
+      <p><img src="img/img_localizacao.png" alt="Endereço"><strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém</p>
+    </div>
+
+    <div class="logos">
+      <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
+      <img src="img/img_confinanciado.png" alt="Confinanciado">
+    </div>
+  </footer>
+
+</body>
+</html>
