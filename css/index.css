@@ -1,0 +1,392 @@
+/* ======= CONFIGURAÇÕES GERAIS ======= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background-color: #fff;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ======= CABEÇALHO ======= */
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-bottom: 1px solid #e2e2e2;
+  background-color: white;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.header-logo img {
+  height: 70px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #000;
+}
+
+/* Linha por baixo do link ativo */
+.nav-link.active {
+  color: #000;
+  font-weight: 600;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+}
+
+.btn-conta {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-conta img {
+  width: 26px;
+  height: 26px;
+}
+
+.btn-sair {
+  background-color: #2f2f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-sair:hover {
+  background-color: #000;
+  text-decoration: none;
+}
+
+/* ======= CONTEÚDO PRINCIPAL ======= */
+#main-content {
+  flex: 1;
+  margin-top: 40px;
+  padding: 0 60px;
+}
+
+/* Linha superior com título e botão */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Título à esquerda */
+.titulo-pagina {
+  font-size: 24px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* Botão no canto superior direito */
+.btn-criar-turma {
+  background-color: #1aa179;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+}
+
+.btn-criar-turma:hover {
+  background-color: #148e69;
+}
+
+/* Cards das turmas — alinhados abaixo do título */
+.turmas-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: flex-start;
+}
+
+.turma-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: block;
+}
+
+.turma-link:hover .turma-card {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Cada card individual */
+.turma-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 20px;
+  width: 260px;
+  min-height: 100px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.turma-nome {
+  font-size: 16px;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.turma-professor-label {
+  color: #555;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.turma-professor-nome {
+  color: #333;
+  font-size: 13px;
+  word-wrap: break-word;
+}
+
+.turma-professor-nome.indefinido {
+  color: #aaa;
+}
+
+/* ======= RODAPÉ ======= */
+#footer {
+  background-color: #fff;
+  border-top: 1px solid #e2e2e2;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.contactos h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.contactos {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.contactos p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.contactos img {
+  width: 26px;
+  height: 26px;
+}
+
+.logos {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.logos img {
+  height: 70px;
+  width: auto;
+}
+
+/* ======= MEDIA QUERIES - RESPONSIVIDADE ======= */
+
+/* Tablets (até 1024px) */
+@media (max-width: 1024px) {
+  #header {
+    padding: 15px 30px;
+  }
+
+  #main-content {
+    padding: 0 30px;
+  }
+
+  .logos {
+    gap: 30px;
+  }
+
+  .turmas-container {
+    gap: 20px;
+  }
+}
+
+/* Tablets pequenos (até 768px) */
+@media (max-width: 768px) {
+  #header {
+    padding: 15px 20px;
+    justify-content: center;
+  }
+
+  .header-logo {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .nav-menu {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  #main-content {
+    padding: 0 20px;
+    margin-top: 30px;
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .titulo-pagina {
+    font-size: 22px;
+  }
+
+  .btn-criar-turma {
+    width: 100%;
+    text-align: center;
+  }
+
+  .turmas-container {
+    justify-content: center;
+  }
+
+  .turma-card {
+    max-width: 100%;
+  }
+
+  #footer {
+    padding: 30px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logos {
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .logos img {
+    height: 60px;
+  }
+}
+
+/* Smartphones (até 480px) */
+@media (max-width: 480px) {
+  #header {
+    padding: 10px 15px;
+  }
+
+  .header-logo img {
+    height: 40px;
+  }
+
+  .nav-menu {
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .btn-conta img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .btn-sair {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  #main-content {
+    padding: 0 15px;
+    margin-top: 20px;
+  }
+
+  .titulo-pagina {
+    font-size: 20px;
+  }
+
+  .btn-criar-turma {
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+
+  .turmas-container {
+    gap: 15px;
+  }
+
+  .turma-card {
+    padding: 15px;
+  }
+
+  #footer {
+    padding: 20px 15px;
+  }
+
+  .contactos {
+    font-size: 13px;
+  }
+
+  .contactos h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .contactos img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .logos img {
+    height: 50px;
+  }
+}
