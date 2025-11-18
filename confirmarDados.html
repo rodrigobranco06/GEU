@@ -33,9 +33,9 @@
     <nav class="steps">
       <a class="step active" href="confirmarDados.html">Confirmar Dados</a>
       <a class="step" href="escolhaAreaEmpresa.html">Escolha de área e empresa</a>
-      <a class="step" href="#">Envio de email</a>
-      <a class="step" href="#">Resposta ao email</a>
-      <a class="step" href="#">Plano estágio</a>
+      <a class="step" href="envioEmail.html">Envio de email</a>
+      <a class="step" href="respostaEmail.html">Resposta ao email</a>
+      <a class="step" href="planoEstagio.html">Plano estágio</a>
       <a class="step" href="#">Avaliação</a>
     </nav>
 
@@ -44,7 +44,10 @@
       <h1 class="titulo">Rodrigo Branco - 240001087</h1>
       <div class="acoes">
         <a class="btn-outline" href="aluno.html">Voltar</a>
-        <button class="btn-primary" type="button">Confirmar Dados</button>
+        <!-- botão com id para abrir o popup -->
+        <button class="btn-primary" type="button" id="btn-confirmar">
+          Confirmar Dados
+        </button>
       </div>
     </div>
 
@@ -114,6 +117,54 @@
       <img src="img/img_confinanciado.png" alt="Confinanciado">
     </div>
   </footer>
+
+  <!-- ======= POP-UP SALVAR ======= -->
+  <div id="popup-salvar" class="popup-overlay">
+    <div class="popup-box">
+      <p class="popup-text">Deseja salvar as informações?</p>
+
+      <div class="popup-actions">
+        <button type="button" class="popup-btn popup-cancel">Cancelar</button>
+        <button type="button" class="popup-btn popup-confirm">Sim</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= SCRIPT DO POP-UP ======= -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const btnConfirmar = document.getElementById("btn-confirmar");
+      const popup = document.getElementById("popup-salvar");
+      const btnCancelar = popup.querySelector(".popup-cancel");
+      const btnSim = popup.querySelector(".popup-confirm");
+
+      // Abre o popup
+      btnConfirmar.addEventListener("click", function () {
+        popup.classList.add("show");
+      });
+
+      // Fecha ao clicar em "Cancelar"
+      btnCancelar.addEventListener("click", function () {
+        popup.classList.remove("show");
+      });
+
+      // Fecha ao clicar fora da caixa
+      popup.addEventListener("click", function (e) {
+        if (e.target === popup) {
+          popup.classList.remove("show");
+        }
+      });
+
+      // Ação ao clicar em "Sim"
+      btnSim.addEventListener("click", function () {
+        popup.classList.remove("show");
+
+        // 👉 Coloca aqui o comportamento quando confirmar
+        // Exemplo: ir para a próxima página
+        // window.location.href = "escolhaAreaEmpresa.html";
+      });
+    });
+  </script>
 
 </body>
 </html>
