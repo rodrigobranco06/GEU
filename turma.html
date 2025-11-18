@@ -75,9 +75,45 @@
         <p class="aluno-estado sem">Sem estágio</p>
       </article>
     </section>
+    
   </main>
 
-  <!-- Rodapé (igual ao index.html) -->
+  <!-- MODAL EDITAR TURMA -->
+<div id="modal-editar-turma" class="modal-overlay" style="display:none;">
+  <div class="modal-content-box">
+
+    <div class="modal-flex">
+
+      <form class="modal-form">
+        <label>Código Turma:</label>
+        <input type="text" value="tpsi20242026">
+
+        <label>Turma:</label>
+        <input type="text" value="TPSI – 2 (2024/2026)">
+
+        <label>Ano curricular:</label>
+        <input type="text" value="2">
+
+        <label>Código professor:</label>
+        <input type="text" value="24000XXXX">
+
+        <label>Professor orientador:</label>
+        <input type="text" value="Jorge Constantino">
+      </form>
+
+      <img class="modal-img" src="img/img_editar_turma.png" alt="">
+    </div>
+
+    <div class="modal-buttons">
+      <button class="modal-btn guardar">Guardar</button>
+      <button class="modal-btn voltar" id="btn-fechar-modal">Voltar</button>
+    </div>
+
+  </div>
+</div>
+
+  <!-- Rodapé -->
+   
   <footer id="footer"> 
     <div class="contactos">
       <h3>Contactos</h3>
@@ -101,5 +137,7 @@
     </div> 
   </footer>
 
+
+  <script src="js/turma.js"></script>
 </body>
 </html>
