@@ -265,6 +265,15 @@ body {
     width: auto;
 }
 
+.linha-click {
+    cursor: pointer;
+}
+
+.linha-click:hover {
+    background-color: #f5f5f5;
+}
+
+
 /* ======= RESPONSIVIDADE ======= */
 @media (max-width: 1024px) {
     #header {
