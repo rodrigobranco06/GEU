@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GEU — Registar novo aluno</title>
+    <link rel="stylesheet" href="css/registarAluno.css" />
+</head>
+<body>
+
+    <!-- ======= CABEÇALHO ======= -->
+    <header id="header">
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
+            </a>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="verAlunos.html" class="nav-link active">Alunos</a>
+            <a href="#" class="nav-link">Professores</a>
+            <a href="#" class="nav-link">Empresas</a>
+            <a href="../index.html" class="nav-link">Turmas</a>
+
+            <button class="btn-conta">
+                <img src="../img/img_conta.png" alt="Conta">
+            </button>
+            <a href="../login.html" class="btn-sair">Sair</a>
+        </nav>
+    </header>
+
+    <!-- ======= CONTEÚDO PRINCIPAL ======= -->
+    <main id="main-content">
+
+        <!-- Subtabs -->
+        <nav class="subtabs">
+            <a href="index.html" class="subtab-link">Ver Alunos</a>
+            <a href="registarAluno.html" class="subtab-link active">Registar novo aluno</a>
+        </nav>
+
+        <section class="content-grid">
+            <!-- Coluna esquerda: formulário -->
+            <form class="form-aluno">
+
+                <div class="form-group">
+                    <label for="codigo">Código Aluno</label>
+                    <input id="codigo" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password">
+                </div>
+
+                <div class="form-group">
+                    <label for="nome">Nome Aluno</label>
+                    <input id="nome" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="dataNascimento">Data nascimento</label>
+                    <input id="dataNascimento" type="date">
+                </div>
+
+                <div class="form-group">
+                    <label for="sexo">Sexo</label>
+                    <div class="select-wrapper">
+                        <select id="sexo">
+                            <option value="">Selecione um sexo</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                            <option value="O">Outro</option>
+                        </select>
+                        <span class="chevron">▾</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="nacionalidade">Nacionalidade</label>
+                    <input id="nacionalidade" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="nif">NIF</label>
+                    <input id="nif" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="cc">Número CC</label>
+                    <input id="cc" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="curso">Curso</label>
+                    <input id="curso" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="turmaId">Turma ID</label>
+                    <div class="select-wrapper">
+                        <select id="turmaId">
+                            <option value="">Selecione uma Turma</option>
+                            <option value="tpsi20242026">tpsi20242026</option>
+                            <option value="tdl20242026">tdl20242026</option>
+                        </select>
+                        <span class="chevron">▾</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="anoCurricular">Ano curricular</label>
+                    <input id="anoCurricular" type="number" min="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="situacaoAcademica">Situação académica</label>
+                    <div class="select-wrapper">
+                        <select id="situacaoAcademica">
+                            <option value="">Selecione uma situação académica</option>
+                            <option value="regular">Ativo</option>
+                            <option value="suspenso">Suspenso</option>
+                        </select>
+                        <span class="chevron">▾</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="escola">Escola</label>
+                    <input id="escola" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="emailInstitucional">Email institucional</label>
+                    <input id="emailInstitucional" type="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="emailPessoal">Email pessoal</label>
+                    <input id="emailPessoal" type="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="morada">Morada</label>
+                    <input id="morada" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="cp">Código-Postal</label>
+                    <input id="cp" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="cidade">Cidade</label>
+                    <input id="cidade" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="idEstagio">ID estágio</label>
+                    <input id="idEstagio" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="profOrientador">Professor orientador</label>
+                    <input id="profOrientador" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="idEmpresa">ID empresa</label>
+                    <input id="idEmpresa" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="nomeEmpresa">Nome empresa</label>
+                    <input id="nomeEmpresa" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="estadoEstagio">Estado estágio</label>
+                    <input id="estadoEstagio" type="text">
+                </div>
+
+                <div class="form-group">
+                    <label for="cv">CV</label>
+                    <input id="cv" type="file" accept=".pdf,.doc,.docx">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn</label>
+                    <input id="linkedin" type="url">
+                </div>
+
+                <div class="form-group">
+                    <label for="portfolio">Portefólio (GitHub)</label>
+                    <input id="portfolio" type="url">
+                </div>
+
+            </form>
+
+            <!-- Coluna direita: botão + imagem -->
+            <aside class="side-panel">
+                <div class="side-top">
+                    <button class="btn-salvar" type="submit" form="">
+                        Salvar
+                    </button>
+                </div>
+
+                <div class="side-image-wrapper">
+                    <img src="../img/img_registarAluno.png" alt="Ilustração registar aluno">
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <!-- ======= RODAPÉ ======= -->
+    <footer id="footer">
+        <div class="contactos">
+            <h3>Contactos</h3>
+            <p>
+                <img src="../img/img_email.png" alt="Email">
+                <strong>Email:</strong> geral@ipsantarem.pt
+            </p>
+            <p>
+                <img src="../img/img_telemovel.png" alt="Telefone">
+                <strong>Telefone:</strong> +351 243 309 520
+            </p>
+            <p>
+                <img src="../img/img_localizacao.png" alt="Endereço">
+                <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém
+            </p>
+        </div>
+
+        <div class="logos">
+            <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
+            <img src="../img/img_confinanciado.png" alt="Confinanciado">
+        </div>
+    </footer>
+
+</body>
+</html>
