@@ -247,7 +247,7 @@ body {
     position: fixed;
     inset: 0;
     z-index: 1000;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0, 0, 0, 0.55);
     backdrop-filter: blur(2px);
     display: none;
     align-items: center;
@@ -261,7 +261,7 @@ body {
     border-radius: 4px;
     width: 520px;
     max-width: 95vw;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
@@ -316,10 +316,9 @@ body {
     margin: 0 0 18px;
 }
 
-/* Botão + verde */
 .upload-plus {
     border: none;
-    background: #0f766e; /* verde água */
+    background: #0f766e;
     color: #ffffff;
     width: 26px;
     height: 26px;

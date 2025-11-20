@@ -1,30 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GEU — Pedido de estágio: Confirmar dados</title>
-  <link rel="stylesheet" href="css/confirmarDados.css"/>
+  <link rel="stylesheet" href="css/confirmarDados.css" />
 </head>
+
 <body>
 
-  <!-- ======= CABEÇALHO ======= -->
-  <header id="header">
-    <div class="header-logo">
-      <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
-    </div>
+  <!-- Cabeçalho -->
+    <header id="header">
+        <div class="header-logo">
+            <a href="index.html">
+                <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
+            </a>
+        </div>
 
-    <nav class="nav-menu">
-      <a href="#" class="nav-link">Alunos</a>
-      <a href="#" class="nav-link">Professores</a>
-      <a href="#" class="nav-link">Empresas</a>
-      <a href="index.html" class="nav-link active">Turmas</a>
-      <button class="btn-conta">
-        <img src="img/img_conta.png" alt="Conta">
-      </button>
-      <a href="login.html" class="btn-sair">Sair</a>
-    </nav>
-  </header>
+        <nav class="nav-menu">
+            <a href="#" class="nav-link">Alunos</a>
+            <a href="#" class="nav-link">Professores</a>
+            <a href="#" class="nav-link">Empresas</a>
+            <a href="index.html" class="nav-link active">Turmas</a>
+            <button class="btn-conta">
+                <img src="img/img_conta.png" alt="Conta">
+            </button>
+            <a href="login.html" class="btn-sair">Sair</a>
+        </nav>
+    </header>
 
   <!-- ======= CONTEÚDO ======= -->
   <main id="main-content">
@@ -95,7 +99,7 @@
   </main>
 
   <!-- ======= RODAPÉ ======= -->
-  <footer id="footer"> 
+  <footer id="footer">
     <div class="contactos">
       <h3>Contactos</h3>
       <p>
@@ -130,41 +134,8 @@
     </div>
   </div>
 
-  <!-- ======= SCRIPT DO POP-UP ======= -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const btnConfirmar = document.getElementById("btn-confirmar");
-      const popup = document.getElementById("popup-salvar");
-      const btnCancelar = popup.querySelector(".popup-cancel");
-      const btnSim = popup.querySelector(".popup-confirm");
-
-      // Abre o popup
-      btnConfirmar.addEventListener("click", function () {
-        popup.classList.add("show");
-      });
-
-      // Fecha ao clicar em "Cancelar"
-      btnCancelar.addEventListener("click", function () {
-        popup.classList.remove("show");
-      });
-
-      // Fecha ao clicar fora da caixa
-      popup.addEventListener("click", function (e) {
-        if (e.target === popup) {
-          popup.classList.remove("show");
-        }
-      });
-
-      // Ação ao clicar em "Sim"
-      btnSim.addEventListener("click", function () {
-        popup.classList.remove("show");
-
-        // 👉 Coloca aqui o comportamento quando confirmar
-        // Exemplo: ir para a próxima página
-        // window.location.href = "escolhaAreaEmpresa.html";
-      });
-    });
-  </script>
+  <script src="js/confirmarDados.js"></script>
 
 </body>
+
 </html>
