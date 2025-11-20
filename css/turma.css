@@ -131,8 +131,8 @@ body {
   gap: 22px;
   background-color: #fff;
   border-radius: 10px;
-  padding: 20px;  
-  
+  padding: 20px;
+
 }
 
 .aluno-card {
@@ -140,21 +140,21 @@ body {
   border: 1px solid #e6e6e6;
   border-radius: 8px;
   padding: 16px 18px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  
+
 }
 
 .alunos-grid a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 
 .aluno-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .aluno-nome {
@@ -162,14 +162,14 @@ body {
   font-weight: 600;
   color: #000;
   margin-bottom: 8px;
-  
+
 }
 
 .aluno-label {
   font-size: 13px;
   color: #666;
   margin-bottom: 2px;
-  
+
 }
 
 .aluno-estado {
@@ -177,11 +177,19 @@ body {
   font-weight: 600;
 }
 
-.aluno-estado.aguardando { color: #b68c0a; }
-.aluno-estado.aceite { color: #1aa179; }
-.aluno-estado.sem { color: #aaa; }
+.aluno-estado.aguardando {
+  color: #b68c0a;
+}
 
-/* ======= RODAPÉ (IGUAL AO INDEX) ======= */
+.aluno-estado.aceite {
+  color: #1aa179;
+}
+
+.aluno-estado.sem {
+  color: #aaa;
+}
+
+/* ======= RODAPÉ ======= */
 #footer {
   background-color: #fff;
   border-top: 1px solid #e2e2e2;
@@ -228,7 +236,7 @@ body {
   width: auto;
 }
 
-/* ======= RESPONSIVO ======= */
+/* ======= RESPONSIVIDADE ======= */
 @media (max-width: 1100px) {
   .alunos-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -239,14 +247,17 @@ body {
   #main-content {
     padding: 24px;
   }
+
   .page-head {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
+
   .btn-editar {
     align-self: flex-end;
   }
+
   .alunos-grid {
     grid-template-columns: 1fr;
     padding: 14px;
@@ -255,81 +266,80 @@ body {
 
 /* ===== Modal Overlay ===== */
 #modal-editar-turma {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
 /* ===== Caixa do modal ===== */
 .modal-content-box {
-    width: 780px;
-    background: white;
-    border-radius: 12px;
-    padding: 20px 28px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  width: 780px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 /* Layout principal */
 .modal-flex {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 /* Form */
 .modal-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .modal-form label {
-    font-weight: 600;
-    font-size: 14px;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 .modal-form input {
-    padding: 7px 10px;
-    border: 1px solid #b8b8b8;
-    border-radius: 6px;
-    font-size: 14px;
+  padding: 7px 10px;
+  border: 1px solid #b8b8b8;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
 /* Imagem */
 .modal-img {
-    padding-top: 20px;
-    width: 260px;
+  padding-top: 20px;
+  width: 260px;
 }
 
 /* Botões no canto inferior esquerdo */
 .modal-buttons {
-    margin-top: 18px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 22px;
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 22px;
 }
 
 /* Estilo dos botões */
 .modal-btn {
-    padding: 10px 32px;
-    border-radius: 25px;
-    border: none;
-    font-size: 15px;
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
+  padding: 10px 32px;
+  border-radius: 25px;
+  border: none;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
 }
 
 .modal-btn.guardar {
-    background: #1aa179;
+  background: #1aa179;
 }
 
 .modal-btn.voltar {
-    background: #1aa179;
+  background: #1aa179;
 }
-

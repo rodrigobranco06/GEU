@@ -14,9 +14,12 @@
 * {
   box-sizing: border-box;
 }
-html, body {
+
+html,
+body {
   height: 100%;
 }
+
 body {
   margin: 0;
   font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -41,6 +44,7 @@ section {
   justify-content: center;
   overflow: hidden;
 }
+
 .divImg img {
   width: 100%;
   height: 100%;
@@ -55,7 +59,8 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;   /* topo */
+  justify-content: flex-start;
+  /* topo */
   padding: 30px;
   position: relative;
 }
@@ -80,7 +85,7 @@ section {
 }
 
 .divFormLogin form {
-  width: 80%;                    /* ocupa 80% da largura do painel */
+  width: 80%;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -108,6 +113,7 @@ input[type="email"],
   color: var(--ink);
   outline: 0;
 }
+
 input:focus {
   border-color: #b5d9d4;
   box-shadow: 0 0 0 4px #e6f6f4;
@@ -118,6 +124,7 @@ input:focus {
   position: relative;
   margin-top: 16px;
 }
+
 .password .reveal {
   position: absolute;
   right: 10px;
@@ -128,6 +135,7 @@ input:focus {
   font-size: 16px;
   opacity: .75;
 }
+
 .password .reveal:hover {
   opacity: 1;
 }
@@ -140,6 +148,7 @@ input:focus {
   gap: 16px;
   margin-top: 14px;
 }
+
 .remember {
   display: flex;
   align-items: center;
@@ -147,11 +156,13 @@ input:focus {
   font-size: 13px;
   color: var(--muted);
 }
+
 .link {
   color: #5a7bff;
   text-decoration: none;
   font-weight: 500;
 }
+
 .link:hover {
   text-decoration: underline;
 }
@@ -169,20 +180,30 @@ input:focus {
   cursor: pointer;
   transition: 0.2s ease-in-out;
 }
+
 .btn {
   background: var(--brand);
   box-shadow: 0 10px 24px rgba(25, 125, 116, .25);
   margin-top: 18px;
 }
-.btn:hover { filter: brightness(.98); }
-.btn:active { transform: translateY(1px); }
+
+.btn:hover {
+  filter: brightness(.98);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
 
 .btn-sair {
   background: #ff4b4b;
   box-shadow: 0 10px 24px rgba(255, 75, 75, .25);
   margin-top: 16px;
 }
-.btn-sair:hover { filter: brightness(.95); }
+
+.btn-sair:hover {
+  filter: brightness(.95);
+}
 
 /* ===================== RODAPÉ (COFINANCIADO POR) ===================== */
 .funding {
@@ -193,12 +214,13 @@ input:focus {
   padding: 16px 0 0;
   margin: 20px auto 0;
 }
+
 .funding img {
   width: 320px;
   max-width: 100%;
   height: auto;
   display: block;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,.06));
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, .06));
 }
 
 /* ===================== RESPONSIVO ===================== */
@@ -206,16 +228,20 @@ input:focus {
   section {
     grid-template-columns: 1fr;
   }
+
   .divImg {
-    display: none; /* esconde imagem no mobile */
+    display: none;
   }
+
   .divFormLogin {
     padding: 30px 20px;
   }
+
   .logo-login {
     max-width: 280px;
     margin: 0 auto 20px;
   }
+
   .divFormLogin form {
     width: 90%;
   }

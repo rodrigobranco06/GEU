@@ -14,7 +14,7 @@ body {
   min-height: 100vh;
 }
 
-/* ======= CABEÇALHO (igual ao index.css) ======= */
+/* ======= CABEÇALHO ======= */
 #header {
   display: flex;
   justify-content: space-between;
@@ -55,6 +55,7 @@ body {
   color: #000;
   font-weight: 600;
 }
+
 .nav-link.active::after {
   content: "";
   position: absolute;
@@ -70,7 +71,11 @@ body {
   border: none;
   cursor: pointer;
 }
-.btn-conta img { width: 26px; height: 26px; }
+
+.btn-conta img {
+  width: 26px;
+  height: 26px;
+}
 
 .btn-sair {
   background-color: #2f2f2f;
@@ -83,7 +88,11 @@ body {
   white-space: nowrap;
   text-decoration: none;
 }
-.btn-sair:hover { background-color: #000; text-decoration: none; }
+
+.btn-sair:hover {
+  background-color: #000;
+  text-decoration: none;
+}
 
 /* ======= CONTEÚDO PRINCIPAL ======= */
 #main-content {
@@ -108,12 +117,13 @@ body {
   color: #000;
 }
 
-/* ações (Voltar / Novo Pedido) com o mesmo estilo do index */
+/* ações (Voltar / Novo Pedido) */
 .acoes {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
+
 .btn-criar {
   background-color: #1aa179;
   color: white;
@@ -126,7 +136,10 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   white-space: nowrap;
 }
-.btn-criar:hover { background-color: #148e69; }
+
+.btn-criar:hover {
+  background-color: #148e69;
+}
 
 .btn-outline {
   background-color: #e8f5f2;
@@ -140,20 +153,24 @@ body {
   text-decoration: none;
   white-space: nowrap;
 }
-.btn-outline:hover { filter: brightness(0.98); }
+
+.btn-outline:hover {
+  filter: brightness(0.98);
+}
 
 /* ======= LISTA DE PEDIDOS ======= */
 .pedidos-container {
   display: grid;
-  grid-template-columns: 1fr;    /* um cartão por linha (como no mock) */
+  grid-template-columns: 1fr;
+  /* um cartão por linha (como no mock) */
   gap: 16px;
-  
+
 }
 
 .pedidos-container a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .pedido-card {
@@ -161,7 +178,7 @@ body {
   border-radius: 8px;
   padding: 18px 20px;
   background-color: #fff;
-  
+
 }
 
 .pedido-titulo {
@@ -169,7 +186,7 @@ body {
   font-weight: 600;
   color: #000;
   margin-bottom: 10px;
-  
+
 }
 
 .pedido-label {
@@ -181,14 +198,22 @@ body {
 .pedido-estado {
   font-size: 13px;
   font-weight: 600;
-  
+
 }
 
-.pedido-estado.aguardando { color: #b68c0a; }
-.pedido-estado.aceite     { color: #1aa179; }
-.pedido-estado.sem        { color: #aaa; }
+.pedido-estado.aguardando {
+  color: #b68c0a;
+}
 
-/* ======= RODAPÉ (igual ao index.css) ======= */
+.pedido-estado.aceite {
+  color: #1aa179;
+}
+
+.pedido-estado.sem {
+  color: #aaa;
+}
+
+/* ======= RODAPÉ ======= */
 #footer {
   background-color: #fff;
   border-top: 1px solid #e2e2e2;
@@ -239,9 +264,17 @@ body {
 
 /* Tablets (até 1024px) */
 @media (max-width: 1024px) {
-  #header { padding: 15px 30px; }
-  #main-content { padding: 0 30px; }
-  .logos { gap: 30px; }
+  #header {
+    padding: 15px 30px;
+  }
+
+  #main-content {
+    padding: 0 30px;
+  }
+
+  .logos {
+    gap: 30px;
+  }
 }
 
 /* Tablets pequenos (até 768px) */
@@ -268,10 +301,19 @@ body {
     margin-top: 30px;
   }
 
-  .titulo-pagina { font-size: 22px; }
+  .titulo-pagina {
+    font-size: 22px;
+  }
 
-  .acoes { width: 100%; justify-content: flex-end; }
-  .btn-criar, .btn-outline { padding: 10px 18px; }
+  .acoes {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .btn-criar,
+  .btn-outline {
+    padding: 10px 18px;
+  }
 
   #footer {
     padding: 30px 20px;
@@ -285,28 +327,70 @@ body {
     gap: 20px;
   }
 
-  .logos img { height: 60px; }
+  .logos img {
+    height: 60px;
+  }
 }
 
 /* Smartphones (até 480px) */
 @media (max-width: 480px) {
-  #header { padding: 10px 15px; }
-  .header-logo img { height: 40px; }
-  .nav-menu { gap: 10px; font-size: 14px; }
-  .btn-conta img { width: 22px; height: 22px; }
-  .btn-sair { padding: 6px 12px; font-size: 13px; }
+  #header {
+    padding: 10px 15px;
+  }
 
-  #main-content { padding: 0 15px; margin-top: 20px; }
-  .titulo-pagina { font-size: 20px; }
+  .header-logo img {
+    height: 40px;
+  }
 
-  .btn-criar, .btn-outline {
+  .nav-menu {
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .btn-conta img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .btn-sair {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  #main-content {
+    padding: 0 15px;
+    margin-top: 20px;
+  }
+
+  .titulo-pagina {
+    font-size: 20px;
+  }
+
+  .btn-criar,
+  .btn-outline {
     padding: 8px 16px;
     font-size: 13px;
   }
 
-  #footer { padding: 20px 15px; }
-  .contactos { font-size: 13px; }
-  .contactos h3 { font-size: 15px; margin-bottom: 10px; }
-  .contactos img { width: 22px; height: 22px; }
-  .logos img { height: 50px; }
+  #footer {
+    padding: 20px 15px;
+  }
+
+  .contactos {
+    font-size: 13px;
+  }
+
+  .contactos h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .contactos img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .logos img {
+    height: 50px;
+  }
 }

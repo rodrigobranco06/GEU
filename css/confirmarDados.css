@@ -1,4 +1,4 @@
-/* ======= CONFIGURAÇÕES GERAIS (igual a aluno.css) ======= */
+/* ======= CONFIGURAÇÕES GERAIS ======= */
 * {
   margin: 0;
   padding: 0;
@@ -25,7 +25,10 @@ body {
   flex-wrap: wrap;
   gap: 15px;
 }
-.header-logo img { height: 70px; }
+
+.header-logo img {
+  height: 70px;
+}
 
 .nav-menu {
   display: flex;
@@ -33,6 +36,7 @@ body {
   gap: 20px;
   flex-wrap: wrap;
 }
+
 .nav-link {
   text-decoration: none;
   color: #333;
@@ -41,8 +45,16 @@ body {
   padding-bottom: 4px;
   white-space: nowrap;
 }
-.nav-link:hover { color: #000; }
-.nav-link.active { color: #000; font-weight: 600; }
+
+.nav-link:hover {
+  color: #000;
+}
+
+.nav-link.active {
+  color: #000;
+  font-weight: 600;
+}
+
 .nav-link.active::after {
   content: "";
   position: absolute;
@@ -52,15 +64,34 @@ body {
   height: 2px;
   background-color: #000;
 }
-.btn-conta { background: none; border: none; cursor: pointer; }
-.btn-conta img { width: 26px; height: 26px; }
+
+.btn-conta {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-conta img {
+  width: 26px;
+  height: 26px;
+}
 
 .btn-sair {
-  background-color: #2f2f2f; color: white; border: none;
-  padding: 8px 16px; border-radius: 6px; cursor: pointer;
-  font-weight: 500; white-space: nowrap; text-decoration: none;
+  background-color: #2f2f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
 }
-.btn-sair:hover { background-color: #000; text-decoration: none; }
+
+.btn-sair:hover {
+  background-color: #000;
+  text-decoration: none;
+}
 
 /* ======= CONTEÚDO PRINCIPAL ======= */
 #main-content {
@@ -79,6 +110,7 @@ body {
   margin-bottom: 20px;
   overflow: auto;
 }
+
 .step {
   color: #333;
   text-decoration: none;
@@ -87,11 +119,16 @@ body {
   position: relative;
   white-space: nowrap;
 }
-.step:hover { color: #000; }
+
+.step:hover {
+  color: #000;
+}
+
 .step.active {
   color: #000;
   font-weight: 600;
 }
+
 .step.active::after {
   content: "";
   position: absolute;
@@ -102,7 +139,7 @@ body {
   background: #000;
 }
 
-/* Barra superior com título e botões (igual ao aluno.css) */
+/* Barra superior com título e botões */
 .page-head {
   display: flex;
   justify-content: space-between;
@@ -111,16 +148,19 @@ body {
   flex-wrap: wrap;
   gap: 15px;
 }
+
 .titulo {
   font-size: 24px;
   font-weight: 600;
   color: #000;
 }
+
 .acoes {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
+
 .btn-primary {
   background-color: #1aa179;
   color: white;
@@ -133,7 +173,10 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   white-space: nowrap;
 }
-.btn-primary:hover { background-color: #148e69; }
+
+.btn-primary:hover {
+  background-color: #148e69;
+}
 
 .btn-outline {
   background-color: #e8f5f2;
@@ -147,7 +190,10 @@ body {
   text-decoration: none;
   white-space: nowrap;
 }
-.btn-outline:hover { filter: brightness(0.98); }
+
+.btn-outline:hover {
+  filter: brightness(0.98);
+}
 
 /* Cartão com dados (clean, inputs readonly finos) */
 .card {
@@ -163,16 +209,19 @@ body {
   grid-template-columns: 1fr;
   gap: 10px;
 }
+
 .kv li {
   display: grid;
   grid-template-columns: 280px 1fr;
   align-items: center;
   gap: 12px;
 }
+
 .kv .k {
   font-size: 14px;
   color: #2b2b2b;
 }
+
 .kv .v {
   width: 100%;
   height: 28px;
@@ -184,9 +233,12 @@ body {
   border-radius: 4px;
   outline: none;
 }
-.kv .v[readonly] { background: #fff; }
 
-/* ======= RODAPÉ (igual) ======= */
+.kv .v[readonly] {
+  background: #fff;
+}
+
+/* ======= RODAPÉ ======= */
 #footer {
   background-color: #fff;
   border-top: 1px solid #e2e2e2;
@@ -196,23 +248,30 @@ body {
   align-items: center;
   flex-wrap: wrap;
 }
+
 .contactos h3 {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 30px;
   color: #333;
 }
+
 .contactos {
   font-size: 14px;
   color: #333;
   line-height: 1.6;
 }
+
 .contactos p {
   display: flex;
   align-items: center;
   gap: 5px;
 }
-.contactos img { width: 26px; height: 26px; }
+
+.contactos img {
+  width: 26px;
+  height: 26px;
+}
 
 .logos {
   display: flex;
@@ -220,6 +279,7 @@ body {
   gap: 40px;
   flex-wrap: wrap;
 }
+
 .logos img {
   height: 70px;
   width: auto;
@@ -229,9 +289,17 @@ body {
 
 /* Tablets (até 1024px) */
 @media (max-width: 1024px) {
-  #header { padding: 15px 30px; }
-  #main-content { padding: 0 30px 30px; }
-  .kv li { grid-template-columns: 240px 1fr; }
+  #header {
+    padding: 15px 30px;
+  }
+
+  #main-content {
+    padding: 0 30px 30px;
+  }
+
+  .kv li {
+    grid-template-columns: 240px 1fr;
+  }
 }
 
 /* Tablets pequenos (até 768px) */
@@ -240,11 +308,13 @@ body {
     padding: 15px 20px;
     justify-content: center;
   }
+
   .header-logo {
     width: 100%;
     text-align: center;
     margin-bottom: 10px;
   }
+
   .nav-menu {
     width: 100%;
     justify-content: center;
@@ -260,32 +330,78 @@ body {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .acoes {
     width: 100%;
     justify-content: flex-end;
   }
 
-  .kv li { grid-template-columns: 1fr; }
+  .kv li {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Smartphones (até 480px) */
 @media (max-width: 480px) {
-  #header { padding: 10px 15px; }
-  .header-logo img { height: 40px; }
-  .nav-menu { gap: 10px; font-size: 14px; }
-  .btn-conta img { width: 22px; height: 22px; }
-  .btn-sair { padding: 6px 12px; font-size: 13px; }
+  #header {
+    padding: 10px 15px;
+  }
 
-  #main-content { padding: 0 15px 20px; margin-top: 20px; }
-  .titulo { font-size: 20px; }
+  .header-logo img {
+    height: 40px;
+  }
 
-  .btn-primary, .btn-outline { padding: 8px 16px; font-size: 13px; }
+  .nav-menu {
+    gap: 10px;
+    font-size: 14px;
+  }
 
-  #footer { padding: 20px 15px; }
-  .contactos { font-size: 13px; }
-  .contactos h3 { font-size: 15px; margin-bottom: 10px; }
-  .contactos img { width: 22px; height: 22px; }
-  .logos img { height: 50px; }
+  .btn-conta img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .btn-sair {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  #main-content {
+    padding: 0 15px 20px;
+    margin-top: 20px;
+  }
+
+  .titulo {
+    font-size: 20px;
+  }
+
+  .btn-primary,
+  .btn-outline {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  #footer {
+    padding: 20px 15px;
+  }
+
+  .contactos {
+    font-size: 13px;
+  }
+
+  .contactos h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .contactos img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .logos img {
+    height: 50px;
+  }
 }
 
 /* ======= POP-UP SALVAR ======= */
@@ -304,12 +420,12 @@ body {
   background: #eaeaea;
   border-radius: 12px;
   padding: 28px 32px;
-  width: 360px;        /* reduzido */
+  width: 360px;
   text-align: center;
 }
 
 .popup-text {
-  font-size: 22px;     /* menor */
+  font-size: 22px;
   font-weight: 600;
   color: #000;
   margin-bottom: 26px;
@@ -324,18 +440,18 @@ body {
 .popup-btn {
   border: none;
   border-radius: 10px;
-  padding: 12px 36px;  /* menor */
-  font-size: 18px;     /* menor */
+  padding: 12px 36px;
+  font-size: 18px;
   cursor: pointer;
 }
 
-/* Botão cinza: Cancelar */
+
 .popup-cancel {
   background: #b3b3b3;
   color: #f9f9f9;
 }
 
-/* Botão verde/teal: Sim */
+
 .popup-confirm {
   background: #0f7a74;
   color: #ffffff;
