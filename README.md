@@ -5,4 +5,4 @@ Gestão de Estágios Universitários (GEU) é uma aplicação web que facilita a
 ![ModeloER](img/DiagramaGEU.png) 
 
 ## GitHub Pages
-https://rodrigobranco06.github.io/GEU/
+https://rodrigobranco06.github.io/GEU/ 
