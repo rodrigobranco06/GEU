@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GEU — Ver empresa</title>
+    <link rel="stylesheet" href="css/verEmpresa.css" />
+</head>
+<body>
+
+    <!-- ======= CABEÇALHO ======= -->
+    <header id="header">
+        <div class="header-logo">
+            <a href="../index.html">
+                <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
+            </a>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="../alunos/index.html" class="nav-link">Alunos</a>
+            <a href="../professores/index.html" class="nav-link">Professores</a>
+            <a href="index.html" class="nav-link active">Empresas</a>
+            <a href="../index.html" class="nav-link">Turmas</a>
+
+            <button class="btn-conta">
+                <img src="../img/img_conta.png" alt="Conta">
+            </button>
+            <a href="../login.html" class="btn-sair">Sair</a>
+        </nav>
+    </header>
+
+    <!-- ======= CONTEÚDO PRINCIPAL ======= -->
+    <main id="main-content">
+
+        <!-- Subtabs -->
+        <nav class="subtabs">
+            <a href="index.html" class="subtab-link active">Ver Empresas</a>
+            <a href="registarEmpresa.html" class="subtab-link">Registar nova empresa</a>
+        </nav>
+
+        <h2 class="empresa-titulo">Pc Diga:</h2>
+
+        <section class="content-grid">
+            <!-- Formulário só leitura -->
+            <form class="form-empresa">
+
+                <div class="form-group">
+                    <label for="codEmpresa">Código Empresa</label>
+                    <input id="codEmpresa" type="text" value="67182996" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="nomeEmpresa">Nome</label>
+                    <input id="nomeEmpresa" type="text" value="Pc Diga" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="nifEmpresa">NIF empresa</label>
+                    <input id="nifEmpresa" type="text" value="991675433" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="ramo">Ramo de atividade</label>
+                    <input id="ramo" type="text"
+                           value="Manutenção de equipamentos informáticos" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="morada">Morada</label>
+                    <input id="morada" type="text"
+                           value="Rua das Flores, lote 13, Santarém" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="cp">Código Postal</label>
+                    <input id="cp" type="text" value="2000-000" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="cidade">Cidade</label>
+                    <input id="cidade" type="text" value="Santarém" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="pais">País</label>
+                    <input id="pais" type="text" value="Portugal" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input id="telefone" type="text" value="243000111" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" type="text"
+                           value="santarem@pcdiga.pt" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="website">Website</label>
+                    <input id="website" type="text" value="pcdiga.pt" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn</label>
+                    <input id="linkedin" type="text"
+                           value="linkedin.com/in/pc-diga" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactoResp">Contacto Responsável</label>
+                    <input id="contactoResp" type="text"
+                           value="912345678" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="cargoResp">Cargo responsável</label>
+                    <input id="cargoResp" type="text"
+                           value="Gestor RH" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailResp">Email responsável</label>
+                    <input id="emailResp" type="text"
+                           value="antonio.santarem.rh@pcdiga.pt" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="telResp">Telefone responsável</label>
+                    <input id="telResp" type="text"
+                           value="921234567" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="user">Nome utilizador</label>
+                    <input id="user" type="text" value="pcdiga" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="text"
+                           value="pcdiga991675433" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="numEstagios">Número de estágios</label>
+                    <input id="numEstagios" type="text" value="1" readonly>
+                </div>
+
+            </form>
+
+            <!-- Coluna direita: botões + imagem -->
+            <aside class="side-panel">
+                <div class="side-top">
+                    <a class="btn-editar" href="editarEmpresa.html">
+                        Editar
+                    </a>
+                    <a class="btn-voltar" href="index.html">
+                        Voltar
+                    </a>
+                </div>
+
+                <div class="side-image-wrapper">
+                    <img src="../img/img_registarAluno.png" alt="Ilustração empresa">
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <!-- ======= RODAPÉ ======= -->
+    <footer id="footer">
+        <div class="contactos">
+            <h3>Contactos</h3>
+            <p>
+                <img src="../img/img_email.png" alt="Email">
+                <strong>Email:</strong> geral@ipsantarem.pt
+            </p>
+            <p>
+                <img src="../img/img_telemovel.png" alt="Telefone">
+                <strong>Telefone:</strong> +351 243 309 520
+            </p>
+            <p>
+                <img src="../img/img_localizacao.png" alt="Endereço">
+                <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém
+            </p>
+        </div>
+
+        <div class="logos">
+            <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
+            <img src="../img/img_confinanciado.png" alt="Confinanciado">
+        </div>
+    </footer>
+
+</body>
+</html>
