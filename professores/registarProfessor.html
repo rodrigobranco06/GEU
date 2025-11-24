@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GEU — Registar novo aluno</title>
-    <link rel="stylesheet" href="css/registarAluno.css" />
+    <title>GEU — Registar novo professor</title>
+    <link rel="stylesheet" href="css/registarProfessor.css" />
 </head>
 <body>
 
@@ -17,9 +17,9 @@
         </div>
 
         <nav class="nav-menu">
-            <a href="index.html" class="nav-link active">Alunos</a>
-            <a href="../professores/index.html" class="nav-link">Professores</a>
-            <a href="#" class="nav-link">Empresas</a>
+            <a href="../alunos/index.html" class="nav-link">Alunos</a>
+            <a href="index.html" class="nav-link active">Professores</a>
+            <a href="../empresas/index.html" class="nav-link">Empresas</a>
             <a href="../index.html" class="nav-link">Turmas</a>
 
             <button class="btn-conta">
@@ -34,17 +34,17 @@
 
         <!-- Subtabs -->
         <nav class="subtabs">
-            <a href="index.html" class="subtab-link">Ver Alunos</a>
-            <a href="registarAluno.html" class="subtab-link active">Registar novo aluno</a>
+            <a href="index.html" class="subtab-link">Ver Professores</a>
+            <a href="registarProfessor.html" class="subtab-link active">Registar novo professor</a>
         </nav>
 
         <section class="content-grid">
             <!-- Coluna esquerda: formulário -->
-            <form class="form-aluno">
+            <form class="form-professor">
 
                 <div class="form-group">
-                    <label for="codigo">Código Aluno</label>
-                    <input id="codigo" type="text">
+                    <label for="codigoProf">Código Professor</label>
+                    <input id="codigoProf" type="text">
                 </div>
 
                 <div class="form-group">
@@ -53,8 +53,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="nome">Nome Aluno</label>
-                    <input id="nome" type="text">
+                    <label for="nomeProf">Nome Professor</label>
+                    <input id="nomeProf" type="text">
                 </div>
 
                 <div class="form-group">
@@ -91,40 +91,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="curso">Curso</label>
-                    <input id="curso" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label for="turmaId">Turma ID</label>
-                    <div class="select-wrapper">
-                        <select id="turmaId">
-                            <option value="">Selecione uma Turma</option>
-                            <option value="tpsi20242026">tpsi20242026</option>
-                            <option value="tdl20242026">tdl20242026</option>
-                        </select>
-                        <span class="chevron">▾</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="anoCurricular">Ano curricular</label>
-                    <input id="anoCurricular" type="number" min="1">
-                </div>
-
-                <div class="form-group">
-                    <label for="situacaoAcademica">Situação académica</label>
-                    <div class="select-wrapper">
-                        <select id="situacaoAcademica">
-                            <option value="">Selecione uma situação académica</option>
-                            <option value="regular">Ativo</option>
-                            <option value="suspenso">Suspenso</option>
-                        </select>
-                        <span class="chevron">▾</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
                     <label for="escola">Escola</label>
                     <input id="escola" type="text">
                 </div>
@@ -135,7 +101,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="emailPessoal">Email pessoal</label>
+                    <label for="emailPessoal">Email pessoal <span class="opcional">(opcional)</span></label>
                     <input id="emailPessoal" type="email">
                 </div>
 
@@ -154,47 +120,6 @@
                     <input id="cidade" type="text">
                 </div>
 
-                <div class="form-group">
-                    <label for="idEstagio">ID estágio</label>
-                    <input id="idEstagio" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label for="profOrientador">Professor orientador</label>
-                    <input id="profOrientador" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label for="idEmpresa">ID empresa</label>
-                    <input id="idEmpresa" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label for="nomeEmpresa">Nome empresa</label>
-                    <input id="nomeEmpresa" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label for="estadoEstagio">Estado estágio</label>
-                    <input id="estadoEstagio" type="text">
-                </div>
-
-                <div class="form-group">
-                    <label for="cv">CV</label>
-                    <input id="cv" type="file" accept=".pdf,.doc,.docx">
-                </div>
-
-
-                <div class="form-group">
-                    <label for="linkedin">LinkedIn</label>
-                    <input id="linkedin" type="url">
-                </div>
-
-                <div class="form-group">
-                    <label for="portfolio">Portefólio (GitHub)</label>
-                    <input id="portfolio" type="url">
-                </div>
-
             </form>
 
             <!-- Coluna direita: botão + imagem -->
@@ -206,7 +131,7 @@
                 </div>
 
                 <div class="side-image-wrapper">
-                    <img src="../img/img_registarAluno.png" alt="Ilustração registar aluno">
+                    <img src="../img/img_registarAluno.png" alt="Ilustração registar professor">
                 </div>
             </aside>
         </section>

@@ -3,22 +3,21 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GEU — Ver Alunos</title>
+    <title>GEU — Ver Professores</title>
     <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
 
-    <!-- ======= CABEÇALHO ======= -->
     <header id="header">
         <div class="header-logo">
-            <a href="index.html">
+            <a href="../index.html">
                 <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
             </a>
         </div>
 
         <nav class="nav-menu">
-            <a href="index.html" class="nav-link active">Alunos</a>
-            <a href="../professores/index.html" class="nav-link">Professores</a>
+            <a href="../alunos/index.html" class="nav-link">Alunos</a>
+            <a href="index.html" class="nav-link active">Professores</a>
             <a href="#" class="nav-link">Empresas</a>
             <a href="../index.html" class="nav-link">Turmas</a>
 
@@ -29,68 +28,50 @@
         </nav>
     </header>
 
-    <!-- ======= CONTEÚDO PRINCIPAL ======= -->
     <main id="main-content">
 
-        <!-- Tabs internas (Ver / Registar) -->
         <nav class="subtabs">
-            <a href="" class="subtab-link active">Ver Alunos</a>
-            <a href="registarAluno.html" class="subtab-link">Registar novo aluno</a>
+            <a href="index.html" class="subtab-link active">Ver Professores</a>
+            <a href="registarProfessor.html" class="subtab-link">Registar novo professor</a>
         </nav>
 
-        <!-- Barra de pesquisa -->
-        <section class="search-section">
-            <div class="search-box">
+        <section class="search-area">
+            <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
-                <input
-                    type="text"
-                    placeholder="Procurar por aluno"
-                    aria-label="Procurar por aluno"
-                >
+                <input type="text" placeholder="Procurar por professor" aria-label="Procurar por professor">
             </div>
         </section>
 
-        <!-- Tabela de alunos -->
         <section class="table-wrapper">
-            <table class="alunos-table">
+            <table class="professores-table">
                 <thead>
                     <tr>
-                        <th>Número de aluno</th>
-                        <th>Nome do aluno</th>
-                        <th>Curso</th>
-                        <th>Empresa</th>
-                        <th>Estado do estágio</th>
+                        <th>Número de professor</th>
+                        <th>Nome do professor</th>
+                        <th>Email</th>
+                        <th>Especialização</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr onclick="window.location='verAluno.html'" class="linha-click">
+                    <tr>
                         <td>240001087</td>
                         <td>Rodrigo Da Silva Branco</td>
-                        <td>Técnico Superior de Programação de Sistemas de Informação</td>
-                        <td>Sem empresa</td>
-                        <td>Esperando empresa</td>
+                        <td>240001087@esg.ipsantarem.pt</td>
+                        <td>Programação Sistemas Informação</td>
                     </tr>
-
-                    <tr>
+                    <tr class="linha-click" onclick="window.location.href='verProfessor.html'">
                         <td>240001462</td>
                         <td>Tomás Cordeiro Ribeiro</td>
-                        <td>Técnico Superior de Programação de Sistemas de Informação</td>
-                        <td>Sem empresa</td>
-                        <td>Esperando empresa</td>
-                    </tr>
-                    <tr>
-                        <td>240000948</td>
-                        <td>Sandro Filipe</td>
-                        <td>Técnico Superior de Programação de Sistemas de Informação</td>
-                        <td>Sem empresa</td>
-                        <td>Esperando empresa</td>
+                        <td>240001462@esg.ipsantarem.pt</td>
+                        <td>Programação Sistemas Informação</td>
                     </tr>
                 </tbody>
             </table>
         </section>
+
     </main>
 
-    <!-- ======= RODAPÉ ======= -->
+    <!-- RODAPÉ -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
