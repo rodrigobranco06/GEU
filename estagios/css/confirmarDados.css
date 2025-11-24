@@ -557,6 +557,8 @@ body {
   padding: 12px 18px;
   font-size: 20px;
   cursor: pointer;
+  text-decoration: none;
+  color: #000;
 }
 
 .perfil-back-icon {
