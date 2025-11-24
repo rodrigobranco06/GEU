@@ -14,7 +14,7 @@
     <header id="header">
         <div class="header-logo">
             <a href="index.html">
-                <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
+                <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
             </a>
         </div>
 
@@ -23,8 +23,8 @@
             <a href="#" class="nav-link">Professores</a>
             <a href="#" class="nav-link">Empresas</a>
             <a href="index.html" class="nav-link active">Turmas</a>
-            <button class="btn-conta">
-                <img src="img/img_conta.png" alt="Conta">
+            <button class="btn-conta" id="btn-conta">
+                <img src="../img/img_conta.png" alt="Conta">
             </button>
             <a href="login.html" class="btn-sair">Sair</a>
         </nav>
@@ -48,7 +48,7 @@
       <h1 class="titulo">Rodrigo Branco - 240001087</h1>
       <div class="acoes">
         <a class="btn-outline" href="confirmarDados.html">Voltar</a>
-        <a class="btn-primary" href="envioEmail.html">Definir área e empresa</a>
+        <a class="btn-primary" type="button" id="btn-confirmar">Definir área e empresa</a>
       </div>
     </div>
 
@@ -110,25 +110,73 @@
     <div class="contactos">
       <h3>Contactos</h3>
       <p>
-        <img src="img/img_email.png" alt="Email">
+        <img src="../img/img_email.png" alt="Email">
         <strong>Email:</strong> geral@ipsantarem.pt
       </p>
       <p>
-        <img src="img/img_telemovel.png" alt="Telefone">
+        <img src="../img/img_telemovel.png" alt="Telefone">
         <strong>Telefone:</strong> +351 243 309 520
       </p>
       <p>
-        <img src="img/img_localizacao.png" alt="Endereço">
+        <img src="../img/img_localizacao.png" alt="Endereço">
         <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém
       </p>
     </div>
 
     <div class="logos">
-      <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
-      <img src="img/img_confinanciado.png" alt="Confinanciado">
+      <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
+      <img src="../img/img_confinanciado.png" alt="Confinanciado">
     </div>
   </footer>
 
+  <!-- ======= POP-UP SALVAR ======= -->
+  <div id="popup-salvar" class="popup-overlay">
+    <div class="popup-box">
+      <p class="popup-text">Deseja salvar as informações?</p>
+
+      <div class="popup-actions">
+        <button type="button" class="popup-btn popup-cancel">Cancelar</button>
+        <button type="button" class="popup-btn popup-confirm">Sim</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= MODAL PERFIL / CONTA ======= -->
+  <div id="perfil-overlay" class="perfil-overlay">
+    <div class="perfil-card">
+      <div class="perfil-banner"></div>
+
+      <div class="perfil-avatar">
+        <span class="perfil-avatar-icon">👤</span>
+      </div>
+
+      <div class="perfil-content">
+        <div class="perfil-role">Aluno</div>
+        <div class="perfil-name">Rodrigo Branco</div>
+
+        <div class="perfil-row">
+          <span class="perfil-row-icon">✉️</span>
+          <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
+        </div>
+
+        <div class="perfil-row">
+          <span class="perfil-row-icon">⚙️</span>
+          <span class="perfil-row-text">Definições de conta</span>
+        </div>
+
+        <button type="button" class="perfil-logout-row">
+          <span class="perfil-back-icon">←</span>
+          <span class="perfil-logout-text">Log out</span>
+        </button>
+
+        <button type="button" class="perfil-voltar-btn">
+          Voltar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/escolhaAreaEmpresa.js"></script>
 </body>
 
 </html>

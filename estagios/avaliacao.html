@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GEU — Pedido de estágio: Envio de email</title>
-  <link rel="stylesheet" href="css/envioEmail.css" />
+  <title>GEU — Pedido de estágio: Avaliação</title>
+  <link rel="stylesheet" href="css/avaliacao.css" />
 </head>
 
 <body>
@@ -14,7 +14,7 @@
     <header id="header">
         <div class="header-logo">
             <a href="index.html">
-                <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
+                <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
             </a>
         </div>
 
@@ -23,8 +23,8 @@
             <a href="#" class="nav-link">Professores</a>
             <a href="#" class="nav-link">Empresas</a>
             <a href="index.html" class="nav-link active">Turmas</a>
-            <button class="btn-conta">
-                <img src="img/img_conta.png" alt="Conta">
+            <button class="btn-conta" id="btn-conta">
+                <img src="../img/img_conta.png" alt="Conta">
             </button>
             <a href="login.html" class="btn-sair">Sair</a>
         </nav>
@@ -37,10 +37,10 @@
     <nav class="steps">
       <a class="step" href="confirmarDados.html">Confirmar Dados</a>
       <a class="step" href="escolhaAreaEmpresa.html">Escolha de área e empresa</a>
-      <a class="step active" href="envioEmail.html">Envio de email</a>
+      <a class="step" href="envioEmail.html">Envio de email</a>
       <a class="step" href="respostaEmail.html">Resposta ao email</a>
       <a class="step" href="planoEstagio.html">Plano estágio</a>
-      <a class="step" href="avaliacao.html">Avaliação</a>
+      <a class="step active" href="avaliacao.html">Avaliação</a>
     </nav>
 
     <!-- Título + ações -->
@@ -48,7 +48,7 @@
       <h1 class="titulo">Rodrigo Branco - 240001087</h1>
       <div class="acoes">
         <a class="btn-outline" href="confirmarDados.html">Voltar</a>
-        <a class="btn-primary" href="respostaEmail.html">Definir email como enviado</a>
+        <a class="btn-primary" type="button" id="btn-confirmar">Guardar avaliação</a>
       </div>
     </div>
 
@@ -71,30 +71,29 @@
         </li>
 
         <li>
-          <span class="k">Email:</span>
-          <input class="v" value="webteq@gmail.com" readonly>
+          <span class="k">Código do professor orientador:</span>
+          <input class="v" value="240001462" readonly>
         </li>
 
         <li>
-          <span class="k">Nome do responsável da empresa:</span>
-          <input class="v" value="Rui Alves" readonly>
+          <span class="k">Nome do professor orientador:</span>
+          <input class="v" value="Tomás Cordeiro Ribeiro" readonly>
         </li>
 
         <li>
-          <span class="k">CV do aluno:</span>
-          <button class="upload-btn" type="button" onclick="openModal()">cv_tpsi_240001087.pdf</button>
+          <span class="k">Relatório:</span>
+          <button class="upload-btn" type="button" onclick="openModal()"></button>
         </li>
 
         <li>
-          <span class="k">Estado de envio:</span>
-          <input class="v" value="Enviado" readonly>
+          <span class="k">Nota final:</span>
+          <input type="number" class="v">
         </li>
 
         <li>
-          <span class="k">Data de envio do email:</span>
-          <input class="v" value="21/10/2025 16:02:41 " readonly>
+          <span class="k">Observações:</span>
+          <input type="text" class="v">
         </li>
-
 
       </ul>
     </section>
@@ -124,27 +123,73 @@
     <div class="contactos">
       <h3>Contactos</h3>
       <p>
-        <img src="img/img_email.png" alt="Email">
+        <img src="../img/img_email.png" alt="Email">
         <strong>Email:</strong> geral@ipsantarem.pt
       </p>
       <p>
-        <img src="img/img_telemovel.png" alt="Telefone">
+        <img src="../img/img_telemovel.png" alt="Telefone">
         <strong>Telefone:</strong> +351 243 309 520
       </p>
       <p>
-        <img src="img/img_localizacao.png" alt="Endereço">
+        <img src="../img/img_localizacao.png" alt="Endereço">
         <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém
       </p>
     </div>
 
     <div class="logos">
-      <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
-      <img src="img/img_confinanciado.png" alt="Confinanciado">
+      <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
+      <img src="../img/img_confinanciado.png" alt="Confinanciado">
     </div>
   </footer>
 
-  <script src="js/envioEmail.js"></script>
+  <!-- ======= POP-UP SALVAR ======= -->
+  <div id="popup-salvar" class="popup-overlay">
+    <div class="popup-box">
+      <p class="popup-text">Deseja salvar as informações?</p>
 
+      <div class="popup-actions">
+        <button type="button" class="popup-btn popup-cancel">Cancelar</button>
+        <button type="button" class="popup-btn popup-confirm">Sim</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= MODAL PERFIL / CONTA ======= -->
+  <div id="perfil-overlay" class="perfil-overlay">
+    <div class="perfil-card">
+      <div class="perfil-banner"></div>
+
+      <div class="perfil-avatar">
+        <span class="perfil-avatar-icon">👤</span>
+      </div>
+
+      <div class="perfil-content">
+        <div class="perfil-role">Aluno</div>
+        <div class="perfil-name">Rodrigo Branco</div>
+
+        <div class="perfil-row">
+          <span class="perfil-row-icon">✉️</span>
+          <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
+        </div>
+
+        <div class="perfil-row">
+          <span class="perfil-row-icon">⚙️</span>
+          <span class="perfil-row-text">Definições de conta</span>
+        </div>
+
+        <button type="button" class="perfil-logout-row">
+          <span class="perfil-back-icon">←</span>
+          <span class="perfil-logout-text">Log out</span>
+        </button>
+
+        <button type="button" class="perfil-voltar-btn">
+          Voltar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/avaliacao.js"></script>
 
 </body>
 
