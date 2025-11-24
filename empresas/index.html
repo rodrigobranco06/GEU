@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GEU — Ver Professores</title>
+    <title>GEU — Ver Empresas</title>
     <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
 
+    <!-- ======= CABEÇALHO ======= -->
     <header id="header">
         <div class="header-logo">
             <a href="../index.html">
@@ -17,8 +18,8 @@
 
         <nav class="nav-menu">
             <a href="../alunos/index.html" class="nav-link">Alunos</a>
-            <a href="index.html" class="nav-link active">Professores</a>
-            <a href="../empresas/index.html" class="nav-link">Empresas</a>
+            <a href="../professores/index.html" class="nav-link">Professores</a>
+            <a href="index.html" class="nav-link active">Empresas</a>
             <a href="../index.html" class="nav-link">Turmas</a>
 
             <button class="btn-conta">
@@ -28,50 +29,65 @@
         </nav>
     </header>
 
+    <!-- ======= CONTEÚDO PRINCIPAL ======= -->
     <main id="main-content">
 
+        <!-- Subtabs -->
         <nav class="subtabs">
-            <a href="index.html" class="subtab-link active">Ver Professores</a>
-            <a href="registarProfessor.html" class="subtab-link">Registar novo professor</a>
+            <a href="index.html" class="subtab-link active">Ver Empresas</a>
+            <a href="registarEmpresa.html" class="subtab-link">Registar nova empresa</a>
         </nav>
 
-        <section class="search-area">
-            <div class="search-wrapper">
-                <span class="search-icon">🔍</span>
-                <input type="text" placeholder="Procurar por professor" aria-label="Procurar por professor">
-            </div>
-        </section>
+        <!-- Barra de pesquisa -->
+        <div class="search-container">
+            <input
+                type="text"
+                class="search-input"
+                placeholder="Procurar por Empresa"
+            />
+        </div>
 
-        <section class="table-wrapper">
-            <table class="professores-table">
+        <!-- Tabela de empresas -->
+        <section class="tabela-empresas">
+            <table>
                 <thead>
                     <tr>
-                        <th>Número de professor</th>
-                        <th>Nome do professor</th>
+                        <th>Número da Empresa</th>
+                        <th>Nome da Empresa</th>
+                        <th>Ramo de atividade</th>
                         <th>Email</th>
-                        <th>Especialização</th>
+                        <th>Número de estagiários</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- primeira linha clica e vai para verEmpresa -->
                     <tr>
-                        <td>240001087</td>
-                        <td>Rodrigo Da Silva Branco</td>
-                        <td>240001087@esg.ipsantarem.pt</td>
-                        <td>Programação Sistemas Informação</td>
+                        <td>90012111</td>
+                        <td>Web TeQ</td>
+                        <td>Programação Web</td>
+                        <td>webteq@gmail.com</td>
+                        <td>2</td>
                     </tr>
-                    <tr class="linha-click" onclick="window.location.href='verProfessor.html'">
-                        <td>240001462</td>
-                        <td>Tomás Cordeiro Ribeiro</td>
-                        <td>240001462@esg.ipsantarem.pt</td>
-                        <td>Programação Sistemas Informação</td>
+                    <tr onclick="window.location.href='verEmpresa.html'">
+                        <td>67182996</td>
+                        <td>Pc Diga</td>
+                        <td>Manutenção de equipamentos informáticos</td>
+                        <td>pcdiga@gmail.com</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>6623342864</td>
+                        <td>Soft Programmer</td>
+                        <td>Programação de Software</td>
+                        <td>softprogrammer@gmail.com</td>
+                        <td>0</td>
                     </tr>
                 </tbody>
             </table>
         </section>
-
     </main>
 
-    <!-- RODAPÉ -->
+    <!-- ======= RODAPÉ ======= -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
