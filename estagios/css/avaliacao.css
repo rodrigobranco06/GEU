@@ -520,7 +520,7 @@ body {
 
 .perfil-banner {
   height: 80px;
-  background-image: url("../img/img_Login.png"); /* usa aqui o fundo que quiseres */
+  background-image: url("../../img/img_Login.png"); 
   background-size: cover;
   background-position: center;
 }
@@ -565,6 +565,8 @@ body {
   gap: 10px;
   font-size: 16px;
   margin-bottom: 10px;
+  text-decoration: none;
+  color: #000;
 }
 
 .perfil-row-icon {
