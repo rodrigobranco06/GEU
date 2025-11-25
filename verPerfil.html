@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GEU — Ver perfil (definições de conta)</title>
-    <link rel="stylesheet" href="css/verPerfil.css"/>
+    <link rel="stylesheet" href="css/verPerfil.css" />
 </head>
+
 <body>
 
     <!-- ======= CABEÇALHO ======= -->
@@ -17,14 +19,14 @@
         </div>
 
         <nav class="nav-menu">
-            <a href="alunos/index.html" class="nav-link">Alunos</a>
+            <a href="index.html" class="nav-link active">Alunos</a>
             <a href="professores/index.html" class="nav-link">Professores</a>
             <a href="empresas/index.html" class="nav-link">Empresas</a>
             <a href="index.html" class="nav-link">Turmas</a>
 
-            <button class="btn-conta">
-                <img src="img/img_conta.png" alt="Conta">
-            </button>
+            <button id="btn-conta" class="btn-conta">
+        <img src="img/img_conta.png" alt="Conta">
+      </button>
             <a href="login.html" class="btn-sair">Sair</a>
         </nav>
     </header>
@@ -104,12 +106,8 @@
                     </div>
 
                     <div class="perfil-input-group">
-                        <input
-                            type="url"
-                            class="perfil-input"
-                            placeholder="https://github.com/o-teu-username"
-                            value="https://www.github.com"
-                        />
+                        <input type="url" class="perfil-input" placeholder="https://github.com/o-teu-username"
+                            value="https://www.github.com" />
                         <button id="btn-add-github" class="btn-add">Adicionar</button>
                     </div>
                 </li>
@@ -122,12 +120,8 @@
                     </div>
 
                     <div class="perfil-input-group">
-                        <input
-                            type="url"
-                            class="perfil-input"
-                            placeholder="https://linkedin.com/in/o-teu-perfil"
-                            value="https://www.linkedin.com"
-                        />
+                        <input type="url" class="perfil-input" placeholder="https://linkedin.com/in/o-teu-perfil"
+                            value="https://www.linkedin.com" />
                         <button id="btn-add-linkedin" class="btn-add">Adicionar</button>
                     </div>
                 </li>
@@ -162,67 +156,31 @@
     </footer>.
 
     <!-- ===== POP-UP GitHub ===== -->
-<div id="popup-github" class="popup-overlay">
-    <div class="popup-box">
-        <div class="popup-header">
-            <img src="../img/github.png" alt="GitHub">
-            <h2>Link do GitHub adicionado!</h2>
+    <div id="popup-github" class="popup-overlay">
+        <div class="popup-box">
+            <div class="popup-header">
+                <img src="../img/github.png" alt="GitHub">
+                <h2>Link do GitHub adicionado!</h2>
+            </div>
+            <button class="popup-close" data-close="github">Close</button>
         </div>
-        <button class="popup-close" data-close="github">Close</button>
     </div>
-</div>
 
-<!-- ===== POP-UP LinkedIn ===== -->
-<div id="popup-linkedin" class="popup-overlay">
-    <div class="popup-box">
-        <div class="popup-header">
-            <img src="../img/linkedin.png" alt="LinkedIn">
-            <h2>Link do LinkedIn adicionado!</h2>
+    <!-- ===== POP-UP LinkedIn ===== -->
+    <div id="popup-linkedin" class="popup-overlay">
+        <div class="popup-box">
+            <div class="popup-header">
+                <img src="../img/linkedin.png" alt="LinkedIn">
+                <h2>Link do LinkedIn adicionado!</h2>
+            </div>
+            <button class="popup-close" data-close="linkedin">Close</button>
         </div>
-        <button class="popup-close" data-close="linkedin">Close</button>
     </div>
-</div>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-    const popupGithub   = document.getElementById("popup-github");
-    const popupLinkedIn = document.getElementById("popup-linkedin");
-
-    const btnGithub  = document.getElementById("btn-add-github");
-    const btnLinkedIn = document.getElementById("btn-add-linkedin");
-
-    // Abrir popups
-    btnGithub?.addEventListener("click", () => {
-        popupGithub.classList.add("show");
-    });
-
-    btnLinkedIn?.addEventListener("click", () => {
-        popupLinkedIn.classList.add("show");
-    });
-
-    // Botões de fechar
-    document.querySelectorAll(".popup-close").forEach(btn => {
-        btn.addEventListener("click", () => {
-            if (btn.dataset.close === "github") popupGithub.classList.remove("show");
-            if (btn.dataset.close === "linkedin") popupLinkedIn.classList.remove("show");
-        });
-    });
-
-    // Fechar ao clicar fora
-    popupGithub?.addEventListener("click", e => {
-        if (e.target === popupGithub) popupGithub.classList.remove("show");
-    });
-
-    popupLinkedIn?.addEventListener("click", e => {
-        if (e.target === popupLinkedIn) popupLinkedIn.classList.remove("show");
-    });
-
-});
-</script>
+    <script src="js/verPerfil.js"></script>
 
 
 </body>
-</html>
 
+</html>

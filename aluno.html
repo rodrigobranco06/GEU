@@ -11,24 +11,26 @@
 <body>
 
   <!-- Cabeçalho -->
-    <header id="header">
-        <div class="header-logo">
-            <a href="index.html">
-                <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
-            </a>
-        </div>
+  <header id="header">
+    <div class="header-logo">
+      <a href="index.html">
+        <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
+      </a>
+    </div>
 
-        <nav class="nav-menu">
-            <a href="alunos/index.html" class="nav-link">Alunos</a>
-            <a href="#" class="nav-link">Professores</a>
-            <a href="#" class="nav-link">Empresas</a>
-            <a href="index.html" class="nav-link active">Turmas</a>
-            <button class="btn-conta" id="btn-conta">
-                <img src="../img/img_conta.png" alt="Conta">
-            </button>
-            <a href="login.html" class="btn-sair">Sair</a>
-        </nav>
-    </header>
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-link active">Alunos</a>
+      <a href="professores/index.html" class="nav-link">Professores</a>
+      <a href="empresas/index.html" class="nav-link">Empresas</a>
+      <a href="index.html" class="nav-link">Turmas</a>
+
+      <button id="btn-conta" class="btn-conta">
+        <img src="img/img_conta.png" alt="Conta">
+      </button>
+
+      <a href="login.html" class="btn-sair">Sair</a>
+    </nav>
+  </header>
 
   <!-- ======= CONTEÚDO ======= -->
   <main id="main-content">
@@ -79,7 +81,7 @@
     </div>
   </footer>
 
-    <!-- ======= POP-UP SALVAR ======= -->
+  <!-- ======= POP-UP SALVAR ======= -->
   <div id="popup-salvar" class="popup-overlay">
     <div class="popup-box">
       <p class="popup-text">Deseja salvar as informações?</p>
@@ -128,52 +130,10 @@
 
   <script src="js/confirmarDados.js"></script>
 </body>
+
 </html>
 
-<script>
-    // -------- MODAL PERFIL / CONTA --------
-  const btnConta       = document.getElementById("btn-conta");
-  const perfilOverlay  = document.getElementById("perfil-overlay");
-  const perfilVoltar   = perfilOverlay ? perfilOverlay.querySelector(".perfil-voltar-btn") : null;
-  const perfilLogout   = perfilOverlay ? perfilOverlay.querySelector(".perfil-logout-row") : null;
-
-  if (!btnConta || !perfilOverlay) {
-    console.warn("Botão de conta ou overlay de perfil não encontrado.");
-  }
-
-  // Abrir modal de perfil
-  if (btnConta && perfilOverlay) {
-    btnConta.addEventListener("click", function () {
-      perfilOverlay.classList.add("show");
-    });
-  }
-
-  // Fechar ao clicar em "Voltar"
-  if (perfilVoltar && perfilOverlay) {
-    perfilVoltar.addEventListener("click", function () {
-      perfilOverlay.classList.remove("show");
-    });
-  }
-
-  // Fechar ao clicar fora do cartão
-  if (perfilOverlay) {
-    perfilOverlay.addEventListener("click", function (e) {
-      if (e.target === perfilOverlay) {
-        perfilOverlay.classList.remove("show");
-      }
-    });
-  }
-
-  // Ação de logout (por agora só consola;
-  // se quiseres podes redirecionar para login.html)
-  if (perfilLogout) {
-    perfilLogout.addEventListener("click", function () {
-      console.log("Log out clicado");
-      // window.location.href = "../login.html";
-    });
-  }
-</script>
-
+<script src="js/aluno.js"></script>
 </body>
 
 </html>
