@@ -116,7 +116,7 @@ body {
     color: #111;
 }
 
-/* Botão voltar (igual estilo dos outros) */
+/* Botão voltar */
 .btn-voltar {
     background-color: #1aa179;
     color: white;
@@ -160,15 +160,17 @@ body {
 .perfil-label {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px; /* Ajustado para dar espaço entre a imagem e o texto */
     font-size: 14px;
     color: #222;
 }
 
-.perfil-icon {
-    font-size: 18px;
-    width: 22px;
-    text-align: center;
+/* CLASSE NOVA: Estilo para as imagens dos ícones */
+.perfil-icon-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    display: block;
 }
 
 .perfil-label-text {
@@ -338,7 +340,6 @@ body {
 .btn-add:hover {
     background: #d6efea;
 }
-
 
 /* ======= RESPONSIVIDADE ======= */
 

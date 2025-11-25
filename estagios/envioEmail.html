@@ -24,7 +24,7 @@
             <a href="../empresas/index.html" class="nav-link">Empresas</a>
             <a href="../index.html" class="nav-link">Turmas</a>
 
-            <button class="btn-conta">
+            <button class="btn-conta" id="btn-conta">
                 <img src="../img/img_conta.png" alt="Conta">
             </button>
             <a href="../login.html" class="btn-sair">Sair</a>
@@ -158,41 +158,39 @@
 
 
 <!-- ======= MODAL PERFIL / CONTA ======= -->
-  <div id="perfil-overlay" class="perfil-overlay">
+    <div id="perfil-overlay" class="perfil-overlay">
     <div class="perfil-card">
-      <div class="perfil-banner"></div>
+        <div class="perfil-banner"></div>
 
-      <div class="perfil-avatar">
-        <span class="perfil-avatar-icon">👤</span>
-      </div>
-
-      <div class="perfil-content">
-        <div class="perfil-role">Aluno</div>
-        <div class="perfil-name">Rodrigo Branco</div>
-
-        <div class="perfil-row">
-          <span class="perfil-row-icon">✉️</span>
-          <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
+        <div class="perfil-avatar">
+            <img src="../img/img_conta.png" alt="Avatar" class="perfil-avatar-img">
         </div>
 
+        <div class="perfil-content">
+            <div class="perfil-role">Aluno</div>
+            <div class="perfil-name">Rodrigo Branco</div>
 
-        <a href="verPerfil.html" type="button" class="perfil-row">
-          <span class="perfil-row-icon">⚙️</span>
-          <span class="perfil-row-text">Definições de conta</span>
-        </a>
-        
+            <div class="perfil-row">
+                <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
+                <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
+            </div>
 
-        <a href="login.html" type="button" class="perfil-logout-row">
-          <span class="perfil-back-icon">←</span>
-          <span class="perfil-logout-text">Log out</span>
-        </a>
+            <a href="../verPerfil.html" class="perfil-row">
+                <img src="../img/img_definicoes.png" alt="Definições" class="perfil-row-img">
+                <span class="perfil-row-text">Definições de conta</span>
+            </a>
 
-        <button type="button" class="perfil-voltar-btn">
-          Voltar
-        </button>
-      </div>
+            <a href="../login.html" class="perfil-logout-row">
+                <img src="../img/img_sair.png" alt="Sair" class="perfil-back-img">
+                <span class="perfil-logout-text">Log out</span>
+            </a>
+
+            <button type="button" class="perfil-voltar-btn">
+                Voltar
+            </button>
+        </div>
     </div>
-  </div>
+</div>
 
   <script src="js/envioEmail.js"></script>
 
