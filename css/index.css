@@ -156,7 +156,6 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
 /* Cada card individual */
 .turma-card {
   border: 1px solid #e5e5e5;
@@ -188,8 +187,6 @@ body {
 
 .turma-professor-nome.indefinido {
   color: #aaa;
-
-
 }
 
 /* ======= RODAPÉ ======= */
@@ -370,18 +367,79 @@ body {
   filter: brightness(0.96);
 }
 
-/* Responsivo para o perfil */
-@media (max-width: 600px) {
-  .perfil-overlay {
-    justify-content: center;
-    padding-right: 0;
-  }
-
-  .perfil-card {
-    width: 92vw;
-  }
+/* ===== MODAL CRIAR TURMA ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
+.modal-content-box {
+  width: 780px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px 28px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.modal-flex {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.modal-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-form label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.modal-form input {
+  padding: 7px 10px;
+  border: 1px solid #b8b8b8;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.modal-img {
+  padding-top: 20px;
+  width: 260px;
+}
+
+.modal-buttons {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 22px;
+}
+
+.modal-btn {
+  padding: 10px 32px;
+  border-radius: 25px;
+  border: none;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-btn.criar {
+  background: #1aa179;
+}
+
+.modal-btn.voltar {
+  background: #1aa179;
+}
 
 
 /* ======= MEDIA QUERIES - RESPONSIVIDADE ======= */
@@ -407,15 +465,18 @@ body {
 
 /* Tablets pequenos (até 768px) */
 @media (max-width: 768px) {
+  
+  /* --- Cabeçalho --- */
   #header {
-    padding: 15px 20px;
-    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
   }
 
   .header-logo {
     width: 100%;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 
   .nav-menu {
@@ -424,6 +485,7 @@ body {
     gap: 15px;
   }
 
+  /* --- Conteúdo Principal --- */
   #main-content {
     padding: 0 20px;
     margin-top: 30px;
@@ -438,23 +500,21 @@ body {
     font-size: 22px;
   }
 
-  .btn-criar-turma {
-    width: 100%;
-    text-align: center;
-  }
-
   .turmas-container {
     justify-content: center;
   }
 
-  .turma-card {
-    max-width: 100%;
-  }
-
+  /* --- Footer --- */
   #footer {
     padding: 30px 20px;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Centra itens */
+    text-align: center;
+    gap: 30px;
+  }
+  
+  .contactos p {
+    justify-content: center;
   }
 
   .logos {
@@ -466,6 +526,24 @@ body {
   .logos img {
     height: 60px;
   }
+
+  /* --- Modal Criar Turma (Tablet) --- */
+  .modal-content-box {
+    width: 90%; /* Deixa de ser fixo 780px */
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-flex {
+    flex-direction: column; /* Coloca form em cima, imagem em baixo */
+    align-items: center;
+  }
+
+  .modal-img {
+    width: 200px; /* Reduz imagem */
+    padding-top: 10px;
+    display: none; /* Esconde imagem em ecrãs muito pequenos se preferir */
+  }
 }
 
 /* Smartphones (até 480px) */
@@ -475,7 +553,7 @@ body {
   }
 
   .header-logo img {
-    height: 40px;
+    height: 50px;
   }
 
   .nav-menu {
@@ -500,11 +578,18 @@ body {
 
   .titulo-pagina {
     font-size: 20px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .main-header {
+    align-items: center;
   }
 
   .btn-criar-turma {
-    padding: 8px 20px;
-    font-size: 13px;
+    width: 100%; /* Botão full width */
+    padding: 12px 20px;
+    font-size: 14px;
   }
 
   .turmas-container {
@@ -513,6 +598,12 @@ body {
 
   .turma-card {
     padding: 15px;
+    width: 100%; /* Card ocupa largura total do telemóvel */
+    min-width: unset;
+  }
+  
+  .turma-link {
+    width: 100%; /* Link ocupa largura total */
   }
 
   #footer {
@@ -536,84 +627,36 @@ body {
   .logos img {
     height: 50px;
   }
-}
 
-/* ===== Modal Overlay ===== */
-#modal-criar-turma {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
+  /* --- Modal Perfil Mobile --- */
+  .perfil-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
 
-/* ===== Caixa do modal ===== */
-.modal-content-box {
-  width: 780px;
-  background: white;
-  border-radius: 12px;
-  padding: 20px 28px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-}
+  .perfil-card {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+  }
 
-/* Layout principal */
-.modal-flex {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
+  /* --- Modal Criar Turma (Mobile) --- */
+  .modal-content-box {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .modal-img {
+    display: none; /* Esconde imagem para ganhar espaço */
+  }
 
-/* Form */
-.modal-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+  .modal-buttons {
+    justify-content: space-between; /* Botões ocupam espaço igual */
+    width: 100%;
+  }
 
-.modal-form label {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.modal-form input {
-  padding: 7px 10px;
-  border: 1px solid #b8b8b8;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-/* Imagem */
-.modal-img {
-  padding-top: 20px;
-  width: 260px;
-}
-
-/* Botões no canto inferior esquerdo */
-.modal-buttons {
-  margin-top: 18px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 22px;
-}
-
-/* Estilo dos botões */
-.modal-btn {
-  padding: 10px 32px;
-  border-radius: 25px;
-  border: none;
-  font-size: 15px;
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.modal-btn.criar {
-  background: #1aa179;
-}
-
-.modal-btn.voltar {
-  background: #1aa179;
+  .modal-btn {
+    padding: 10px 0;
+    width: 48%;
+    text-align: center;
+  }
 }

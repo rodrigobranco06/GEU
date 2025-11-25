@@ -107,6 +107,7 @@ body {
     border-bottom: 1px solid #e6e6e6;
     padding-bottom: 8px;
     margin-bottom: 18px;
+    flex-wrap: wrap; /* Permite quebrar linha em mobile */
 }
 
 .subtab-link {
@@ -116,6 +117,7 @@ body {
     font-weight: 500;
     padding-bottom: 4px;
     position: relative;
+    white-space: nowrap;
 }
 
 .subtab-link:hover {
@@ -178,13 +180,17 @@ body {
 /* ======= TABELA DE PROFESSORES ======= */
 .table-wrapper {
     margin-top: 16px;
-    overflow-x: auto;
+    width: 100%;
+    overflow-x: auto; /* Permite scroll horizontal em mobile */
+    -webkit-overflow-scrolling: touch; /* Scroll suave em iOS */
+    border-radius: 6px;
 }
 
 .professores-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
+    min-width: 600px; /* Garante que a tabela não fica espremida */
 }
 
 .professores-table thead {
@@ -193,14 +199,19 @@ body {
 
 .professores-table th,
 .professores-table td {
-    padding: 6px 10px;
+    padding: 10px 12px; /* Mais espaço para toque */
     text-align: left;
 }
 
 .professores-table th {
-    font-weight: 500;
+    font-weight: 600;
     color: #555;
     border-bottom: 1px solid #dcdfe4;
+    white-space: nowrap;
+}
+
+.professores-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .professores-table tbody tr:nth-child(even) {
@@ -209,6 +220,7 @@ body {
 
 .linha-click {
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .linha-click:hover {
@@ -267,7 +279,9 @@ body {
     width: auto;
 }
 
-/* ======= RESPONSIVIDADE ======= */
+/* ======= MEDIA QUERIES - RESPONSIVIDADE ======= */
+
+/* Tablets (até 1024px) */
 @media (max-width: 1024px) {
     #header {
         padding: 15px 30px;
@@ -278,16 +292,19 @@ body {
     }
 }
 
+/* Tablets e Telemóveis grandes (até 768px) */
 @media (max-width: 768px) {
+    /* --- Cabeçalho --- */
     #header {
+        flex-direction: column;
         padding: 15px 20px;
-        justify-content: center;
+        gap: 15px;
     }
 
     .header-logo {
         width: 100%;
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
 
     .nav-menu {
@@ -296,15 +313,23 @@ body {
         gap: 15px;
     }
 
+    /* --- Conteúdo --- */
     #main-content {
         padding: 0 20px 24px;
         margin-top: 20px;
     }
 
+    /* --- Footer --- */
     #footer {
         padding: 30px 20px;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .contactos p {
+        justify-content: center;
     }
 
     .logos {
@@ -318,13 +343,15 @@ body {
     }
 }
 
+/* Telemóveis (até 480px) */
 @media (max-width: 480px) {
+    /* --- Cabeçalho --- */
     #header {
         padding: 10px 15px;
     }
 
     .header-logo img {
-        height: 40px;
+        height: 50px;
     }
 
     .nav-menu {
@@ -342,10 +369,17 @@ body {
         font-size: 13px;
     }
 
+    /* --- Conteúdo --- */
     #main-content {
         padding: 0 15px 20px;
     }
 
+    /* --- Pesquisa --- */
+    .search-wrapper {
+        max-width: 100%; /* Ocupa largura total */
+    }
+
+    /* --- Footer --- */
     #footer {
         padding: 20px 15px;
     }

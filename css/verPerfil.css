@@ -1,462 +1,512 @@
 /* ======= CONFIGURAÇÕES GERAIS ======= */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
-    background-color: #fff;
-    color: #222;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  background-color: #fff;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* ======= CABEÇALHO ======= */
 #header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    border-bottom: 1px solid #e2e2e2;
-    background-color: white;
-    flex-wrap: wrap;
-    gap: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  border-bottom: 1px solid #e2e2e2;
+  background-color: white;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .header-logo img {
-    height: 70px;
+  height: 70px;
 }
 
 .nav-menu {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .nav-link {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    position: relative;
-    padding-bottom: 4px;
-    white-space: nowrap;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 4px;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
-    color: #000;
+  color: #000;
 }
 
 .nav-link.active {
-    color: #000;
-    font-weight: 600;
+  color: #000;
+  font-weight: 600;
 }
 
 .nav-link.active::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background-color: #000;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
 }
 
 .btn-conta {
-    background: none;
-    border: none;
-    cursor: pointer;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .btn-conta img {
-    width: 26px;
-    height: 26px;
+  width: 26px;
+  height: 26px;
 }
 
 .btn-sair {
-    background-color: #2f2f2f;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    white-space: nowrap;
-    text-decoration: none;
+  background-color: #2f2f2f;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
 }
 
 .btn-sair:hover {
-    background-color: #000;
-    text-decoration: none;
+  background-color: #000;
+  text-decoration: none;
 }
 
 /* ======= CONTEÚDO PRINCIPAL ======= */
 #main-content {
-    flex: 1;
-    margin-top: 30px;
-    padding: 0 60px 40px;
+  flex: 1;
+  margin-top: 30px;
+  padding: 0 60px 40px;
 }
 
 /* Cabeçalho da secção de perfil */
 .perfil-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-    gap: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .perfil-titulo {
-    font-size: 20px;
-    font-weight: 600;
-    color: #111;
+  font-size: 20px;
+  font-weight: 600;
+  color: #111;
 }
 
-/* Botão voltar (igual estilo dos outros) */
+/* Botão voltar */
 .btn-voltar {
-    background-color: #1aa179;
-    color: white;
-    border: none;
-    padding: 10px 28px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    white-space: nowrap;
+  background-color: #1aa179;
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
 }
 
 .btn-voltar:hover {
-    background-color: #148e69;
+  background-color: #148e69;
 }
 
 /* ======= CARTÃO DE PERFIL ======= */
 .perfil-card {
-    background: #fff;
-    border-radius: 4px;
-    border-top: 1px solid #e2e2e2;
-    padding: 12px 8px 0;
+  background: #fff;
+  border-radius: 4px;
+  border-top: 1px solid #e2e2e2;
+  padding: 12px 8px 0;
 }
 
 .perfil-list {
-    list-style: none;
+  list-style: none;
 }
 
 /* Cada linha */
 .perfil-row {
-    display: grid;
-    grid-template-columns: 260px minmax(0, 1fr);
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #f1f1f1;
-    column-gap: 10px;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f1f1;
+  column-gap: 10px;
 }
 
 .perfil-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    color: #222;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #222;
 }
 
 .perfil-icon {
-    font-size: 18px;
-    width: 22px;
-    text-align: center;
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
 }
 
 .perfil-label-text {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 /* Valor simples (texto) */
 .perfil-value {
-    font-size: 14px;
-    color: #333;
+  font-size: 14px;
+  color: #333;
+  word-wrap: break-word; /* Garante que emails longos quebrem linha */
 }
 
 /* Linha com input + botão (GitHub / LinkedIn) */
 .perfil-input-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
 }
 
 .perfil-input {
-    flex: 1;
-    height: 28px;
-    padding: 3px 8px;
-    border: 1px solid #dcdfe4;
-    border-radius: 4px;
-    font-size: 13px;
-    color: #333;
-    outline: none;
+  flex: 1;
+  height: 32px;
+  padding: 3px 8px;
+  border: 1px solid #dcdfe4;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #333;
+  outline: none;
+  width: 100%; /* Garante flexibilidade */
 }
 
 .perfil-input:focus {
-    border-color: #1aa179;
+  border-color: #1aa179;
 }
 
 /* Botão pequeno "Adicionar" */
-.btn-small {
-    border: 1px solid #cbe7e1;
-    background-color: #e8f5f2;
-    color: #0d5f52;
-    border-radius: 4px;
-    padding: 5px 10px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
+.btn-add {
+  background: #e8f5f2;
+  border: 1px solid #b3dad2;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #0d5f52;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-.btn-small:hover {
-    filter: brightness(0.97);
+.btn-add:hover {
+  background: #d6efea;
 }
 
 /* ======= RODAPÉ ======= */
 #footer {
-    background-color: #fff;
-    border-top: 1px solid #e2e2e2;
-    padding: 30px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+  background-color: #fff;
+  border-top: 1px solid #e2e2e2;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .contactos h3 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #333;
 }
 
 .contactos {
-    font-size: 14px;
-    color: #333;
-    line-height: 1.6;
+  font-size: 14px;
+  color: #333;
+  line-height: 1.6;
 }
 
 .contactos p {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .contactos img {
-    width: 26px;
-    height: 26px;
+  width: 26px;
+  height: 26px;
 }
 
 .logos {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
 }
 
 .logos img {
-    height: 70px;
-    width: auto;
+  height: 70px;
+  width: auto;
 }
 
 /* ================= POPUPS DE GITHUB E LINKEDIN ================= */
 
 .popup-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 3000;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
 }
 
 .popup-overlay.show {
-    display: flex;
+  display: flex;
 }
 
 .popup-box {
-    background: #ffffff;
-    width: 420px;
-    padding: 28px;
-    border-radius: 8px;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.20);
-    text-align: center;
+  background: #ffffff;
+  width: 420px;
+  max-width: 90%;
+  padding: 28px;
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.20);
+  text-align: center;
 }
 
 .popup-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centrado */
+  gap: 14px;
+  margin-bottom: 22px;
 }
 
 .popup-header img {
-    width: 42px;
-    height: 42px;
+  width: 42px;
+  height: 42px;
 }
 
 .popup-header h2 {
-    font-size: 22px;
-    color: #2a3a4a;
-    font-weight: 600;
+  font-size: 20px;
+  color: #2a3a4a;
+  font-weight: 600;
+  text-align: left;
 }
 
 .popup-close {
-    margin-top: 10px;
-    padding: 10px 28px;
-    font-size: 18px;
-    border: 1px solid #6ba7a9;
-    background: #e5f4f4;
-    border-radius: 6px;
-    cursor: pointer;
+  margin-top: 10px;
+  padding: 10px 28px;
+  font-size: 16px;
+  border: 1px solid #6ba7a9;
+  background: #e5f4f4;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #0d5f52;
+  font-weight: 600;
 }
 
 .popup-close:hover {
-    background: #d3eded;
-}
-
-.btn-add {
-    background: #e8f5f2;
-    border: 1px solid #b3dad2;
-    padding: 4px 12px;
-    font-size: 13px;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #0d5f52;
-    font-weight: 500;
-}
-
-.btn-add:hover {
-    background: #d6efea;
+  background: #d3eded;
 }
 
 
-/* ======= RESPONSIVIDADE ======= */
+/* ======= MEDIA QUERIES - RESPONSIVIDADE ======= */
 
-/* Tablets */
+/* Tablets (até 1024px) */
 @media (max-width: 1024px) {
-    #header {
-        padding: 15px 30px;
-    }
+  #header {
+    padding: 15px 20px;
+  }
 
-    #main-content {
-        padding: 0 30px 30px;
-    }
+  #main-content {
+    padding: 0 30px 30px;
+  }
 
-    .perfil-row {
-        grid-template-columns: 220px minmax(0, 1fr);
-    }
+  .perfil-row {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
 }
 
-/* Tablets pequenos / telemóveis grandes */
+/* Tablets e Telemóveis grandes (até 768px) */
 @media (max-width: 768px) {
-    #header {
-        padding: 15px 20px;
-        justify-content: center;
-    }
+  
+  /* --- Cabeçalho --- */
+  #header {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
 
-    .header-logo {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 10px;
-    }
+  .header-logo {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
 
-    .nav-menu {
-        width: 100%;
-        justify-content: center;
-        gap: 15px;
-    }
+  .nav-menu {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
 
-    #main-content {
-        padding: 0 20px 24px;
-        margin-top: 20px;
-    }
+  /* --- Conteúdo Principal --- */
+  #main-content {
+    padding: 0 20px 24px;
+    margin-top: 20px;
+  }
 
-    .perfil-head {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .perfil-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
 
-    .perfil-row {
-        grid-template-columns: 1fr;
-        row-gap: 6px;
-    }
+  .btn-voltar {
+    width: 100%;
+    text-align: center;
+  }
 
-    .perfil-input-group {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  /* --- Lista de Perfil (Stacking) --- */
+  .perfil-row {
+    grid-template-columns: 1fr; /* Uma coluna apenas */
+    gap: 5px;
+    padding: 15px 0;
+  }
 
-    .btn-small {
-        align-self: flex-start;
-    }
+  .perfil-label {
+    margin-bottom: 4px;
+  }
 
-    .btn-voltar {
-        align-self: flex-end;
-    }
+  .perfil-value {
+    padding-left: 30px; /* Alinha o texto com o texto da label (ignorando o ícone) */
+    color: #555;
+  }
+
+  /* --- Inputs --- */
+  .perfil-input-group {
+    flex-direction: column; /* Input em cima, botão em baixo */
+    align-items: stretch;
+    padding-left: 30px;
+    margin-top: 5px;
+  }
+
+  .perfil-input {
+    margin-bottom: 8px;
+  }
+
+  .btn-add {
+    width: 100%; /* Botão largura total */
+    padding: 8px;
+  }
+
+  /* --- Footer --- */
+  #footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+
+  .contactos p {
+    justify-content: center;
+  }
+
+  .logos {
+    justify-content: center;
+  }
 }
 
-/* Telemóveis pequenos */
+/* Telemóveis (até 480px) */
 @media (max-width: 480px) {
-    #header {
-        padding: 10px 15px;
-    }
 
-    .header-logo img {
-        height: 40px;
-    }
+  /* --- Cabeçalho --- */
+  .header-logo img {
+    height: 50px;
+  }
 
-    .nav-menu {
-        gap: 10px;
-        font-size: 14px;
-    }
+  .nav-menu {
+    gap: 10px;
+  }
 
-    .btn-conta img {
-        width: 22px;
-        height: 22px;
-    }
+  .nav-link {
+    font-size: 14px;
+  }
 
-    .btn-sair {
-        padding: 6px 12px;
-        font-size: 13px;
-    }
+  .btn-conta img {
+    width: 22px;
+    height: 22px;
+  }
 
-    #main-content {
-        padding: 0 15px 20px;
-    }
+  .btn-sair {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
 
-    .perfil-titulo {
-        font-size: 18px;
-    }
+  /* --- Conteúdo --- */
+  #main-content {
+    padding: 0 15px 20px;
+  }
 
-    #footer {
-        padding: 20px 15px;
-    }
+  .perfil-titulo {
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
+  }
 
-    .contactos {
-        font-size: 13px;
-    }
+  /* --- Footer --- */
+  #footer {
+    padding: 20px 15px;
+  }
 
-    .contactos h3 {
-        font-size: 15px;
-        margin-bottom: 10px;
-    }
+  .contactos {
+    font-size: 13px;
+  }
 
-    .contactos img {
-        width: 22px;
-        height: 22px;
-    }
+  .contactos h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
 
-    .logos img {
-        height: 50px;
-    }
+  .contactos img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .logos img {
+    height: 50px;
+  }
+
+  /* --- Popups --- */
+  .popup-box {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .popup-header h2 {
+    font-size: 16px;
+  }
 }

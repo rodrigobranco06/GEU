@@ -108,6 +108,7 @@ body {
     border-bottom: 1px solid #e6e6e6;
     padding-bottom: 8px;
     margin-bottom: 18px;
+    flex-wrap: wrap;
 }
 
 .subtab-link {
@@ -117,6 +118,7 @@ body {
     font-weight: 500;
     padding-bottom: 4px;
     position: relative;
+    white-space: nowrap;
 }
 
 .subtab-link:hover {
@@ -138,7 +140,7 @@ body {
     background-color: #000;
 }
 
-/* ======= LAYOUT PRINCIPAL (FORM + LADO DIREITO) ======= */
+/* ======= LAYOUT PRINCIPAL (FORM + SIDE) ======= */
 .content-grid {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
@@ -147,11 +149,12 @@ body {
     margin-top: 20px;
 }
 
-/* ======= FORMULÁRIO DE LEITURA ======= */
+/* ======= FORMULÁRIO (READ ONLY) ======= */
 .form-professor {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
+    width: 100%;
     max-width: 520px;
 }
 
@@ -163,27 +166,31 @@ body {
 }
 
 .form-group label {
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
+    font-weight: 500;
 }
 
+/* Input com aspeto de leitura */
 .form-group input {
-    height: 28px;
+    height: 32px;
     padding: 3px 8px;
     border: 1px solid #dcdfe4;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
     outline: none;
-    background-color: #f9fafb;
+    background-color: #f9fafb; /* Fundo cinza claro */
+    width: 100%;
 }
 
 .form-group input[readonly] {
     background-color: #f9fafb;
     color: #444;
+    cursor: default;
 }
 
-/* Select “read-only” */
+/* SELECT WRAPPER (Desativado visualmente) */
 .select-wrapper {
     position: relative;
     width: 100%;
@@ -191,21 +198,16 @@ body {
 
 .select-wrapper select {
     width: 100%;
-    height: 28px;
+    height: 32px;
     padding: 3px 26px 3px 8px;
     border: 1px solid #dcdfe4;
     border-radius: 4px;
-    font-size: 13px;
-    color: #333;
+    font-size: 14px;
+    color: #444;
     background-color: #f9fafb;
     outline: none;
     appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-.select-wrapper select:disabled {
-    color: #444;
+    cursor: default;
 }
 
 .chevron {
@@ -214,11 +216,11 @@ body {
     top: 50%;
     transform: translateY(-50%);
     font-size: 12px;
-    color: #666;
+    color: #888;
     pointer-events: none;
 }
 
-/* ======= COLUNA DIREITA ======= */
+/* ======= SIDE PANEL ======= */
 .side-panel {
     display: flex;
     flex-direction: column;
@@ -231,6 +233,7 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .btn-editar {
@@ -244,6 +247,7 @@ body {
     font-weight: 600;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .btn-editar:hover {
@@ -260,7 +264,7 @@ body {
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
-    display: inline-block;
+    white-space: nowrap;
 }
 
 .btn-voltar:hover {
@@ -344,14 +348,15 @@ body {
 
 @media (max-width: 768px) {
     #header {
+        flex-direction: column;
         padding: 15px 20px;
-        justify-content: center;
+        gap: 15px;
     }
 
     .header-logo {
         width: 100%;
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
 
     .nav-menu {
@@ -371,20 +376,40 @@ body {
 
     .side-panel {
         align-items: center;
+        width: 100%;
     }
 
     .side-top {
         justify-content: center;
     }
 
+    /* Mobile: labels por cima */
     .form-group {
         grid-template-columns: 1fr;
+        row-gap: 5px;
         align-items: flex-start;
-        row-gap: 4px;
     }
 
     .form-professor {
         max-width: 100%;
+    }
+
+    #footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+        padding: 30px 20px;
+    }
+
+    .contactos p {
+        justify-content: center;
+    }
+
+    .logos {
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
     }
 }
 
@@ -394,7 +419,7 @@ body {
     }
 
     .header-logo img {
-        height: 40px;
+        height: 50px;
     }
 
     .nav-menu {
@@ -414,6 +439,24 @@ body {
 
     #main-content {
         padding: 0 15px 20px;
+    }
+
+    /* Botões Full Width */
+    .side-top {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .btn-editar,
+    .btn-voltar {
+        width: 48%; /* Botões lado a lado */
+        text-align: center;
+        padding: 12px 0;
+    }
+
+    /* Esconder imagem */
+    .side-image-wrapper {
+        display: none;
     }
 
     #footer {

@@ -108,6 +108,7 @@ body {
     border-bottom: 1px solid #e6e6e6;
     padding-bottom: 8px;
     margin-bottom: 18px;
+    flex-wrap: wrap;
 }
 
 .subtab-link {
@@ -117,6 +118,7 @@ body {
     font-weight: 500;
     padding-bottom: 4px;
     position: relative;
+    white-space: nowrap;
 }
 
 .subtab-link:hover {
@@ -151,8 +153,9 @@ body {
 .form-professor {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 12px;
     max-width: 520px;
+    width: 100%;
 }
 
 .form-group {
@@ -163,23 +166,26 @@ body {
 }
 
 .form-group label {
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
+    font-weight: 500;
 }
 
 .opcional {
     font-size: 11px;
     opacity: 0.7;
+    font-weight: 400;
 }
 
 .form-group input {
-    height: 28px;
+    height: 32px;
     padding: 3px 8px;
     border: 1px solid #dcdfe4;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
     outline: none;
+    width: 100%;
 }
 
 .form-group input:focus {
@@ -194,11 +200,11 @@ body {
 
 .select-wrapper select {
     width: 100%;
-    height: 28px;
+    height: 32px;
     padding: 3px 26px 3px 8px;
     border: 1px solid #dcdfe4;
     border-radius: 4px;
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
     background-color: #fff;
     outline: none;
@@ -243,6 +249,7 @@ body {
     font-size: 14px;
     font-weight: 600;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
 }
 
 .btn-salvar:hover {
@@ -305,6 +312,7 @@ body {
 
 .logos img {
     height: 70px;
+    width: auto;
 }
 
 /* ======= RESPONSIVIDADE ======= */
@@ -325,14 +333,15 @@ body {
 
 @media (max-width: 768px) {
     #header {
+        flex-direction: column;
         padding: 15px 20px;
-        justify-content: center;
+        gap: 15px;
     }
 
     .header-logo {
         width: 100%;
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
 
     .nav-menu {
@@ -352,6 +361,7 @@ body {
 
     .side-panel {
         align-items: center;
+        width: 100%;
     }
 
     .side-top {
@@ -361,12 +371,30 @@ body {
     /* mobile: label por cima */
     .form-group {
         grid-template-columns: 1fr;
-        row-gap: 4px;
+        row-gap: 5px;
         align-items: flex-start;
     }
 
     .form-professor {
         max-width: 100%;
+    }
+
+    #footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+        padding: 30px 20px;
+    }
+
+    .contactos p {
+        justify-content: center;
+    }
+
+    .logos {
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
     }
 }
 
@@ -376,7 +404,7 @@ body {
     }
 
     .header-logo img {
-        height: 40px;
+        height: 50px;
     }
 
     .nav-menu {
@@ -398,6 +426,18 @@ body {
         padding: 0 15px 20px;
     }
 
+    /* Botão full width */
+    .btn-salvar {
+        width: 100%;
+        text-align: center;
+        padding: 12px 0;
+    }
+
+    /* Esconder imagem */
+    .side-image-wrapper {
+        display: none;
+    }
+
     #footer {
         padding: 20px 15px;
     }
@@ -413,6 +453,7 @@ body {
 
     .contactos img {
         width: 22px;
+        height: 22px;
     }
 
     .logos img {

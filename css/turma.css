@@ -22,6 +22,8 @@ body {
   padding: 15px 40px;
   border-bottom: 1px solid #e2e2e2;
   background-color: white;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .header-logo img {
@@ -32,6 +34,7 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .nav-link {
@@ -40,6 +43,7 @@ body {
   font-weight: 500;
   position: relative;
   padding-bottom: 4px;
+  white-space: nowrap;
 }
 
 .nav-link:hover {
@@ -81,6 +85,7 @@ body {
   cursor: pointer;
   font-weight: 500;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .btn-sair:hover {
@@ -100,6 +105,8 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .turma-titulo {
@@ -118,6 +125,7 @@ body {
   font-size: 14px;
   font-weight: 600;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
 }
 
 .btn-editar:hover {
@@ -132,7 +140,6 @@ body {
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
-
 }
 
 .aluno-card {
@@ -142,7 +149,6 @@ body {
   padding: 16px 18px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-
 }
 
 .alunos-grid a {
@@ -150,7 +156,6 @@ body {
   color: inherit;
   display: block;
 }
-
 
 .aluno-card:hover {
   transform: translateY(-3px);
@@ -162,14 +167,12 @@ body {
   font-weight: 600;
   color: #000;
   margin-bottom: 8px;
-
 }
 
 .aluno-label {
   font-size: 13px;
   color: #666;
   margin-bottom: 2px;
-
 }
 
 .aluno-estado {
@@ -244,8 +247,8 @@ body {
   display: none;
   align-items: flex-start;
   justify-content: flex-end;
-  padding-top: 80px;        /* distância ao topo */
-  padding-right: 60px;      /* distância à direita similar ao header */
+  padding-top: 80px;
+  padding-right: 60px;
   background: rgba(0, 0, 0, 0.35);
   z-index: 2500;
 }
@@ -266,12 +269,11 @@ body {
 
 .perfil-banner {
   height: 80px;
-  background-image: url("../img/img_Login.png"); /* usa aqui o fundo que quiseres */
+  background-image: url("../img/img_Login.png");
   background-size: cover;
   background-position: center;
 }
 
-/* avatar circular a “sair” do banner */
 .perfil-avatar {
   position: absolute;
   top: 50px;
@@ -321,7 +323,6 @@ body {
   flex: 1;
 }
 
-/* Linha de logout grande */
 .perfil-logout-row {
   width: 100%;
   margin-top: 16px;
@@ -347,7 +348,6 @@ body {
   text-align: center;
 }
 
-/* Botão Voltar em verde */
 .perfil-voltar-btn {
   width: 100%;
   margin-top: 18px;
@@ -365,50 +365,8 @@ body {
   filter: brightness(0.96);
 }
 
-/* Responsivo para o perfil */
-@media (max-width: 600px) {
-  .perfil-overlay {
-    justify-content: center;
-    padding-right: 0;
-  }
-
-  .perfil-card {
-    width: 92vw;
-  }
-}
-
-
-
-/* ======= RESPONSIVIDADE ======= */
-@media (max-width: 1100px) {
-  .alunos-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 720px) {
-  #main-content {
-    padding: 24px;
-  }
-
-  .page-head {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .btn-editar {
-    align-self: flex-end;
-  }
-
-  .alunos-grid {
-    grid-template-columns: 1fr;
-    padding: 14px;
-  }
-}
-
-/* ===== Modal Overlay ===== */
-#modal-editar-turma {
+/* ===== MODAL EDITAR TURMA ===== */
+.modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
@@ -418,7 +376,6 @@ body {
   z-index: 9999;
 }
 
-/* ===== Caixa do modal ===== */
 .modal-content-box {
   width: 780px;
   background: white;
@@ -427,14 +384,12 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* Layout principal */
 .modal-flex {
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 
-/* Form */
 .modal-form {
   width: 100%;
   display: flex;
@@ -454,13 +409,11 @@ body {
   font-size: 14px;
 }
 
-/* Imagem */
 .modal-img {
   padding-top: 20px;
   width: 260px;
 }
 
-/* Botões no canto inferior esquerdo */
 .modal-buttons {
   margin-top: 18px;
   display: flex;
@@ -468,7 +421,6 @@ body {
   gap: 22px;
 }
 
-/* Estilo dos botões */
 .modal-btn {
   padding: 10px 32px;
   border-radius: 25px;
@@ -485,4 +437,264 @@ body {
 
 .modal-btn.voltar {
   background: #1aa179;
+}
+
+/* ======= POP-UP SALVAR ======= */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.popup-box {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.popup-text {
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.popup-btn {
+  padding: 8px 20px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.popup-cancel {
+  background: #ccc;
+  color: #333;
+}
+
+.popup-confirm {
+  background: #1aa179;
+  color: #fff;
+}
+
+
+/* ======= MEDIA QUERIES - RESPONSIVIDADE ======= */
+
+/* Tablets (até 1024px) */
+@media (max-width: 1024px) {
+  #header {
+    padding: 15px 20px;
+  }
+
+  #main-content {
+    padding: 0 30px;
+    margin-top: 30px;
+  }
+
+  /* Grelha de alunos em 2 colunas */
+  .alunos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .logos {
+    gap: 30px;
+  }
+}
+
+/* Tablets pequenos (até 768px) */
+@media (max-width: 768px) {
+  /* --- Cabeçalho --- */
+  #header {
+    flex-direction: column;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .header-logo {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
+
+  .nav-menu {
+    width: 100%;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  /* --- Conteúdo Principal --- */
+  #main-content {
+    padding: 0 20px;
+  }
+
+  .page-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .btn-editar {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* --- Footer --- */
+  #footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+    padding: 30px 20px;
+  }
+
+  .contactos p {
+    justify-content: center;
+  }
+
+  .logos {
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .logos img {
+    height: 60px;
+  }
+
+  /* --- Modal Editar Turma (Tablet) --- */
+  .modal-content-box {
+    width: 90%; 
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-flex {
+    flex-direction: column; 
+    align-items: center;
+  }
+
+  .modal-img {
+    display: none; /* Esconde a imagem */
+  }
+}
+
+/* Smartphones (até 480px) */
+@media (max-width: 480px) {
+  /* --- Cabeçalho --- */
+  #header {
+    padding: 10px 15px;
+  }
+
+  .header-logo img {
+    height: 50px;
+  }
+
+  .nav-menu {
+    gap: 10px;
+    font-size: 14px;
+  }
+
+  .btn-conta img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .btn-sair {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  /* --- Conteúdo --- */
+  #main-content {
+    padding: 0 15px;
+    margin-top: 20px;
+  }
+
+  .turma-titulo {
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .page-head {
+    align-items: center;
+  }
+
+  .btn-editar {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  /* Grelha de alunos em 1 coluna */
+  .alunos-grid {
+    grid-template-columns: 1fr;
+    padding: 15px;
+    gap: 15px;
+  }
+
+  .aluno-card {
+    padding: 15px;
+  }
+
+  /* --- Footer --- */
+  #footer {
+    padding: 20px 15px;
+  }
+
+  .contactos {
+    font-size: 13px;
+  }
+
+  .contactos h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .contactos img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .logos img {
+    height: 50px;
+  }
+
+  /* --- Modal Perfil Mobile --- */
+  .perfil-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .perfil-card {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+  }
+
+  /* --- Modal Editar Turma (Mobile) --- */
+  .modal-content-box {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .modal-buttons {
+    justify-content: space-between; 
+    width: 100%;
+  }
+
+  .modal-btn {
+    padding: 10px 0;
+    width: 48%;
+    text-align: center;
+  }
 }
