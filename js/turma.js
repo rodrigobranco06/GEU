@@ -37,7 +37,7 @@ if (btnConta && perfilOverlay) {
 if (perfilVoltar && perfilOverlay) {
   perfilVoltar.addEventListener("click", function () {
     perfilOverlay.classList.remove("show");
-  });
+  });c
 }
 
 // Fechar ao clicar fora do cartão
