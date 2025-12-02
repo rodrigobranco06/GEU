@@ -8,7 +8,7 @@ function estabelecerConexao()
    $username = 'root';
    $pass = '';
 
-   $dsn = "mysql:host=$hostname;dbname=$dbname;port=3306;charset=utf8mb4";
+   $dsn = "mysql:host=$hostname;dbname=$dbname;port=3307;charset=utf8mb4";
 
    try {
       $conexao = new PDO( $dsn, $username, $pass ); 
