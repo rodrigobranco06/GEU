@@ -1,4 +1,7 @@
 <?php
+
+// professores/registarProfessor.php
+
 include '../db.php';
 include '../utils.php';
 
@@ -249,7 +252,7 @@ $especializacoes  = buscarEspecializacoes();
 
         <nav class="nav-menu">
             <a href="../alunos/index.html" class="nav-link">Alunos</a>
-            <a href="index.html" class="nav-link active">Professores</a>
+            <a href="index.php" class="nav-link active">Professores</a>
             <a href="../empresas/index.html" class="nav-link">Empresas</a>
             <a href="../index.html" class="nav-link">Turmas</a>
 
@@ -265,8 +268,8 @@ $especializacoes  = buscarEspecializacoes();
 
         <!-- Subtabs -->
         <nav class="subtabs">
-            <a href="index.html" class="subtab-link">Ver Professores</a>
-            <a href="registarProfessor.html" class="subtab-link active">Registar novo professor</a>
+            <a href="index.php" class="subtab-link">Ver Professores</a>
+            <a href="registarProfessor.php" class="subtab-link active">Registar novo professor</a>
         </nav>
 
         <section class="content-grid">

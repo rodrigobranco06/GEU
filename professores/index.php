@@ -1,25 +1,27 @@
 <?php
+
+// professores/index.php
+
 include '../db.php';
 include '../utils.php';
 
 // Testar estabelecerConexao()
-   
 $conexao = estabelecerConexao();
 
 function getProfessores()
-    {
-        $conexao = estabelecerConexao();
-         
-        $res = $conexao->query('SELECT 
-            p.id_professor,
-            p.nome AS nome_professor,
-            p.email_institucional AS email_institucional,
-            e.especializacao_desc
-        FROM professor p
-        LEFT JOIN especializacao e ON e.id_especializacao = p.especializacao_id');
+{
+    $conexao = estabelecerConexao();
+    
+    $res = $conexao->query('SELECT 
+        p.id_professor,
+        p.nome AS nome_professor,
+        p.email_institucional AS email_institucional,
+        e.especializacao_desc
+    FROM professor p
+    LEFT JOIN especializacao e ON e.id_especializacao = p.especializacao_id');
 
-        return $res->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $res->fetchAll(PDO::FETCH_ASSOC);
+}
 
 
 $professores = getProfessores();
@@ -46,7 +48,7 @@ $professores = getProfessores();
 
         <nav class="nav-menu">
             <a href="../alunos/index.html" class="nav-link">Alunos</a>
-            <a href="index.html" class="nav-link active">Professores</a>
+            <a href="index.php" class="nav-link active">Professores</a>
             <a href="../empresas/index.html" class="nav-link">Empresas</a>
             <a href="../index.html" class="nav-link">Turmas</a>
 
@@ -60,14 +62,14 @@ $professores = getProfessores();
     <main id="main-content">
 
         <nav class="subtabs">
-            <a href="index.html" class="subtab-link active">Ver Professores</a>
+            <a href="index.php" class="subtab-link active">Ver Professores</a>
             <a href="registarProfessor.php" class="subtab-link">Registar novo professor</a>
         </nav>
 
         <section class="search-area">
             <div class="search-wrapper">
                 <span class="search-icon">🔍</span>
-                <input type="text" placeholder="Procurar por professor" aria-label="Procurar por professor">
+                <input type="text" id="search-input" placeholder="Procurar por professor" aria-label="Procurar por professor">
             </div>
         </section>
 
@@ -81,13 +83,13 @@ $professores = getProfessores();
                         <th>Especialização</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="professores-table-body">
                     <?php foreach ($professores as $prof): ?>
-                        <tr onclick="window.location.href='verProfessor.php?id_professor=<?= $prof['id_professor'] ?>'" style="cursor:pointer;">
-                            <td><?= $prof['id_professor'] ?></td>
-                            <td><?= $prof['nome_professor'] ?></td>
-                            <td><?= $prof['email_institucional'] ?></td>
-                            <td><?= $prof['especializacao_desc'] ?></td>
+                        <tr onclick="window.location.href='verProfessor.php?id_professor=<?= $prof['id_professor'] ?>'" class="linha-click">
+                            <td><?= htmlspecialchars($prof['id_professor']) ?></td>
+                            <td><?= htmlspecialchars($prof['nome_professor']) ?></td>
+                            <td><?= htmlspecialchars($prof['email_institucional']) ?></td>
+                            <td><?= htmlspecialchars($prof['especializacao_desc']) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -97,7 +99,6 @@ $professores = getProfessores();
 
     </main>
 
-    <!-- RODAPÉ -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
@@ -121,7 +122,6 @@ $professores = getProfessores();
         </div>
     </footer>
 
-    <!-- ======= MODAL PERFIL / CONTA ======= -->
     <div id="perfil-overlay" class="perfil-overlay">
     <div class="perfil-card">
         <div class="perfil-banner"></div>
@@ -155,7 +155,7 @@ $professores = getProfessores();
         </div>
     </div>
 </div>
-  <script src="js/index.js"></script>
+    <script src="js/index.js"></script>
 
 </body>
 </html>
