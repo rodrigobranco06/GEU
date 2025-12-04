@@ -1,5 +1,5 @@
 <?php
-// professores/editarProfessor.php
+
 
 include 'modelsProfessores.php';
 
