@@ -82,7 +82,7 @@ include 'utils.php';
 
         <nav class="nav-menu">
             <a href="alunos/index.html" class="nav-link">Alunos</a>
-            <a href="professores/index.html" class="nav-link">Professores</a>
+            <a href="professores/index.php" class="nav-link">Professores</a>
             <a href="empresas/index.html" class="nav-link">Empresas</a>
             <a href="index.html" class="nav-link active">Turmas</a>
 

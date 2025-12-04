@@ -39,3 +39,15 @@ if (perfilLogout) {
     // window.location.href = "../login.html";
   });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+
+    if (passwordInput && togglePassword) {
+        togglePassword.addEventListener('change', function () {
+            passwordInput.type = this.checked ? 'text' : 'password';
+        });
+    }
+});
+

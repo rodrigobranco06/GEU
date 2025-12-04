@@ -39,3 +39,18 @@ if (perfilLogout) {
     // window.location.href = "../login.html";
   });
 }
+
+// mostrar password
+document.addEventListener("DOMContentLoaded", () => {
+    const passInput = document.getElementById("novaPassword");
+    const toggle = document.getElementById("toggleNovaPassword");
+
+    if (toggle && passInput) {
+        toggle.addEventListener("change", () => {
+            passInput.type = toggle.checked ? "text" : "password";
+        });
+    }
+});
+
+
+

@@ -261,6 +261,30 @@ body {
     object-fit: contain;
 }
 
+/* ====== check box de mostrar password ====== */
+.password-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toggle-password {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    user-select: none;
+}
+
+.toggle-password input[type="checkbox"] {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+
+
 /* ======= RODAPÉ ======= */
 #footer {
     background-color: #fff;
