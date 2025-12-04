@@ -1,4 +1,7 @@
 <?php
+
+// professores/verProfessor.php
+
 include '../db.php';
 include '../utils.php';
 
