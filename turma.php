@@ -4,33 +4,64 @@ include 'utils.php';
 
 $conexao = estabelecerConexao();
 
-// Lógica de Pesquisa
-$termoPesquisa = isset($_GET['pesquisa']) ? trim($_GET['pesquisa']) : '';
-$params = [];
-
-// Query para buscar todas as turmas + nome do curso + nome do professor
-$sql = "SELECT 
-            t.id_turma,
-            t.codigo,
-            t.nome,
-            t.ano_inicio,
-            t.ano_fim,
-            c.curso_desc,
-            p.nome as nome_professor
-        FROM turma t
-        LEFT JOIN curso c ON t.curso_id = c.id_curso
-        LEFT JOIN professor p ON t.professor_id = p.id_professor";
-
-if (!empty($termoPesquisa)) {
-    $sql .= " WHERE t.nome LIKE :termo OR t.codigo LIKE :termo";
-    $params[':termo'] = '%' . $termoPesquisa . '%';
+// 1. Verificar se recebemos o ID da turma
+if (!isset($_GET['id_turma'])) {
+    // Se não houver ID, redireciona de volta para a lista geral
+    header('Location: verTurmas.php'); 
+    exit;
 }
 
-$sql .= " ORDER BY t.ano_inicio DESC, t.nome ASC";
+$idTurma = $_GET['id_turma'];
 
-$stmt = $conexao->prepare($sql);
-$stmt->execute($params);
-$turmas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// 2. Buscar informações da Turma (Nome, Datas, Curso)
+$sqlTurma = "SELECT t.*, c.curso_desc 
+             FROM turma t 
+             LEFT JOIN curso c ON t.curso_id = c.id_curso
+             WHERE t.id_turma = :id";
+$stmt = $conexao->prepare($sqlTurma);
+$stmt->execute([':id' => $idTurma]);
+$turma = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Se a turma não existir na BD
+if (!$turma) {
+    die("Turma não encontrada.");
+}
+
+// 3. Buscar os Alunos da Turma e o Estado do Estágio
+// Fazemos LEFT JOIN com pedido_estagio para saber o estado
+$sqlAlunos = "SELECT 
+                a.id_aluno, 
+                a.nome, 
+                pe.estado_pedido 
+              FROM aluno a
+              LEFT JOIN pedido_estagio pe ON a.id_aluno = pe.aluno_id
+              WHERE a.turma_id = :id
+              ORDER BY a.nome ASC";
+
+$stmtAlunos = $conexao->prepare($sqlAlunos);
+$stmtAlunos->execute([':id' => $idTurma]);
+$alunos = $stmtAlunos->fetchAll(PDO::FETCH_ASSOC);
+
+// Função auxiliar para definir a classe CSS baseada no estado da BD
+function obterClasseEstado($estado) {
+    if (empty($estado)) return 'sem'; // Cinzento
+    
+    $estado = mb_strtolower($estado, 'UTF-8');
+    
+    if (strpos($estado, 'aceite') !== false || strpos($estado, 'aprovado') !== false) {
+        return 'aceite'; // Verde
+    }
+    if (strpos($estado, 'aguarda') !== false || strpos($estado, 'pendente') !== false) {
+        return 'aguardando'; // Amarelo
+    }
+    
+    return 'sem'; // Padrão
+}
+
+// Função para formatar o texto do estado
+function obterTextoEstado($estado) {
+    return !empty($estado) ? $estado : 'Sem estágio';
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,18 +69,8 @@ $turmas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GEU — Ver Turmas</title>
-    <link rel="stylesheet" href="css/turma.css" /> 
-    <style>
-        /* Estilos rápidos para a tabela se não tiveres CSS específico */
-        .tabela-turmas { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .tabela-turmas th { background: #f9fafb; padding: 15px; text-align: left; font-weight: 600; color: #374151; border-bottom: 2px solid #e5e7eb; }
-        .tabela-turmas td { padding: 15px; border-bottom: 1px solid #e5e7eb; color: #4b5563; }
-        .tabela-turmas tr:hover { background-color: #f3f4f6; cursor: pointer; }
-        .search-area { margin-bottom: 20px; display: flex; align-items: center; background: #fff; padding: 10px 15px; border-radius: 8px; border: 1px solid #e5e7eb; }
-        .search-area input { border: none; outline: none; width: 100%; font-size: 1rem; margin-left: 10px; }
-        .badge-curso { background: #e0f2fe; color: #0369a1; padding: 4px 8px; border-radius: 12px; font-size: 0.85em; font-weight: 500; }
-    </style>
+    <title>GEU — <?= htmlspecialchars($turma['nome']) ?></title>
+    <link rel="stylesheet" href="css/turma.css" />
 </head>
 <body>
 
@@ -73,73 +94,74 @@ $turmas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <main id="main-content">
         
-        <div class="page-head" style="margin-bottom: 20px;">
-            <h1 class="turma-titulo">Listagem de Turmas</h1>
-            <button class="btn-editar" onclick="alert('Funcionalidade de criar turma ainda não implementada')">Nova Turma</button>
+        <div class="page-head">
+            <h1 class="turma-titulo">
+                <?= htmlspecialchars($turma['nome']) ?> 
+                (<?= htmlspecialchars($turma['ano_inicio']) ?>–<?= htmlspecialchars($turma['ano_fim']) ?>)
+            </h1>
+            
+            <button class="btn-editar" onclick="abrirModal()">Editar Turma</button>
         </div>
 
-        <section class="search-area">
-            <form action="verTurmas.php" method="GET" style="display: contents;">
-                <span>🔍</span>
-                <input 
-                    type="text" 
-                    name="pesquisa" 
-                    placeholder="Procurar por turma (Nome ou Código)" 
-                    value="<?= htmlspecialchars($termoPesquisa) ?>"
-                >
-            </form>
-        </section>
+        <section class="alunos-grid">
+            
+            <?php if (count($alunos) > 0): ?>
+                <?php foreach ($alunos as $aluno): ?>
+                    <?php 
+                        $classeCss = obterClasseEstado($aluno['estado_pedido']);
+                        $textoEstado = obterTextoEstado($aluno['estado_pedido']);
+                    ?>
+                    
+                    <a href="aluno.php?id=<?= $aluno['id_aluno'] ?>">
+                        <article class="aluno-card">
+                            <h3 class="aluno-nome">
+                                <?= htmlspecialchars($aluno['nome']) ?> - <?= htmlspecialchars($aluno['id_aluno']) ?>
+                            </h3>
+                            <p class="aluno-label">Estado do estágio</p>
+                            <p class="aluno-estado <?= $classeCss ?>">
+                                <?= htmlspecialchars($textoEstado) ?>
+                            </p>
+                        </article>
+                    </a>
 
-        <section>
-            <table class="tabela-turmas">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Nome</th>
-                        <th>Curso</th>
-                        <th>Ano Letivo</th>
-                        <th>Professor Orientador</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (count($turmas) > 0): ?>
-                        <?php foreach ($turmas as $t): ?>
-                            <tr onclick="window.location.href='turma.php?id_turma=<?= $t['id_turma'] ?>'">
-                                
-                                <td style="font-weight: bold; color: #2563eb;">
-                                    <?= htmlspecialchars($t['codigo']) ?>
-                                </td>
-                                
-                                <td><?= htmlspecialchars($t['nome']) ?></td>
-                                
-                                <td>
-                                    <span class="badge-curso">
-                                        <?= htmlspecialchars($t['curso_desc'] ?? 'N/A') ?>
-                                    </span>
-                                </td>
-                                
-                                <td>
-                                    <?= htmlspecialchars($t['ano_inicio']) ?> – <?= htmlspecialchars($t['ano_fim']) ?>
-                                </td>
-                                
-                                <td>
-                                    <?= htmlspecialchars($t['nome_professor'] ?? 'Sem professor') ?>
-                                </td>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p style="grid-column: 1/-1; color: #666; padding: 20px;">
+                    Não existem alunos registados nesta turma.
+                </p>
+            <?php endif; ?>
 
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="5" style="text-align: center; padding: 30px;">
-                                Nenhuma turma encontrada.
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
         </section>
 
     </main>
+
+    <div id="modal-editar-turma" class="modal-overlay" style="display:none;"> <div class="modal-content-box"> <div class="modal-flex">
+
+                <form class="modal-form">
+                    <label>Código Turma:</label>
+                    <input type="text" value="<?= htmlspecialchars($turma['codigo']) ?>">
+
+                    <label>Turma:</label>
+                    <input type="text" value="<?= htmlspecialchars($turma['nome']) ?>">
+
+                    <label>Ano curricular:</label>
+                    <input type="text" value="<?= htmlspecialchars($turma['ano_curricular'] ?? '') ?>">
+
+                    <label>ID Professor:</label>
+                    <input type="text" value="<?= htmlspecialchars($turma['professor_id'] ?? '') ?>">
+                    
+                    </form>
+
+                <img class="modal-img" src="img/img_editar_turma.png" alt="Editar Turma">
+            </div>
+
+            <div class="modal-buttons">
+                <button class="modal-btn guardar">Guardar</button>
+                <button class="modal-btn voltar" onclick="fecharModal()">Voltar</button>
+            </div>
+
+        </div>
+    </div>
 
     <footer id="footer">
         <div class="contactos">
@@ -154,5 +176,25 @@ $turmas = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </footer>
 
+    <script>
+        function abrirModal() {
+            // Nota: No teu CSS o ID é #modal-editar-turma e usa display flex para centrar
+            const modal = document.getElementById('modal-editar-turma');
+            modal.style.display = 'flex'; 
+        }
+
+        function fecharModal() {
+            const modal = document.getElementById('modal-editar-turma');
+            modal.style.display = 'none';
+        }
+
+        // Fechar ao clicar fora do modal
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-editar-turma');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

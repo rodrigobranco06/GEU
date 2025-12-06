@@ -162,7 +162,7 @@ body {
     border: 1px solid #e5e5e5;
     border-radius: 8px;
     padding: 20px;
-    width: 260px;
+    width: 280px;
     min-height: 100px;
     background-color: white;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
@@ -171,7 +171,11 @@ body {
 .turma-nome {
     font-size: 16px;
     font-weight: 600;
-    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    max-width: 100%;
 }
 
 .turma-professor-label {
@@ -181,7 +185,7 @@ body {
 }
 
 .turma-professor-nome {
-    color: #333;
+    color: #aaa;
     font-size: 13px;
     word-wrap: break-word;
 }
@@ -245,8 +249,8 @@ body {
     display: none;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-top: 80px;        /* distância ao topo */
-    padding-right: 60px;      /* distância à direita similar ao header */
+    padding-top: 80px;
+    padding-right: 60px;
     background: rgba(0, 0, 0, 0.35);
     z-index: 2500;
 }
@@ -267,12 +271,11 @@ body {
 
 .perfil-banner {
     height: 80px;
-    background-image: url("../img/img_Login.png"); /* usa aqui o fundo que quiseres */
+    background-image: url("../img/img_Login.png");
     background-size: cover;
     background-position: center;
 }
 
-/* avatar circular a “sair” do banner */
 .perfil-avatar {
     position: absolute;
     top: 50px;
@@ -287,7 +290,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para a imagem de avatar */
 .perfil-avatar-img {
     width: 32px;
     height: 32px;
@@ -319,7 +321,6 @@ body {
     color: #000;
 }
 
-/* Estilo para as imagens das linhas (email, definições) */
 .perfil-row-img {
     width: 20px;
     height: 20px;
@@ -339,26 +340,24 @@ body {
     background: #f0f0f0;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza o texto */
+    justify-content: center;
     padding: 12px 18px;
     font-size: 20px;
     cursor: pointer;
     text-decoration: none;
     color: #000;
-    position: relative; /* Importante para o ícone absoluto funcionar */
+    position: relative;
 }
 
-/* Ícone fixo à esquerda (absoluto) */
 .perfil-back-img {
     width: 30px;
     height: 30px;
     object-fit: contain;
     position: absolute;
-    left: 18px; /* Mantém a mesma distância da margem que o padding */
+    left: 18px;
 }
 
 .perfil-logout-text {
-    /* Sem flex:1 para garantir que fica no centro exato */
     text-align: center;
     font-weight: 500;
 }
@@ -381,7 +380,6 @@ body {
     filter: brightness(0.96);
 }
 
-/* Responsivo para o perfil */
 @media (max-width: 600px) {
     .perfil-overlay {
         justify-content: center;
@@ -392,8 +390,6 @@ body {
         width: 92vw;
     }
 }
-
-
 
 /* ======= MEDIA QUERIES - RESPONSIVIDADE ======= */
 
@@ -562,11 +558,16 @@ body {
 
 /* ===== Caixa do modal ===== */
 .modal-content-box {
-    width: 780px;
+    width: 980px;
+    max-width: 95vw;
     background: white;
     border-radius: 12px;
     padding: 20px 28px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    
+    /* ALTERAÇÃO: Habilita posicionamento absoluto para os botões e cria espaço em baixo */
+    position: relative;
+    padding-bottom: 80px;
 }
 
 /* Layout principal */
@@ -600,11 +601,17 @@ body {
 .modal-img {
     padding-top: 20px;
     width: 260px;
+    flex-shrink: 0; 
+    object-fit: contain; 
 }
 
-/* Botões no canto inferior esquerdo */
+/* Botões no canto inferior direito */
 .modal-buttons {
-    margin-top: 18px;
+    /* ALTERAÇÃO: Posicionamento Absoluto */
+    position: absolute;
+    bottom: 20px;
+    right: 28px;
+    
     display: flex;
     justify-content: flex-end;
     gap: 22px;
@@ -627,4 +634,13 @@ body {
 
 .modal-btn.voltar {
     background: #1aa179;
+}
+
+.modal-form select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+    width: 100%;
 }

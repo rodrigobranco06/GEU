@@ -108,7 +108,7 @@ body {
   color: #0f1a1a;
 }
 
-.btn-editar {
+.btn-editar, .btn-criar-turma {
   background-color: #1aa179;
   color: white;
   border: none;
@@ -120,11 +120,72 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-.btn-editar:hover {
+.btn-editar:hover, .btn-criar-turma:hover {
   background-color: #148e69;
 }
 
-/* ======= GRELHA DE ALUNOS ======= */
+/* ======= LISTAGEM DE TURMAS (Para o index.php) ======= */
+
+.turmas-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+  gap: 22px;
+  padding-bottom: 40px;
+}
+
+.turma-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.turma-card {
+  background: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 24px; /* Mais espaçamento interno */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%; /* Garante altura igual */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.turma-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.turma-nome {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 12px;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
+
+.turma-professor-label {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+.turma-professor-nome {
+  font-size: 15px;
+  font-weight: 500;
+  color: #aaa; 
+}
+
+.turma-professor-nome.indefinido {
+  color: #aaa;
+  font-style: italic;
+}
+
+
+/* ======= GRELHA DE ALUNOS (Para o turma.php) ======= */
 .alunos-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -132,7 +193,6 @@ body {
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
-
 }
 
 .aluno-card {
@@ -142,7 +202,6 @@ body {
   padding: 16px 18px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-
 }
 
 .alunos-grid a {
@@ -162,14 +221,12 @@ body {
   font-weight: 600;
   color: #000;
   margin-bottom: 8px;
-
 }
 
 .aluno-label {
   font-size: 13px;
   color: #666;
   margin-bottom: 2px;
-
 }
 
 .aluno-estado {
@@ -198,6 +255,7 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  margin-top: auto;
 }
 
 .contactos h3 {
@@ -244,8 +302,8 @@ body {
     display: none;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-top: 80px;        /* distância ao topo */
-    padding-right: 60px;      /* distância à direita similar ao header */
+    padding-top: 80px;      
+    padding-right: 60px;    
     background: rgba(0, 0, 0, 0.35);
     z-index: 2500;
 }
@@ -266,12 +324,11 @@ body {
 
 .perfil-banner {
     height: 80px;
-    background-image: url("../img/img_Login.png"); /* usa aqui o fundo que quiseres */
+    background-image: url("../img/img_Login.png"); 
     background-size: cover;
     background-position: center;
 }
 
-/* avatar circular a “sair” do banner */
 .perfil-avatar {
     position: absolute;
     top: 50px;
@@ -286,7 +343,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para a imagem de avatar */
 .perfil-avatar-img {
     width: 32px;
     height: 32px;
@@ -318,7 +374,6 @@ body {
     color: #000;
 }
 
-/* Estilo para as imagens das linhas (email, definições) */
 .perfil-row-img {
     width: 20px;
     height: 20px;
@@ -329,7 +384,6 @@ body {
     flex: 1;
 }
 
-/* === AQUI ESTÁ A CORREÇÃO DO BOTÃO LOGOUT === */
 .perfil-logout-row {
     width: 100%;
     margin-top: 16px;
@@ -338,31 +392,28 @@ body {
     background: #f0f0f0;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza o texto */
+    justify-content: center; 
     padding: 12px 18px;
     font-size: 20px;
     cursor: pointer;
     text-decoration: none;
     color: #000;
-    position: relative; /* Importante para o ícone absoluto funcionar */
+    position: relative; 
 }
 
-/* Ícone fixo à esquerda (absoluto) */
 .perfil-back-img {
     width: 30px;
     height: 30px;
     object-fit: contain;
     position: absolute;
-    left: 18px; /* Mantém a mesma distância da margem que o padding */
+    left: 18px; 
 }
 
 .perfil-logout-text {
-    /* Sem flex:1 para garantir que fica no centro exato */
     text-align: center;
     font-weight: 500;
 }
 
-/* Botão Voltar em verde */
 .perfil-voltar-btn {
     width: 100%;
     margin-top: 18px;
@@ -380,7 +431,6 @@ body {
     filter: brightness(0.96);
 }
 
-/* Responsivo para o perfil */
 @media (max-width: 600px) {
   .perfil-overlay {
     justify-content: center;
@@ -392,11 +442,9 @@ body {
   }
 }
 
-
-
 /* ======= RESPONSIVIDADE ======= */
 @media (max-width: 1100px) {
-  .alunos-grid {
+  .alunos-grid, .turmas-container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -412,18 +460,18 @@ body {
     gap: 12px;
   }
 
-  .btn-editar {
+  .btn-editar, .btn-criar-turma {
     align-self: flex-end;
   }
 
-  .alunos-grid {
+  .alunos-grid, .turmas-container {
     grid-template-columns: 1fr;
     padding: 14px;
   }
 }
 
 /* ===== Modal Overlay ===== */
-#modal-editar-turma {
+#modal-editar-turma, #modal-criar-turma {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.55);
@@ -462,11 +510,12 @@ body {
   font-size: 14px;
 }
 
-.modal-form input {
+.modal-form input, .modal-form select {
   padding: 7px 10px;
   border: 1px solid #b8b8b8;
   border-radius: 6px;
   font-size: 14px;
+  width: 100%;
 }
 
 /* Imagem */
@@ -494,7 +543,7 @@ body {
   font-weight: 600;
 }
 
-.modal-btn.guardar {
+.modal-btn.criar, .modal-btn.guardar {
   background: #1aa179;
 }
 

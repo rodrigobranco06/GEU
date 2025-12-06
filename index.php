@@ -1,63 +1,32 @@
 <?php
-
 include 'db.php';
 include 'utils.php';
 
-// Testar estabelecerConexao()
-   
-    $conexao = estabelecerConexao();
+$conexao = estabelecerConexao();
 
-    // show_var( $conexao, '$conexao');
+// 1. Buscar Cursos (para o Select do Modal de criar turma)
+$stmtCursos = $conexao->query("SELECT id_curso, curso_desc FROM curso ORDER BY curso_desc");
+$cursos = $stmtCursos->fetchAll(PDO::FETCH_ASSOC);
 
+// 2. Buscar Professores (para o Select do Modal de criar turma)
+$stmtProfs = $conexao->query("SELECT id_professor, nome FROM professor ORDER BY nome");
+$professores = $stmtProfs->fetchAll(PDO::FETCH_ASSOC);
 
-    // fazer uma query para obter todas as turmas
-    function getCursos()
-    {
-        $conexao = estabelecerConexao();
-         
-        $res = $conexao->query('SELECT id_curso, curso_desc FROM curso');
-
-        return $res->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    function getTurmas()
-    {
-        $conexao = estabelecerConexao();
-         
-        $res = $conexao->query('SELECT 
+// 3. Buscar Todas as Turmas para a listagem
+// JOIN com professor para mostrar o nome do orientador no card
+$sql = "SELECT 
             t.id_turma,
             t.nome AS turma_nome,
+            t.codigo,
+            t.ano_inicio,
+            t.ano_fim,
             p.nome AS professor_nome
         FROM turma t
-        LEFT JOIN professor p ON p.id_professor = t.professor_id');
+        LEFT JOIN professor p ON t.professor_id = p.id_professor
+        ORDER BY t.ano_inicio DESC, t.nome ASC";
 
-        return $res->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    function getProfessores() {
-    $conexao = estabelecerConexao();
-    $res = $conexao->query("
-        SELECT id_professor, nome 
-        FROM professor
-        ORDER BY nome
-    ");
-    return $res->fetchAll(PDO::FETCH_ASSOC);
-}
-
-
-
-
-    $turmas = getTurmas();
-    // show_var( $turmas , '$turmas');
-
-    $cursos = getCursos();
-    // show_var( $cursos , '$cursos');
-
-    $professores = getProfessores();
-    // show_var( $professores , '$professores');
-
-
-
+$stmtTurmas = $conexao->query($sql);
+$turmas = $stmtTurmas->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -72,118 +41,110 @@ include 'utils.php';
 
 <body>
 
-    <!-- Cabeçalho -->
     <header id="header">
         <div class="header-logo">
-            <a href="index.html">
+            <a href="index.php">
                 <img src="img/Logo.png" alt="Gestão de Estágios Universitários">
             </a>
         </div>
 
         <nav class="nav-menu">
-            <a href="alunos/index.html" class="nav-link">Alunos</a>
+            <a href="alunos/index.php" class="nav-link">Alunos</a>
             <a href="professores/index.php" class="nav-link">Professores</a>
-            <a href="empresas/index.html" class="nav-link">Empresas</a>
-            <a href="index.html" class="nav-link active">Turmas</a>
+            <a href="empresas/index.php" class="nav-link">Empresas</a>
+            <a href="index.php" class="nav-link active">Turmas</a>
 
             <button id="btn-conta" class="btn-conta">
                 <img src="img/img_conta.png" alt="Conta">
             </button>
-            <a href="login.html" class="btn-sair">Sair</a>
+            <a href="login.php" class="btn-sair">Sair</a>
         </nav>
     </header>
 
-    <!-- Conteúdo principal -->
     <main id="main-content">
         <div class="main-header">
             <h2 class="titulo-pagina">Turmas</h2>
-            <button class="btn-criar-turma">Criar Nova Turma</button>
+            <button class="btn-criar-turma" onclick="abrirModal()">Criar Nova Turma</button>
         </div>
 
         <div class="turmas-container">
-            <?php foreach ($turmas as $turma): ?>
-                <a href="turma.php?id=<?= $turma['id_turma'] ?>" class="turma-link">
-                    <div class="turma-card">
-                        <h3 class="turma-nome"><?= htmlspecialchars($turma['turma_nome']) ?></h3>
+            <?php if (count($turmas) > 0): ?>
+                <?php foreach ($turmas as $t): ?>
+                    
+                    <a href="turma.php?id_turma=<?= $t['id_turma'] ?>" class="turma-link">
+                        <div class="turma-card">
+                            
+                            <h3 class="turma-nome">
+                                <?= htmlspecialchars($t['turma_nome']) ?> 
+                            </h3>
+                            
+                            <p class="turma-professor-label">Professor orientador</p>
+                            
+                            <p class="turma-professor-nome <?= empty($t['professor_nome']) ? 'indefinido' : '' ?>">
+                                <?= htmlspecialchars($t['professor_nome'] ?: 'Indefinido') ?>
+                            </p>
 
-                        <p class="turma-professor-label">Professor orientador</p>
+                        </div>
+                    </a>
 
-                        <p class="turma-professor-nome <?= empty($turma['professor_nome']) ? 'indefinido' : '' ?>">
-                            <?= $turma['professor_nome'] ?: 'Indefinido' ?>
-                        </p>
-                    </div>
-                </a>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p style="padding: 20px; color: #666;">Ainda não existem turmas criadas.</p>
+            <?php endif; ?>
         </div>
-
 
     </main>
 
-    <!-- MODAL CRIAR TURMA -->
     <div id="modal-criar-turma" class="modal-overlay" style="display:none;">
         <div class="modal-content-box">
 
             <div class="modal-flex">
 
                 <form class="modal-form" action="adicionarTurma.php" method="POST">
+                    
                     <label>Código Turma:</label>
-                    <input type="text" id="codigo-turma" name="codigo" readonly>
+                    <input type="text" name="codigo" required placeholder="Ex: TPSI-24">
 
                     <label>Nome:</label>
-                    <input type="text" id="nome-turma" name="nome">
+                    <input type="text" name="nome" required placeholder="Ex: TPSI - 2º Ano">
 
-                    <label>Ano incio:</label>
-                    <input type="text" id="ano-inicio" name="ano_inicio">
+                    <label>Ano Início:</label>
+                    <input type="number" name="ano_inicio" required placeholder="2024">
+                    
+                    <label>Ano Fim:</label>
+                    <input type="number" name="ano_fim" placeholder="2025">
 
-                    <label>Ano fim:</label>
-                    <input type="text" id="ano-fim" name="ano_fim">
+                    <label>Ano Curricular:</label>
+                    <input type="number" name="ano_curricular" placeholder="Ex: 2">
 
-                    <label>Ano curricular:</label>
-                    <input type="text" id="ano-curricular" name="ano_curricular">
-
-                    <label for="curso">Curso:</label>
-                    <input list="lista-cursos" id="curso" name="curso_desc" placeholder="Escreve o curso...">
-
-                    <datalist id="lista-cursos">
-                        <?php foreach ($cursos as $curso): ?>
-                            <option value="<?= htmlspecialchars($curso['curso_desc']) ?>">
+                    <label>Curso:</label>
+                    <select name="curso_id" required>
+                        <option value="" disabled selected>Selecione o curso...</option>
+                        <?php foreach ($cursos as $c): ?>
+                            <option value="<?= $c['id_curso'] ?>">
+                                <?= htmlspecialchars($c['curso_desc']) ?>
+                            </option>
                         <?php endforeach; ?>
-                    </datalist>
+                    </select>
 
-
-
-
-
-                    <label>Código professor:</label>
-                    <input list="lista-codigos" id="prof-codigo" name="professor_codigo" placeholder="Escreve o código...">
-
-                    <datalist id="lista-codigos">
+                    <label>Professor Orientador:</label>
+                    <select name="professor_id">
+                        <option value="">Indefinido</option>
                         <?php foreach ($professores as $p): ?>
-                            <option value="<?= htmlspecialchars($p['id_professor']) ?>">
+                            <option value="<?= $p['id_professor'] ?>">
                                 <?= htmlspecialchars($p['nome']) ?>
                             </option>
                         <?php endforeach; ?>
-                    </datalist>
-
-
-                    <label>Professor orientador:</label>
-                    <input list="lista-nomes" id="prof-nome" name="professor_nome" placeholder="Escreve o nome...">
-
-                    <datalist id="lista-nomes">
-                        <?php foreach ($professores as $p): ?>
-                            <option value="<?= htmlspecialchars($p['nome']) ?>">
-                                <?= htmlspecialchars($p['id_professor']) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </datalist>
-
-                    <div class="modal-buttons">
+                    </select>
+                    
+                    <div class="modal-buttons" style="margin-top: 20px;">
                         <button class="modal-btn criar" type="submit">Criar</button>
-                        <button class="modal-btn voltar" id="btn-fechar-modal">Voltar</button>
+                        <button class="modal-btn voltar" type="button" onclick="fecharModal()">Voltar</button>
                     </div>
+
                 </form>
 
-                <img class="modal-img" src="img/img_editar_turma.png" alt="">
+                <img class="modal-img" src="img/img_editar_turma.png" alt="Ilustração">
             </div>
 
         </div>
@@ -191,21 +152,20 @@ include 'utils.php';
 
     <hr>
 
-    <!-- Rodapé -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
             <p>
-                <img src="img/img_email.png" alt="Email">
+                <img src="img/img_email.png" alt="Email" style="width:20px; vertical-align:middle;">
                 <strong>Email:</strong> geral@ipsantarem.pt
             </p>
             <p>
-                <img src="img/img_telemovel.png" alt="Telefone">
+                <img src="img/img_telemovel.png" alt="Telefone" style="width:20px; vertical-align:middle;">
                 <strong>Telefone:</strong> +351 243 309 520
             </p>
             <p>
-                <img src="img/img_localizacao.png" alt="Endereço">
-                <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém
+                <img src="img/img_localizacao.png" alt="Endereço" style="width:20px; vertical-align:middle;">
+                <strong>Endereço:</strong> Complexo Andaluz, Santarém
             </p>
         </div>
 
@@ -215,44 +175,25 @@ include 'utils.php';
         </div>
     </footer>
 
-    <!-- ======= MODAL PERFIL / CONTA ======= -->
-    <div id="perfil-overlay" class="perfil-overlay">
-    <div class="perfil-card">
-        <div class="perfil-banner"></div>
+    <script>
+        function abrirModal() {
+            document.getElementById('modal-criar-turma').style.display = 'flex';
+        }
 
-        <div class="perfil-avatar">
-            <img src="img/img_conta.png" alt="Avatar" class="perfil-avatar-img">
-        </div>
+        function fecharModal() {
+            document.getElementById('modal-criar-turma').style.display = 'none';
+        }
 
-        <div class="perfil-content">
-            <div class="perfil-role">Aluno</div>
-            <div class="perfil-name">Rodrigo Branco</div>
-
-            <div class="perfil-row">
-                <img src="img/img_email.png" alt="Email" class="perfil-row-img">
-                <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
-            </div>
-
-            <a href="verPerfil.html" class="perfil-row">
-                <img src="img/img_definicoes.png" alt="Definições" class="perfil-row-img">
-                <span class="perfil-row-text">Definições de conta</span>
-            </a>
-
-            <a href="login.html" class="perfil-logout-row">
-                <img src="img/img_sair.png" alt="Sair" class="perfil-back-img">
-                <span class="perfil-logout-text">Log out</span>
-            </a>
-
-            <button type="button" class="perfil-voltar-btn">
-                Voltar
-            </button>
-        </div>
-    </div>
-</div>
-
-
-
-<script src="js/index.js"></script>
+        // Fechar ao clicar fora do modal
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal-criar-turma');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    
+    <script src="js/index.js"></script>
 
 </body>
 </html>
