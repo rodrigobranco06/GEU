@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- ======= CABEÇALHO ======= -->
     <header id="header">
         <div class="header-logo">
             <a href="../index.html">
@@ -29,25 +28,20 @@
         </nav>
     </header>
 
-    <!-- ======= CONTEÚDO PRINCIPAL ======= -->
     <main id="main-content">
 
-        <!-- Subtabs -->
         <nav class="subtabs">
             <a href="index.html" class="subtab-link active">Ver Empresas</a>
             <a href="registarEmpresa.html" class="subtab-link">Registar nova empresa</a>
         </nav>
 
-        <!-- Barra de pesquisa -->
-        <div class="search-container">
-            <input
-                type="text"
-                class="search-input"
-                placeholder="Procurar por Empresa"
-            />
-        </div>
+        <section class="search-area">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Procurar por empresa" aria-label="Procurar por empresa">
+            </div>
+        </section>
 
-        <!-- Tabela de empresas -->
         <section class="tabela-empresas">
             <table>
                 <thead>
@@ -60,7 +54,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- primeira linha clica e vai para verEmpresa -->
                     <tr>
                         <td>90012111</td>
                         <td>Web TeQ</td>
@@ -87,7 +80,6 @@
         </section>
     </main>
 
-    <!-- ======= RODAPÉ ======= -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
@@ -111,43 +103,41 @@
         </div>
     </footer>
 
-    <!-- ======= MODAL PERFIL / CONTA ======= -->
     <div id="perfil-overlay" class="perfil-overlay">
-    <div class="perfil-card">
-        <div class="perfil-banner"></div>
+        <div class="perfil-card">
+            <div class="perfil-banner"></div>
 
-        <div class="perfil-avatar">
-            <img src="../img/img_conta.png" alt="Avatar" class="perfil-avatar-img">
-        </div>
-
-        <div class="perfil-content">
-            <div class="perfil-role">Aluno</div>
-            <div class="perfil-name">Rodrigo Branco</div>
-
-            <div class="perfil-row">
-                <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
-                <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
+            <div class="perfil-avatar">
+                <img src="../img/img_conta.png" alt="Avatar" class="perfil-avatar-img">
             </div>
 
-            <a href="../verPerfil.html" class="perfil-row">
-                <img src="../img/img_definicoes.png" alt="Definições" class="perfil-row-img">
-                <span class="perfil-row-text">Definições de conta</span>
-            </a>
+            <div class="perfil-content">
+                <div class="perfil-role">Aluno</div>
+                <div class="perfil-name">Rodrigo Branco</div>
 
-            <a href="../login.html" class="perfil-logout-row">
-                <img src="../img/img_sair.png" alt="Sair" class="perfil-back-img">
-                <span class="perfil-logout-text">Log out</span>
-            </a>
+                <div class="perfil-row">
+                    <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
+                    <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
+                </div>
 
-            <button type="button" class="perfil-voltar-btn">
-                Voltar
-            </button>
+                <a href="../verPerfil.html" class="perfil-row">
+                    <img src="../img/img_definicoes.png" alt="Definições" class="perfil-row-img">
+                    <span class="perfil-row-text">Definições de conta</span>
+                </a>
+
+                <a href="../login.html" class="perfil-logout-row">
+                    <img src="../img/img_sair.png" alt="Sair" class="perfil-back-img">
+                    <span class="perfil-logout-text">Log out</span>
+                </a>
+
+                <button type="button" class="perfil-voltar-btn">
+                    Voltar  
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
   <script src="js/index.js"></script>
-
 
 </body>
 </html>

@@ -138,84 +138,84 @@ body {
     background-color: #000;
 }
 
+
 /* ======= PESQUISA ======= */
-.search-section {
-    margin-top: 16px;
-    margin-bottom: 16px;
+.search-area {
+    margin-top: 18px;
+    padding: 12px 16px;
+    background-color: #f5f6f8; 
+    border-radius: 4px;
 }
 
-.search-box {
-    max-width: 360px;
+.search-wrapper {
+    max-width: 340px;
     width: 100%;
-    border: 1px solid #dcdfe4;
-    border-radius: 6px;
-    padding: 6px 10px;
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #fafafa;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #dcdfe4;
+    padding: 6px 10px;
 }
 
 .search-icon {
-    font-size: 15px;
-    opacity: 0.7;
+    font-size: 18px;
+    color: #4c6fbf; 
 }
 
-.search-box input {
+.search-wrapper input {
     border: none;
-    background: transparent;
     outline: none;
+    background: transparent;
     width: 100%;
     font-size: 14px;
     color: #333;
 }
 
-.search-box input::placeholder {
+.search-wrapper input::placeholder {
     color: #9aa0a6;
 }
 
-/* ======= TABELA DE ALUNOS ======= */
-.table-wrapper {
-    margin-top: 10px;
-    overflow-x: auto;
+/* ======= TABELA ======= */
+.tabela-alunos {
+    margin-top: 16px;
 }
 
-.alunos-table {
+.tabela-alunos table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
 }
 
-.alunos-table thead {
+.tabela-alunos thead {
     background-color: #f5f6f8;
+}
+
+.tabela-alunos th,
+.tabela-alunos td {
+    padding: 6px 10px;
+    text-align: center;
+}
+
+.tabela-alunos th {
+     font-weight: 500;
+    color: #555;
     border-bottom: 1px solid #dcdfe4;
 }
 
-.alunos-table th,
-.alunos-table td {
-    padding: 8px 10px;
-    text-align: left;
-    white-space: nowrap;
-}
-
-.alunos-table th {
-    font-weight: 600;
-    color: #333;
-    border-bottom: 1px solid #dcdfe4;
-}
-
-.alunos-table tbody tr:nth-child(even) {
+.tabela-alunos tbody tr {
+    cursor: pointer;
     background-color: #fafafa;
 }
 
-.alunos-table tbody tr:hover {
-    background-color: #eef3ff;
+.tabela-alunos tbody tr:hover {
+    background-color: #f5f9ff;
 }
 
-/* permitir quebra nas colunas mais longas em ecrãs pequenos */
-.alunos-table td:nth-child(2),
-.alunos-table td:nth-child(3) {
-    white-space: normal;
+.tabela-alunos td:nth-child(2),
+.tabela-alunos td:nth-child(4){
+     white-space: nowrap;
 }
 
 /* ======= RODAPÉ ======= */

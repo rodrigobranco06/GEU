@@ -139,56 +139,86 @@ body {
 }
 
 /* ======= PESQUISA ======= */
-.search-container {
-    margin: 16px 0 12px;
-}
-
-.search-input {
-    width: 100%;
-    max-width: 360px;
-    height: 34px;
-    padding: 6px 10px;
+.search-area {
+    margin-top: 18px;
+    padding: 12px 16px;
+    background-color: #f5f6f8; 
     border-radius: 4px;
-    border: 1px solid #dcdfe4;
-    font-size: 13px;
-    color: #333;
-    outline: none;
 }
 
-.search-input::placeholder {
-    color: #999;
+.search-wrapper {
+    max-width: 340px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #ffffff;
+    border-radius: 6px;
+    border: 1px solid #dcdfe4;
+    padding: 6px 10px;
+}
+
+.search-icon {
+    font-size: 18px;
+    color: #4c6fbf; 
+}
+
+.search-wrapper input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-size: 14px;
+    color: #333;
+}
+
+.search-wrapper input::placeholder {
+    color: #9aa0a6;
 }
 
 /* ======= TABELA ======= */
+
+.tabela-empresas {
+    margin-top: 16px;
+}
+
 .tabela-empresas table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .tabela-empresas thead {
-    background-color: #f3f4f7;
+    background-color: #f5f6f8;
 }
 
 .tabela-empresas th,
 .tabela-empresas td {
-    padding: 6px 8px;
-    border-bottom: 1px solid #e4e6eb;
-    text-align: left;
+    padding: 6px 10px;
+    text-align: center;
 }
 
 .tabela-empresas th {
-    font-weight: 600;
-    color: #444;
+     font-weight: 500;
+    color: #555;
+    border-bottom: 1px solid #dcdfe4;
 }
 
 .tabela-empresas tbody tr {
     cursor: pointer;
+    background-color: #fafafa;
 }
 
 .tabela-empresas tbody tr:hover {
     background-color: #f5f9ff;
 }
+
+.tabela-empresas td:nth-child(2),
+.tabela-empresas td:nth-child(4){
+     white-space: nowrap;
+}
+
+    
 
 /* ======= RODAPÉ ======= */
 #footer {

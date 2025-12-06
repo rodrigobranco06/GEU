@@ -194,7 +194,7 @@ body {
 .professores-table th,
 .professores-table td {
     padding: 6px 10px;
-    text-align: left;
+    text-align: center;
 }
 
 .professores-table th {
@@ -203,13 +203,11 @@ body {
     border-bottom: 1px solid #dcdfe4;
 }
 
-.professores-table tbody tr:nth-child(even) {
+.professores-table tbody tr{
     background-color: #fafafa;
-}
-
-.linha-click {
     cursor: pointer;
 }
+
 
 .linha-click:hover {
     background-color: #eef3ff;

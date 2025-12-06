@@ -1,6 +1,6 @@
 <?php
 
-/*
+
 function estabelecerConexao()
 {
    // Devia mais tarde ser passado para um ficheiro de configuração
@@ -15,15 +15,15 @@ function estabelecerConexao()
       $conexao = new PDO( $dsn, $username, $pass ); 
    }
    catch ( PDOException $e ) {
-      $e->getMessage();         // a dot notation no PHP é diferente '->'
+      $e->getMessage();
    }
 
    return $conexao;
 }
-*/
+
 
 // estabelecer conexao com o hostinger
-
+/*
 function estabelecerConexao()
 {
    // Devia mais tarde ser passado para um ficheiro de configuração
@@ -43,5 +43,5 @@ function estabelecerConexao()
 
    return $conexao;
 }
-
+*/
 ?>
