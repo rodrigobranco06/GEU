@@ -11,19 +11,19 @@ include '../utils.php';
 function listarEscolas(): array {
     $con = estabelecerConexao();
     $stmt = $con->query('SELECT id_escola, escola_desc FROM escola ORDER BY escola_desc');
-    return $res->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function listarNacionalidades(): array {
     $con = estabelecerConexao();
-    $res = $con->query('SELECT id_nacionalidade, nacionalidade_desc FROM nacionalidade ORDER BY nacionalidade_desc');
-    return $res->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $con->query('SELECT id_nacionalidade, nacionalidade_desc FROM nacionalidade ORDER BY nacionalidade_desc');
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function listarEspecializacoes(): array {
     $con = estabelecerConexao();
-    $res = $con->query('SELECT id_especializacao, especializacao_desc FROM especializacao ORDER BY especializacao_desc');
-    return $res->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $con->query('SELECT id_especializacao, especializacao_desc FROM especializacao ORDER BY especializacao_desc');
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 /* ============================================================
@@ -33,7 +33,7 @@ function listarEspecializacoes(): array {
 function getTodosProfessores(): array {
     $con = estabelecerConexao();
 
-    $res = $con->query('
+    $stmt = $con->query('
         SELECT 
             p.id_professor,
             p.nome AS nome_professor,
@@ -44,20 +44,20 @@ function getTodosProfessores(): array {
         ORDER BY p.nome
     ');
 
-    return $res->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function professorIdExiste(int $idProfessor): bool {
     $con = estabelecerConexao();
-    $res = $con->prepare('SELECT 1 FROM professor WHERE id_professor = :id');
-    $res->execute(['id' => $idProfessor]);
-    return (bool) $res->fetchColumn();
+    $stmt = $con->prepare('SELECT 1 FROM professor WHERE id_professor = :id');
+    $stmt->execute(['id' => $idProfessor]);
+    return (bool) $stmt->fetchColumn();
 }
 
 function getProfessorById(int $idProfessor) {
     $con = estabelecerConexao();
 
-    $res = $con->prepare('
+    $stmt = $con->prepare('
         SELECT 
             p.*,
             u.id_utilizador,
@@ -76,9 +76,9 @@ function getProfessorById(int $idProfessor) {
             ON p.especializacao_id = s.id_especializacao
         WHERE p.id_professor = :id
     ');
-    $res->execute(['id' => $idProfessor]);
+    $stmt->execute(['id' => $idProfessor]);
 
-    return $res->fetch(PDO::FETCH_ASSOC);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 /* ============================================================
@@ -88,7 +88,7 @@ function getProfessorById(int $idProfessor) {
 function criarUtilizadorProfessor(string $username, string $password): int {
     $con = estabelecerConexao();
 
-    $res = $con->prepare('
+    $stmt = $con->prepare('
         INSERT INTO utilizador (
             username,
             password_hash,
@@ -105,7 +105,7 @@ function criarUtilizadorProfessor(string $username, string $password): int {
         )
     ');
 
-    $res->execute([
+    $stmt->execute([
         'username'        => $username,
         'password_hash'   => password_hash($password, PASSWORD_DEFAULT),
         'tipo_utilizador' => 'Professor',
@@ -118,7 +118,7 @@ function criarUtilizadorProfessor(string $username, string $password): int {
 function criarProfessor(array $dados, int $utilizadorId): void {
     $con = estabelecerConexao();
 
-    $res = $con->prepare('
+    $stmt = $con->prepare('
         INSERT INTO professor (
             id_professor,
             nome,
@@ -155,7 +155,7 @@ function criarProfessor(array $dados, int $utilizadorId): void {
         )
     ');
 
-    $res->execute([
+    $stmt->execute([
         'id_professor'        => $dados['id_professor'],
         'nome'                => $dados['nome'],
         'data_nascimento'     => $dados['data_nascimento'],
@@ -181,7 +181,7 @@ function criarProfessor(array $dados, int $utilizadorId): void {
 function updateProfessor(int $idProfessor, array $dados): void {
     $con = estabelecerConexao();
 
-    $res = $con->prepare('
+    $stmt = $con->prepare('
         UPDATE professor
         SET
             nome                = :nome,
@@ -200,7 +200,7 @@ function updateProfessor(int $idProfessor, array $dados): void {
         WHERE id_professor     = :id_professor
     ');
 
-    $res->execute([
+    $stmt->execute([
         'nome'               => $dados['nome'],
         'data_nascimento'    => $dados['data_nascimento'],
         'sexo'               => $dados['sexo'],
@@ -225,13 +225,13 @@ function updatePasswordUtilizador(int $idUtilizador, string $novaPassword): void
 
     $con = estabelecerConexao();
 
-    $res = $con->prepare('
+    $stmt = $con->prepare('
         UPDATE utilizador
         SET password_hash = :pwd
         WHERE id_utilizador = :id_utilizador
     ');
 
-    $res->execute([
+    $stmt->execute([
         'pwd'           => password_hash($novaPassword, PASSWORD_DEFAULT),
         'id_utilizador' => $idUtilizador,
     ]);
@@ -247,12 +247,12 @@ function deleteProfessorEUtilizador(int $idProfessor, ?int $idUtilizador = null)
     try {
         $con->beginTransaction();
 
-        $res = $con->prepare('DELETE FROM professor WHERE id_professor = :id_professor');
-        $res->execute(['id_professor' => $idProfessor]);
+        $stmt = $con->prepare('DELETE FROM professor WHERE id_professor = :id_professor');
+        $stmt->execute(['id_professor' => $idProfessor]);
 
         if (!empty($idUtilizador)) {
-            $res = $con->prepare('DELETE FROM utilizador WHERE id_utilizador = :id_utilizador');
-            $res->execute(['id_utilizador' => $idUtilizador]);
+            $stmt = $con->prepare('DELETE FROM utilizador WHERE id_utilizador = :id_utilizador');
+            $stmt->execute(['id_utilizador' => $idUtilizador]);
         }
 
         $con->commit();
