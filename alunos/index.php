@@ -1,58 +1,10 @@
 <?php
-include '../db.php';
-include '../utils.php';
+// alunos/index.php
 
-// Ligação à Base de Dados
-$conexao = estabelecerConexao();
+include 'modelsAlunos.php';
 
-// Lógica de Pesquisa
-$termoPesquisa = isset($_GET['pesquisa']) ? trim($_GET['pesquisa']) : '';
-$params = [];
-
-/**
- * CONSTRUÇÃO DA QUERY
- * 1. Extraímos o número de aluno do email (antes do @).
- * 2. Juntamos com curso para ver o nome do curso.
- * 3. Juntamos com pedido_estagio para ver se tem estágio.
- * 4. Juntamos com empresa para ver o nome da empresa associada ao pedido.
- */
-$sql = "SELECT 
-            a.id_aluno,
-            a.nome,
-            a.email_institucional,
-            -- Extrair o número de aluno do email (ex: 240001087 de 240001087@esg...)
-            SUBSTRING_INDEX(a.email_institucional, '@', 1) as numero_aluno,
-            c.curso_desc,
-            e.nome AS nome_empresa,
-            pe.estado_pedido
-        FROM aluno a
-        LEFT JOIN curso c 
-            ON a.curso_id = c.id_curso
-        LEFT JOIN pedido_estagio pe 
-            ON pe.aluno_id = a.id_aluno
-        LEFT JOIN empresa e 
-            ON pe.empresa_id = e.id_empresa";
-
-// Adicionar filtros de pesquisa
-if (!empty($termoPesquisa)) {
-    // Pesquisa pelo nome ou pelo número (extraído do email)
-    $sql .= " WHERE a.nome LIKE :termo OR a.email_institucional LIKE :termo";
-    $params[':termo'] = '%' . $termoPesquisa . '%';
-}
-
-$sql .= " ORDER BY a.nome ASC";
-
-$alunos = [];
-
-try {
-    $stmt = $conexao->prepare($sql);
-    $stmt->execute($params);
-    $alunos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Erro na base de dados: " . $e->getMessage());
-}
+$alunos = getTodosAlunos();
 ?>
-
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -65,6 +17,7 @@ try {
 
 <body>
 
+    <!-- ======= CABEÇALHO ======= -->
     <header id="header">
         <div class="header-logo">
             <a href="../index.php">
@@ -85,26 +38,25 @@ try {
         </nav>
     </header>
 
+    <!-- ======= CONTEÚDO PRINCIPAL ======= -->
     <main id="main-content">
 
+        <!-- Tabs internas (Ver / Registar) -->
         <nav class="subtabs">
             <a href="index.php" class="subtab-link active">Ver Alunos</a>
             <a href="registarAluno.php" class="subtab-link">Registar novo aluno</a>
         </nav>
 
+        <!-- Tabela de alunos -->
         <section class="search-area">
-            <form action="index.php" method="GET" style="display: contents;">
-                <div class="search-wrapper">
-                    <span class="search-icon">🔍</span>
-                    <input 
-                        type="text" 
-                        name="pesquisa"
-                        placeholder="Procurar por aluno (Nome ou Número)" 
-                        aria-label="Procurar por aluno"
-                        value="<?= htmlspecialchars($termoPesquisa) ?>"
-                    >
-                </div>
-            </form>
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Procurar por aluno"
+                    aria-label="Procurar por aluno">
+            </div>
         </section>
 
         <section class="tabela-alunos">
@@ -118,48 +70,25 @@ try {
                         <th>Estado do estágio</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php if (count($alunos) > 0): ?>
-                        <?php foreach ($alunos as $aluno): ?>
-                            <tr onclick="window.location.href='verAluno.php?id_aluno=<?= $aluno['id_aluno'] ?>'" style="cursor: pointer;">
-                                
-                                <td><?= htmlspecialchars($aluno['numero_aluno'] ?? '') ?></td>
-                                
-                                <td><?= htmlspecialchars($aluno['nome'] ?? '') ?></td>
-                                
-                                <td><?= htmlspecialchars($aluno['curso_desc'] ?? 'Sem curso') ?></td>
-                                
-                                <td>
-                                    <?php 
-                                        if (!empty($aluno['nome_empresa'])) {
-                                            echo htmlspecialchars($aluno['nome_empresa']);
-                                        } else {
-                                            echo '<span style="color: #999;">Sem empresa</span>';
-                                        }
-                                    ?>
-                                </td>
-                                
-                                <td>
-                                    <?php 
-                                        // Mapeamento simples de cores/texto se necessário
-                                        $estado = $aluno['estado_pedido'] ?? 'Sem estágio';
-                                        echo htmlspecialchars($estado);
-                                    ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="5" style="text-align: center; padding: 20px; color: #666;">
-                                Nenhum aluno encontrado.
-                            </td>
+                <tbody id="alunos-table-body">
+                    <?php foreach ($alunos as $al): ?>
+                        <tr
+                            class="linha-click"
+                            onclick="window.location='verAluno.php?id=<?= $aluno['id_aluno'] ?>'">
+                            <td><?= htmlspecialchars($aluno['id_aluno']) ?></td>
+                            <td><?= htmlspecialchars($al['nome_aluno']) ?></td>
+                            <td><?= htmlspecialchars($al['curso_desc'] ?? 'Sem curso') ?></td>
+                            <td><?= htmlspecialchars($al['nome_empresa'] ?? 'Sem empresa') ?></td>
+                            <td><?= htmlspecialchars($al['estado_pedido'] ?? 'Esperando empresa') ?></td>
                         </tr>
-                    <?php endif; ?>
+                        
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </section>
     </main>
 
+    <!-- ======= RODAPÉ ======= -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
@@ -183,6 +112,7 @@ try {
         </div>
     </footer>
 
+    <!-- ======= MODAL PERFIL / CONTA ======= -->
     <div id="perfil-overlay" class="perfil-overlay">
         <div class="perfil-card">
             <div class="perfil-banner"></div>
@@ -218,7 +148,5 @@ try {
     </div>
 
     <script src="js/index.js"></script>
-
 </body>
-
 </html>

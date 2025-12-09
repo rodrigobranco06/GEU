@@ -1,130 +1,16 @@
 <?php
-include '../db.php';
-include '../utils.php';
+// alunos/registarAluno.php
 
-$conexao = estabelecerConexao();
-$erro = '';
-$sucesso = '';
+include 'modelsAlunos.php';
 
-/**
- * Função auxiliar para lidar com inputs de texto que são chaves estrangeiras.
- * Ex: Se o user escrever "Portuguesa", verifica se existe na tabela 'nacionalidade'.
- * Se sim, devolve o ID. Se não, cria e devolve o novo ID.
- */
-function obterOuCriarID($conexao, $tabela, $colunaDesc, $colunaId, $valor) {
-    if (empty($valor)) return null;
-    
-    // 1. Verificar se existe
-    $sqlCheck = "SELECT $colunaId FROM $tabela WHERE $colunaDesc = :valor LIMIT 1";
-    $stmt = $conexao->prepare($sqlCheck);
-    $stmt->execute([':valor' => $valor]);
-    $id = $stmt->fetchColumn();
+// $erros pode vir do addAluno.php (include em caso de erro)
+$erros = $erros ?? [];
 
-    if ($id) {
-        return $id;
-    } else {
-        // 2. Criar novo se não existir
-        $sqlInsert = "INSERT INTO $tabela ($colunaDesc) VALUES (:valor)";
-        $stmtInsert = $conexao->prepare($sqlInsert);
-        $stmtInsert->execute([':valor' => $valor]);
-        return $conexao->lastInsertId();
-    }
-}
-
-// Buscar turmas para preencher o Select
-$stmtTurmas = $conexao->query("SELECT id_turma, nome FROM turma ORDER BY nome ASC");
-$listaTurmas = $stmtTurmas->fetchAll(PDO::FETCH_ASSOC);
-
-// --- PROCESSAR FORMULÁRIO (POST) ---
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        $conexao->beginTransaction();
-
-        // 1. Dados de Login (Utilizador)
-        $codigo   = $_POST['codigo'] ?? ''; // Será o username
-        $password = $_POST['password'] ?? '';
-
-        if (empty($codigo) || empty($password)) {
-            throw new Exception("O Código de Aluno e a Password são obrigatórios.");
-        }
-
-        // Criar Utilizador
-        $sqlUser = "INSERT INTO utilizador (username, password_hash, tipo_utilizador, estado_conta, data_criacao) 
-                    VALUES (:user, :pass, 'aluno', 'ativo', NOW())";
-        $stmtUser = $conexao->prepare($sqlUser);
-        $stmtUser->execute([
-            ':user' => $codigo,
-            ':pass' => $password // Idealmente: password_hash($password, PASSWORD_DEFAULT)
-        ]);
-        $idUtilizador = $conexao->lastInsertId();
-
-        // 2. Resolver IDs para campos de texto (FKs)
-        $nomeNacionalidade = $_POST['nacionalidade'] ?? '';
-        $idNacionalidade = obterOuCriarID($conexao, 'nacionalidade', 'nacionalidade_desc', 'id_nacionalidade', $nomeNacionalidade);
-
-        $nomeCurso = $_POST['curso'] ?? '';
-        $idCurso = obterOuCriarID($conexao, 'curso', 'curso_desc', 'id_curso', $nomeCurso);
-
-        $nomeEscola = $_POST['escola'] ?? '';
-        $idEscola = obterOuCriarID($conexao, 'escola', 'escola_desc', 'id_escola', $nomeEscola);
-
-        // 3. Upload do CV (Simples)
-        $nomeCV = '';
-        if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
-            $nomeCV = $_FILES['cv']['name'];
-            // Para mover o ficheiro real, descomentar e garantir permissões na pasta:
-            // move_uploaded_file($_FILES['cv']['tmp_name'], "../uploads/" . $nomeCV);
-        }
-
-        // 4. Inserir Aluno
-        $sqlAluno = "INSERT INTO aluno (
-            nome, data_nascimento, sexo, nif, numero_cc, 
-            email_institucional, email_pessoal, morada, codigo_postal, cidade,
-            situacao_academica, cv, linkedin, github, 
-            utilizador_id, nacionalidade_id, curso_id, escola_id, turma_id, ano_curricular
-        ) VALUES (
-            :nome, :dataNasc, :sexo, :nif, :cc,
-            :emailInst, :emailPes, :morada, :cp, :cidade,
-            :situacao, :cv, :linkedin, :github,
-            :uid, :nid, :cid, :eid, :tid, :ano
-        )";
-
-        $stmtAluno = $conexao->prepare($sqlAluno);
-        $stmtAluno->execute([
-            ':nome'         => $_POST['nome'] ?? '',
-            ':dataNasc'     => $_POST['data_nascimento'] ?? null,
-            ':sexo'         => $_POST['sexo'] ?? '',
-            ':nif'          => $_POST['nif'] ?? '',
-            ':cc'           => $_POST['cc'] ?? '',
-            ':emailInst'    => $_POST['email_institucional'] ?? '',
-            ':emailPes'     => $_POST['email_pessoal'] ?? '',
-            ':morada'       => $_POST['morada'] ?? '',
-            ':cp'           => $_POST['cp'] ?? '',
-            ':cidade'       => $_POST['cidade'] ?? '',
-            ':situacao'     => $_POST['situacao_academica'] ?? 'Ativo',
-            ':cv'           => $nomeCV,
-            ':linkedin'     => $_POST['linkedin'] ?? '',
-            ':github'       => $_POST['github'] ?? '', // name="portfolio" no HTML
-            ':uid'          => $idUtilizador,
-            ':nid'          => $idNacionalidade,
-            ':cid'          => $idCurso,
-            ':eid'          => $idEscola,
-            ':tid'          => !empty($_POST['turma_id']) ? $_POST['turma_id'] : null,
-            ':ano'          => $_POST['ano_curricular'] ?? 1
-        ]);
-
-        $conexao->commit();
-        $sucesso = "Aluno registado com sucesso!";
-        // Opcional: Redirecionar
-        // header("Location: index.php"); exit;
-
-    } catch (Exception $e) {
-        $conexao->rollBack();
-        $erro = "Erro ao registar: " . $e->getMessage();
-    }
-}
+$nacionalidades = listarNacionalidades();
+$cursos         = listarCursos();
+$turmas         = listarTurmas();
+$escolas        = listarEscolas();
 ?>
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -135,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
+    <!-- ======= CABEÇALHO ======= -->
     <header id="header">
         <div class="header-logo">
             <a href="../index.php">
@@ -155,45 +42,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </nav>
     </header>
 
+    <!-- ======= CONTEÚDO PRINCIPAL ======= -->
     <main id="main-content">
 
+        <!-- Subtabs -->
         <nav class="subtabs">
             <a href="index.php" class="subtab-link">Ver Alunos</a>
             <a href="registarAluno.php" class="subtab-link active">Registar novo aluno</a>
         </nav>
 
-        <?php if ($erro): ?>
-            <div style="background-color: #f8d7da; color: #721c24; padding: 15px; margin: 20px; border-radius: 5px;">
-                <?= htmlspecialchars($erro) ?>
-            </div>
-        <?php endif; ?>
-        <?php if ($sucesso): ?>
-            <div style="background-color: #d4edda; color: #155724; padding: 15px; margin: 20px; border-radius: 5px;">
-                <?= htmlspecialchars($sucesso) ?>
-            </div>
-        <?php endif; ?>
-
         <section class="content-grid">
-            <form class="form-aluno" id="form-registar" method="POST" action="registarAluno.php" enctype="multipart/form-data">
+            <!-- Coluna esquerda: formulário -->
+            <form
+                class="form-aluno"
+                method="post"
+                action="addAluno.php"
+                id="formRegistoAluno"
+                enctype="multipart/form-data"
+            >
+
+                <?php if (!empty($erros)): ?>
+                    <div class="erros">
+                        <ul>
+                            <?php foreach ($erros as $erro): ?>
+                                <li><?= htmlspecialchars($erro) ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
 
                 <div class="form-group">
-                    <label for="codigo">Código Aluno (Username)</label>
-                    <input id="codigo" name="codigo" type="text" required>
+                    <label for="codigoAluno">Código Aluno</label>
+                    <input
+                        id="codigoAluno"
+                        name="codigoAluno"
+                        type="text"
+                        value="<?= htmlspecialchars($_POST['codigoAluno'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input id="password" name="password" type="password" required>
+                    <div class="password-wrapper">
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            value="<?= htmlspecialchars($_POST['password'] ?? '') ?>"
+                        >
+                        <label class="toggle-password">
+                            <input type="checkbox" id="togglePassword">
+                            Mostrar password
+                        </label>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="nome">Nome Aluno</label>
-                    <input id="nome" name="nome" type="text" required>
+                    <label for="nomeAluno">Nome Aluno</label>
+                    <input
+                        id="nomeAluno"
+                        name="nomeAluno"
+                        type="text"
+                        value="<?= htmlspecialchars($_POST['nomeAluno'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="dataNascimento">Data nascimento</label>
-                    <input id="dataNascimento" name="data_nascimento" type="date">
+                    <input
+                        id="dataNascimento"
+                        name="data_nascimento"
+                        type="date"
+                        value="<?= htmlspecialchars($_POST['data_nascimento'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
@@ -201,9 +122,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="select-wrapper">
                         <select id="sexo" name="sexo">
                             <option value="">Selecione um sexo</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Feminino">Feminino</option>
-                            <option value="Outro">Outro</option>
+                            <option value="Masculino" <?= (($_POST['sexo'] ?? '') === 'Masculino') ? 'selected' : '' ?>>Masculino</option>
+                            <option value="Feminino" <?= (($_POST['sexo'] ?? '') === 'Feminino') ? 'selected' : '' ?>>Feminino</option>
+                            <option value="Outro"     <?= (($_POST['sexo'] ?? '') === 'Outro')     ? 'selected' : '' ?>>Outro</option>
                         </select>
                         <span class="chevron">▾</span>
                     </div>
@@ -211,32 +132,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label for="nacionalidade">Nacionalidade</label>
-                    <input id="nacionalidade" name="nacionalidade" type="text" placeholder="Ex: Portuguesa">
+                    <div class="select-wrapper">
+                        <select id="nacionalidade" name="nacionalidade_id">
+                            <option value="">Selecione uma nacionalidade</option>
+                            <?php foreach ($nacionalidades as $nac): ?>
+                                <option
+                                    value="<?= $nac['id_nacionalidade'] ?>"
+                                    <?= (($_POST['nacionalidade_id'] ?? '') == $nac['id_nacionalidade']) ? 'selected' : '' ?>
+                                >
+                                    <?= htmlspecialchars($nac['nacionalidade_desc']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <span class="chevron">▾</span>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="nif">NIF</label>
-                    <input id="nif" name="nif" type="text">
+                    <input
+                        id="nif"
+                        name="nif"
+                        type="text"
+                        value="<?= htmlspecialchars($_POST['nif'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="cc">Número CC</label>
-                    <input id="cc" name="cc" type="text">
+                    <input
+                        id="cc"
+                        name="cc"
+                        type="text"
+                        value="<?= htmlspecialchars($_POST['cc'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="curso">Curso</label>
-                    <input id="curso" name="curso" type="text" placeholder="Ex: TESP de Programação">
+                    <div class="select-wrapper">
+                        <select id="curso" name="curso_id">
+                            <option value="">Selecione um curso</option>
+                            <?php foreach ($cursos as $curso): ?>
+                                <option
+                                    value="<?= $curso['id_curso'] ?>"
+                                    <?= (($_POST['curso_id'] ?? '') == $curso['id_curso']) ? 'selected' : '' ?>
+                                >
+                                    <?= htmlspecialchars($curso['curso_desc']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <span class="chevron">▾</span>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="turmaId">Turma</label>
                     <div class="select-wrapper">
-                        <select id="turmaId" name="turma_id">
-                            <option value="">Selecione uma Turma</option>
-                            <?php foreach ($listaTurmas as $t): ?>
-                                <option value="<?= $t['id_turma'] ?>">
-                                    <?= htmlspecialchars($t['nome']) ?>
+                        <select id="turmaId" name="turma_id" disabled>
+                            <option value="">
+                                <?= isset($_POST['curso_id']) && $_POST['curso_id'] !== '' ? 'Selecione uma Turma' : 'Selecione um curso primeiro' ?>
+                            </option>
+                            <?php foreach ($turmas as $turma): ?>
+                                <option
+                                    value="<?= $turma['id_turma'] ?>"
+                                    data-curso-id="<?= $turma['curso_id'] ?>"
+                                    <?= (($_POST['turma_id'] ?? '') == $turma['id_turma']) ? 'selected' : '' ?>
+                                >
+                                    <?= htmlspecialchars($turma['codigo'] ?? $turma['nome'] ?? $turma['id_turma']) ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -246,15 +209,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label for="anoCurricular">Ano curricular</label>
-                    <input id="anoCurricular" name="ano_curricular" type="number" min="1" value="1">
+                    <input
+                        id="anoCurricular"
+                        type="number"
+                        min="1"
+                        value="<?= htmlspecialchars($_POST['anoCurricular'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="situacaoAcademica">Situação académica</label>
                     <div class="select-wrapper">
                         <select id="situacaoAcademica" name="situacao_academica">
-                            <option value="Ativo">Ativo</option>
-                            <option value="Suspenso">Suspenso</option>
+                            <option value="">Selecione uma situação académica</option>
+                            <option value="Ativo"    <?= (($_POST['situacao_academica'] ?? '') === 'Ativo')    ? 'selected' : '' ?>>Ativo</option>
+                            <option value="Suspenso" <?= (($_POST['situacao_academica'] ?? '') === 'Suspenso') ? 'selected' : '' ?>>Suspenso</option>
                         </select>
                         <span class="chevron">▾</span>
                     </div>
@@ -262,79 +231,139 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-group">
                     <label for="escola">Escola</label>
-                    <input id="escola" name="escola" type="text" placeholder="Ex: ESGTS">
+                    <div class="select-wrapper">
+                        <select id="escola" name="escola_id">
+                            <option value="">Selecione uma escola</option>
+                            <?php foreach ($escolas as $esc): ?>
+                                <option
+                                    value="<?= $esc['id_escola'] ?>"
+                                    <?= (($_POST['escola_id'] ?? '') == $esc['id_escola']) ? 'selected' : '' ?>
+                                >
+                                    <?= htmlspecialchars($esc['escola_desc']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <span class="chevron">▾</span>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="emailInstitucional">Email institucional</label>
-                    <input id="emailInstitucional" name="email_institucional" type="email">
+                    <input
+                        id="emailInstitucional"
+                        name="emailInstitucional"
+                        type="email"
+                        value="<?= htmlspecialchars($_POST['emailInstitucional'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="emailPessoal">Email pessoal</label>
-                    <input id="emailPessoal" name="email_pessoal" type="email">
+                    <input
+                        id="emailPessoal"
+                        name="emailPessoal"
+                        type="email"
+                        value="<?= htmlspecialchars($_POST['emailPessoal'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="morada">Morada</label>
-                    <input id="morada" name="morada" type="text">
+                    <input
+                        id="morada"
+                        name="morada"
+                        type="text"
+                        value="<?= htmlspecialchars($_POST['morada'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="cp">Código-Postal</label>
-                    <input id="cp" name="cp" type="text">
+                    <input
+                        id="cp"
+                        name="cp"
+                        type="text"
+                        value="<?= htmlspecialchars($_POST['cp'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="cidade">Cidade</label>
-                    <input id="cidade" name="cidade" type="text">
+                    <input
+                        id="cidade"
+                        name="cidade"
+                        type="text"
+                        value="<?= htmlspecialchars($_POST['cidade'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
-                    <label for="idEstagio">ID estágio (Desabilitado)</label>
-                    <input id="idEstagio" type="text" disabled placeholder="Gerado posteriormente">
+                    <label for="idEstagio">ID estágio</label>
+                    <input id="idEstagio" type="text">
                 </div>
 
                 <div class="form-group">
                     <label for="profOrientador">Professor orientador</label>
-                    <input id="profOrientador" type="text" disabled placeholder="Associado no estágio">
+                    <input id="profOrientador" type="text">
                 </div>
 
                 <div class="form-group">
                     <label for="idEmpresa">ID empresa</label>
-                    <input id="idEmpresa" type="text" disabled placeholder="Associado no estágio">
+                    <input id="idEmpresa" type="text">
                 </div>
 
                 <div class="form-group">
                     <label for="nomeEmpresa">Nome empresa</label>
-                    <input id="nomeEmpresa" type="text" disabled placeholder="Associado no estágio">
+                    <input id="nomeEmpresa" type="text">
                 </div>
 
                 <div class="form-group">
                     <label for="estadoEstagio">Estado estágio</label>
-                    <input id="estadoEstagio" type="text" disabled placeholder="Não iniciado">
+                    <input id="estadoEstagio" type="text">
                 </div>
 
                 <div class="form-group">
-                    <label for="cv">CV (PDF/DOC)</label>
-                    <input id="cv" name="cv" type="file" accept=".pdf,.doc,.docx">
+                    <label for="cv">CV</label>
+                    <input
+                        id="cv"
+                        name="cv"
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="linkedin">LinkedIn</label>
-                    <input id="linkedin" name="linkedin" type="url">
+                    <input
+                        id="linkedin"
+                        name="linkedin"
+                        type="url"
+                        value="<?= htmlspecialchars($_POST['linkedin'] ?? '') ?>"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="portfolio">Portefólio (GitHub)</label>
-                    <input id="portfolio" name="github" type="url">
+                    <input
+                        id="portfolio"
+                        name="github"
+                        type="url"
+                        value="<?= htmlspecialchars($_POST['github'] ?? '') ?>"
+                    >
+                </div>
+
+                <div class="side-top side-top-inside-form">
+                    <button class="btn-salvar" type="submit">
+                        Salvar
+                    </button>
                 </div>
 
             </form>
 
+            <!-- Coluna direita: botão + imagem -->
             <aside class="side-panel">
                 <div class="side-top">
-                    <button class="btn-salvar" type="submit" form="form-registar">
+                    <button class="btn-salvar" type="submit" form="formRegistoAluno">
                         Salvar
                     </button>
                 </div>
@@ -346,6 +375,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
     </main>
 
+    <!-- ======= RODAPÉ ======= -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
@@ -369,6 +399,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </footer>
 
+    <!-- ======= MODAL PERFIL / CONTA ======= -->
     <div id="perfil-overlay" class="perfil-overlay">
         <div class="perfil-card">
             <div class="perfil-banner"></div>

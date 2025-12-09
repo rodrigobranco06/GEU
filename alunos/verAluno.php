@@ -1,57 +1,33 @@
 <?php
-include '../db.php';
-include '../utils.php';
+// alunos/verAluno.php
 
-// 1. Obter ID do aluno via GET
-$idAluno = isset($_GET['id_aluno']) ? (int)$_GET['id_aluno'] : 0;
+include 'modelsAlunos.php';
 
-if ($idAluno <= 0) {
-    die('ID de aluno inválido.');
+// Garantir que vem um id válido por GET
+if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
+    header('Location: index.php');
+    exit;
 }
 
-$conexao = estabelecerConexao();
+$idAluno = (int) $_GET['id'];
 
-// 2. Query para buscar TODOS os dados do aluno e relações
-$sql = "SELECT 
-            a.*,
-            u.username, u.password_hash,
-            n.nacionalidade_desc,
-            c.curso_desc,
-            e.escola_desc,
-            t.nome AS nome_turma,
-            -- Dados do Estágio (se existir)
-            pe.id_pedido_estagio,
-            pe.estado_pedido,
-            emp.id_empresa, 
-            emp.nome AS nome_empresa,
-            p.nome AS nome_professor
-        FROM aluno a
-        LEFT JOIN utilizador u ON a.utilizador_id = u.id_utilizador
-        LEFT JOIN nacionalidade n ON a.nacionalidade_id = n.id_nacionalidade
-        LEFT JOIN curso c ON a.curso_id = c.id_curso
-        LEFT JOIN escola e ON a.escola_id = e.id_escola
-        LEFT JOIN turma t ON a.turma_id = t.id_turma
-        -- Join para buscar info do estágio
-        LEFT JOIN pedido_estagio pe ON pe.aluno_id = a.id_aluno
-        LEFT JOIN empresa emp ON pe.empresa_id = emp.id_empresa
-        LEFT JOIN professor p ON pe.professor_id = p.id_professor
-        WHERE a.id_aluno = :id";
-
-$stmt = $conexao->prepare($sql);
-$stmt->execute([':id' => $idAluno]);
-$aluno = $stmt->fetch(PDO::FETCH_ASSOC);
+// Buscar dados do aluno
+$aluno = getAlunoById($idAluno);
 
 if (!$aluno) {
-    die("Aluno não encontrado.");
+    // Se não existir, volta à listagem
+    header('Location: index.php');
+    exit;
 }
 
-// 3. Formatar Data de Nascimento (YYYY-MM-DD -> DD/MM/YYYY)
-$dataNascFormatada = '';
-if (!empty($aluno['data_nascimento'])) {
-    $dataNascFormatada = date('d/m/Y', strtotime($aluno['data_nascimento']));
-}
+// Campos auxiliares
+$cvPath   = $aluno['cv'] ?? null;
+$cvLabel  = $cvPath ? basename($cvPath) : 'Sem CV';
+
+$linkedin = $aluno['linkedin'] ?? '';
+$github   = $aluno['github'] ?? '';
+
 ?>
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -62,6 +38,7 @@ if (!empty($aluno['data_nascimento'])) {
 </head>
 <body>
 
+    <!-- ======= CABEÇALHO ======= -->
     <header id="header">
         <div class="header-logo">
             <a href="../index.php">
@@ -82,41 +59,48 @@ if (!empty($aluno['data_nascimento'])) {
         </nav>
     </header>
 
+    <!-- ======= CONTEÚDO PRINCIPAL ======= -->
     <main id="main-content">
 
+        <!-- Subtabs -->
         <nav class="subtabs">
             <a href="index.php" class="subtab-link active">Ver Alunos</a>
             <a href="registarAluno.php" class="subtab-link">Registar novo aluno</a>
         </nav>
 
         <section class="content-grid">
+            <!-- Coluna esquerda: formulário só de leitura -->
             <form class="form-aluno">
 
                 <div class="form-group">
                     <label for="codigo">Código Aluno</label>
-                    <input id="codigo" type="text" value="<?= htmlspecialchars($aluno['username'] ?? '') ?>" readonly>
+                    <input id="codigo" type="text"
+                           value="<?= htmlspecialchars($aluno['id_aluno']) ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input id="password" type="text" value="<?= htmlspecialchars($aluno['password_hash'] ?? '') ?>" readonly>
+                    <input id="password" type="text"
+                           value="******** (não visível)" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="nome">Nome Aluno</label>
-                    <input id="nome" type="text" value="<?= htmlspecialchars($aluno['nome'] ?? '') ?>" readonly>
+                    <input id="nome" type="text"
+                           value="<?= htmlspecialchars($aluno['nome']) ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="dataNascimento">Data nascimento</label>
-                    <input id="dataNascimento" type="text" value="<?= htmlspecialchars($dataNascFormatada) ?>" readonly>
+                    <input id="dataNascimento" type="text"
+                           value="<?= htmlspecialchars($aluno['data_nascimento']) ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="sexo">Sexo</label>
                     <div class="select-wrapper">
                         <select id="sexo" disabled>
-                            <option><?= htmlspecialchars($aluno['sexo'] ?? 'Não definido') ?></option>
+                            <option><?= htmlspecialchars($aluno['sexo'] ?? '') ?></option>
                         </select>
                         <span class="chevron">▾</span>
                     </div>
@@ -124,29 +108,33 @@ if (!empty($aluno['data_nascimento'])) {
 
                 <div class="form-group">
                     <label for="nacionalidade">Nacionalidade</label>
-                    <input id="nacionalidade" type="text" value="<?= htmlspecialchars($aluno['nacionalidade_desc'] ?? '') ?>" readonly>
+                    <input id="nacionalidade" type="text"
+                           value="<?= htmlspecialchars($aluno['nacionalidade_desc'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="nif">NIF</label>
-                    <input id="nif" type="text" value="<?= htmlspecialchars($aluno['nif'] ?? '') ?>" readonly>
+                    <input id="nif" type="text"
+                           value="<?= htmlspecialchars($aluno['nif'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cc">Número CC</label>
-                    <input id="cc" type="text" value="<?= htmlspecialchars($aluno['numero_cc'] ?? '') ?>" readonly>
+                    <input id="cc" type="text"
+                           value="<?= htmlspecialchars($aluno['numero_cc'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="curso">Curso</label>
-                    <input id="curso" type="text" value="<?= htmlspecialchars($aluno['curso_desc'] ?? '') ?>" readonly>
+                    <input id="curso" type="text"
+                           value="<?= htmlspecialchars($aluno['curso_desc'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
-                    <label for="turmaId">Turma</label>
+                    <label for="turmaId">Turma ID</label>
                     <div class="select-wrapper">
                         <select id="turmaId" disabled>
-                            <option><?= htmlspecialchars($aluno['nome_turma'] ?? 'Sem Turma') ?></option>
+                            <option><?= htmlspecialchars($aluno['turma_codigo'] ?? '') ?></option>
                         </select>
                         <span class="chevron">▾</span>
                     </div>
@@ -154,14 +142,15 @@ if (!empty($aluno['data_nascimento'])) {
 
                 <div class="form-group">
                     <label for="anoCurricular">Ano curricular</label>
-                    <input id="anoCurricular" type="text" value="<?= htmlspecialchars($aluno['ano_curricular'] ?? '') ?>" readonly>
+                    <input id="anoCurricular" type="text"
+                           value="" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="situacaoAcademica">Situação académica</label>
                     <div class="select-wrapper">
                         <select id="situacaoAcademica" disabled>
-                            <option><?= htmlspecialchars($aluno['situacao_academica'] ?? 'Ativo') ?></option>
+                            <option><?= htmlspecialchars($aluno['situacao_academica'] ?? '') ?></option>
                         </select>
                         <span class="chevron">▾</span>
                     </div>
@@ -169,80 +158,99 @@ if (!empty($aluno['data_nascimento'])) {
 
                 <div class="form-group">
                     <label for="escola">Escola</label>
-                    <input id="escola" type="text" value="<?= htmlspecialchars($aluno['escola_desc'] ?? '') ?>" readonly>
+                    <input id="escola" type="text"
+                           value="<?= htmlspecialchars($aluno['escola_desc'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="emailInstitucional">Email institucional</label>
-                    <input id="emailInstitucional" type="text" value="<?= htmlspecialchars($aluno['email_institucional'] ?? '') ?>" readonly>
+                    <input id="emailInstitucional" type="text"
+                           value="<?= htmlspecialchars($aluno['email_institucional'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="emailPessoal">Email pessoal</label>
-                    <input id="emailPessoal" type="text" value="<?= htmlspecialchars($aluno['email_pessoal'] ?? '') ?>" readonly>
+                    <input id="emailPessoal" type="text"
+                           value="<?= htmlspecialchars($aluno['email_pessoal'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="morada">Morada</label>
-                    <input id="morada" type="text" value="<?= htmlspecialchars($aluno['morada'] ?? '') ?>" readonly>
+                    <input id="morada" type="text"
+                           value="<?= htmlspecialchars($aluno['morada'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cp">Código-Postal</label>
-                    <input id="cp" type="text" value="<?= htmlspecialchars($aluno['codigo_postal'] ?? '') ?>" readonly>
+                    <input id="cp" type="text"
+                           value="<?= htmlspecialchars($aluno['codigo_postal'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cidade">Cidade</label>
-                    <input id="cidade" type="text" value="<?= htmlspecialchars($aluno['cidade'] ?? '') ?>" readonly>
+                    <input id="cidade" type="text"
+                           value="<?= htmlspecialchars($aluno['cidade'] ?? '') ?>" readonly>
                 </div>
 
+                <!-- Estes campos de estágio/empresa ainda não estão ligados à BD -->
                 <div class="form-group">
-                    <label for="idEstagio">ID Pedido Estágio</label>
-                    <input id="idEstagio" type="text" value="<?= htmlspecialchars($aluno['id_pedido_estagio'] ?? 'N/A') ?>" readonly>
+                    <label for="idEstagio">ID estágio</label>
+                    <input id="idEstagio" type="text" value="" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="profOrientador">Professor orientador</label>
-                    <input id="profOrientador" type="text" value="<?= htmlspecialchars($aluno['nome_professor'] ?? 'Sem orientador') ?>" readonly>
+                    <input id="profOrientador" type="text" value="" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="idEmpresa">ID empresa</label>
-                    <input id="idEmpresa" type="text" value="<?= htmlspecialchars($aluno['id_empresa'] ?? 'N/A') ?>" readonly>
+                    <input id="idEmpresa" type="text" value="" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="nomeEmpresa">Nome empresa</label>
-                    <input id="nomeEmpresa" type="text" value="<?= htmlspecialchars($aluno['nome_empresa'] ?? 'Sem empresa') ?>" readonly>
+                    <input id="nomeEmpresa" type="text" value="" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="estadoEstagio">Estado estágio</label>
-                    <input id="estadoEstagio" type="text" value="<?= htmlspecialchars($aluno['estado_pedido'] ?? 'Não iniciado') ?>" readonly>
+                    <input id="estadoEstagio" type="text" value="" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cv">CV</label>
-                    <input id="cv" type="text" value="<?= htmlspecialchars($aluno['cv'] ?? 'Sem CV') ?>" readonly>
+                    <?php if ($cvPath): ?>
+                        <input id="cv" type="text"
+                               value="<?= htmlspecialchars($cvLabel) ?>" readonly>
+                    <?php else: ?>
+                        <input id="cv" type="text" value="Sem CV" readonly>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
                     <label for="linkedin">LinkedIn</label>
-                    <input id="linkedin" type="text" value="<?= htmlspecialchars($aluno['linkedin'] ?? '') ?>" readonly>
+                    <input id="linkedin" type="text"
+                           value="<?= htmlspecialchars($linkedin) ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="portfolio">Portefólio (GitHub)</label>
-                    <input id="portfolio" type="text" value="<?= htmlspecialchars($aluno['github'] ?? '') ?>" readonly>
+                    <input id="portfolio" type="text"
+                           value="<?= htmlspecialchars($github) ?>" readonly>
                 </div>
 
             </form>
 
+            <!-- Coluna direita: botões + imagem -->
             <aside class="side-panel">
                 <div class="side-top">
-                    <a href="editarAluno.php?id_aluno=<?= $idAluno ?>" class="btn-editar">Editar</a>
-                    <a class="btn-voltar" href="index.php">Voltar</a>
+                    <a href="editarAluno.php?id=<?= urlencode($aluno['id_aluno']) ?>" class="btn-editar" type="button">
+                        Editar
+                    </a>
+                    <a class="btn-voltar" href="index.php">
+                        Voltar
+                    </a>
                 </div>
 
                 <div class="side-image-wrapper">
@@ -252,6 +260,7 @@ if (!empty($aluno['data_nascimento'])) {
         </section>
     </main>
 
+    <!-- ======= RODAPÉ ======= -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
@@ -275,6 +284,7 @@ if (!empty($aluno['data_nascimento'])) {
         </div>
     </footer>
 
+    <!-- ======= MODAL PERFIL / CONTA ======= -->
     <div id="perfil-overlay" class="perfil-overlay">
         <div class="perfil-card">
             <div class="perfil-banner"></div>
@@ -285,11 +295,13 @@ if (!empty($aluno['data_nascimento'])) {
 
             <div class="perfil-content">
                 <div class="perfil-role">Aluno</div>
-                <div class="perfil-name">Rodrigo Branco</div>
+                <div class="perfil-name"><?= htmlspecialchars($aluno['nome']) ?></div>
 
                 <div class="perfil-row">
                     <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
-                    <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
+                    <span class="perfil-row-text">
+                        <?= htmlspecialchars($aluno['email_institucional'] ?? '') ?>
+                    </span>
                 </div>
 
                 <a href="../verPerfil.php" class="perfil-row">
@@ -310,5 +322,6 @@ if (!empty($aluno['data_nascimento'])) {
     </div>
 
     <script src="js/verAluno.js"></script>
+
 </body>
 </html>

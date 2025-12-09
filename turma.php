@@ -85,7 +85,7 @@ function obterTextoEstado($estado) {
             <a href="alunos/index.php" class="nav-link">Alunos</a>
             <a href="professores/index.php" class="nav-link">Professores</a>
             <a href="empresas/index.php" class="nav-link">Empresas</a>
-            <a href="verTurmas.php" class="nav-link active">Turmas</a> <button id="btn-conta" class="btn-conta">
+            <a href="index.php" class="nav-link active">Turmas</a> <button id="btn-conta" class="btn-conta">
                 <img src="img/img_conta.png" alt="Conta">
             </button>
             <a href="login.php" class="btn-sair">Sair</a>
