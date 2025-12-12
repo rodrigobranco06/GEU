@@ -14,9 +14,15 @@ if (!$empresa) die('Empresa não encontrada.');
 </head>
 <body>
 <header id="header">
-    <div class="header-logo"><a href="../index.php"><img src="../img/Logo.png" alt="GEU"></a></div>
+    <div class="header-logo">
+        <a href="../index.php"><img src="../img/Logo.png" alt="GEU"></a>
+    </div>
     <nav class="nav-menu">
+        <a href="../alunos/index.php" class="nav-link">Alunos</a>
+        <a href="../professores/index.php" class="nav-link">Professores</a>
         <a href="index.php" class="nav-link active">Empresas</a>
+        <a href="../index.php" class="nav-link">Turmas</a>
+        <button class="btn-conta"><img src="../img/img_conta.png" alt="Conta"></button>
         <a href="../login.php" class="btn-sair">Sair</a>
     </nav>
 </header>
