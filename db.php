@@ -1,6 +1,6 @@
 <?php
 
-
+/*
 function estabelecerConexao()
 {
    // Devia mais tarde ser passado para um ficheiro de configuração
@@ -20,10 +20,11 @@ function estabelecerConexao()
 
    return $conexao;
 }
+*/
 
 
 // estabelecer conexao com o hostinger
-/*
+
 function estabelecerConexao()
 {
    // Devia mais tarde ser passado para um ficheiro de configuração
@@ -43,5 +44,5 @@ function estabelecerConexao()
 
    return $conexao;
 }
-*/
+
 ?>
