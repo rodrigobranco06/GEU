@@ -1,48 +1,30 @@
 <?php
 
-/*
 function estabelecerConexao()
 {
-   // Devia mais tarde ser passado para um ficheiro de configuração
-   $dbname = 'geu';
-   $hostname = 'localhost';
-   $username = 'root';
-   $pass = '';
+    if ($_SERVER['SERVER_NAME'] === 'localhost') {
+        // Ambiente de desenvolvimento
+        $dbname = 'geu';
+        $hostname = 'localhost';
+        $username = 'root';
+        $pass = '';
+        $port = 3307;
+    } else {
+        // Ambiente de produção (Hostinger)
+        $dbname = 'u506280443_rodtomDB';
+        $hostname = 'localhost';
+        $username = 'u506280443_rodtomdbUser';
+        $pass = '5eb~4!f;D';
+        $port = 3306;
+    }
 
-   $dsn = "mysql:host=$hostname;dbname=$dbname;port=3307;charset=utf8mb4";
+    $dsn = "mysql:host=$hostname;dbname=$dbname;port=$port;charset=utf8mb4";
 
-   try {
-      $conexao = new PDO( $dsn, $username, $pass ); 
-   }
-   catch ( PDOException $e ) {
-      $e->getMessage();
-   }
-
-   return $conexao;
+    try {
+        return new PDO($dsn, $username, $pass, [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]);
+    } catch (PDOException $e) {
+        die("Erro de conexão: " . $e->getMessage());
+    }
 }
-*/
-
-
-// estabelecer conexao com o hostinger
-
-function estabelecerConexao()
-{
-   // Devia mais tarde ser passado para um ficheiro de configuração
-   $dbname = 'u506280443_rodtomDB';
-   $hostname = 'localhost';
-   $username = 'u506280443_rodtomdbUser';
-   $pass = '5eb~4!f;D';
-
-   $dsn = "mysql:host=$hostname;dbname=$dbname;port=3306;charset=utf8mb4";
-
-   try {
-      $conexao = new PDO( $dsn, $username, $pass ); 
-   }
-   catch ( PDOException $e ) {
-      $e->getMessage();         // a dot notation no PHP é diferente '->'
-   }
-
-   return $conexao;
-}
-
-?>

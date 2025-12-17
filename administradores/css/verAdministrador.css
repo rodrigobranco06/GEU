@@ -147,8 +147,8 @@ body {
     margin-top: 20px;
 }
 
-/* ======= FORMULÁRIO ======= */
-.form-aluno {
+/* ======= FORM (READONLY) ======= */
+.form-admin {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -175,46 +175,7 @@ body {
     font-size: 13px;
     color: #333;
     outline: none;
-    background-color: #fff;
-}
-
-.form-group input:focus {
-    border-color: #1aa179;
-}
-
-/* selects */
-.select-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.select-wrapper select {
-    width: 100%;
-    height: 28px;
-    padding: 3px 26px 3px 8px;
-    border: 1px solid #dcdfe4;
-    border-radius: 4px;
-    font-size: 13px;
-    color: #333;
-    background-color: #fff;
-    outline: none;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-
-.select-wrapper select:focus {
-    border-color: #1aa179;
-}
-
-.chevron {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 12px;
-    color: #666;
-    pointer-events: none;
+    background-color: #f8f8f8;
 }
 
 /* ======= COLUNA DIREITA ======= */
@@ -232,7 +193,7 @@ body {
     gap: 10px;
 }
 
-.btn-salvar {
+.btn-editar {
     background-color: #1aa179;
     color: white;
     border: none;
@@ -245,23 +206,9 @@ body {
     text-decoration: none;
 }
 
-.btn-salvar:hover {
+.btn-editar:hover {
     background-color: #148e69;
 }
-/* botão de eliminar */
-.btn-eliminar {
-    background-color: #c0392b;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 25px;
-    cursor: pointer;
-}
-
-.btn-eliminar:hover {
-    background-color: #e74c3c;
-}
-
 
 .btn-voltar {
     background-color: #e8f5f2;
@@ -339,17 +286,15 @@ body {
     width: auto;
 }
 
-
 /* ======= MODAL PERFIL / CONTA ======= */
-
 .perfil-overlay {
     position: fixed;
     inset: 0;
     display: none;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-top: 80px;        /* distância ao topo */
-    padding-right: 60px;      /* distância à direita similar ao header */
+    padding-top: 80px;
+    padding-right: 60px;
     background: rgba(0, 0, 0, 0.35);
     z-index: 2500;
 }
@@ -375,7 +320,6 @@ body {
     background-position: center;
 }
 
-/* avatar circular a “sair” do banner */
 .perfil-avatar {
     position: absolute;
     top: 50px;
@@ -390,7 +334,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para a imagem de avatar */
 .perfil-avatar-img {
     width: 32px;
     height: 32px;
@@ -422,7 +365,6 @@ body {
     color: #000;
 }
 
-/* Estilo para as imagens das linhas (email, definições) */
 .perfil-row-img {
     width: 20px;
     height: 20px;
@@ -433,7 +375,6 @@ body {
     flex: 1;
 }
 
-/* === AQUI ESTÁ A CORREÇÃO DO BOTÃO LOGOUT === */
 .perfil-logout-row {
     width: 100%;
     margin-top: 16px;
@@ -442,31 +383,28 @@ body {
     background: #f0f0f0;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza o texto */
+    justify-content: center;
     padding: 12px 18px;
     font-size: 20px;
     cursor: pointer;
     text-decoration: none;
     color: #000;
-    position: relative; /* Importante para o ícone absoluto funcionar */
+    position: relative;
 }
 
-/* Ícone fixo à esquerda (absoluto) */
 .perfil-back-img {
     width: 30px;
     height: 30px;
     object-fit: contain;
     position: absolute;
-    left: 18px; /* Mantém a mesma distância da margem que o padding */
+    left: 18px;
 }
 
 .perfil-logout-text {
-    /* Sem flex:1 para garantir que fica no centro exato */
     text-align: center;
     font-weight: 500;
 }
 
-/* Botão Voltar em verde */
 .perfil-voltar-btn {
     width: 100%;
     margin-top: 18px;
@@ -484,75 +422,67 @@ body {
     filter: brightness(0.96);
 }
 
-/* ======= PASSWORD INLINE (input + checkbox alinhada) ======= */
-.password-inline {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
+/* ======= RESPONSIVO ======= */
+@media (max-width: 1024px) {
+    #header {
+        padding: 15px 30px;
+    }
+
+    #main-content {
+        padding: 0 30px 30px;
+    }
+
+    .content-grid {
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+        gap: 30px;
+    }
 }
 
-.password-inline input {
-    flex: 1;
-}
+@media (max-width: 768px) {
+    #header {
+        padding: 15px 20px;
+        justify-content: center;
+    }
 
-.toggle-password-inline {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: #444;
-    white-space: nowrap;
-    user-select: none;
-}
+    .header-logo {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
 
-.toggle-password-inline input {
-    width: 14px;
-    height: 14px;
-    margin: 0;
-}
+    .nav-menu {
+        width: 100%;
+        justify-content: center;
+        gap: 15px;
+    }
 
-/* ======= CV INLINE (ficheiro + "Atual") ======= */
-.cv-inline {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 100%;
-}
+    #main-content {
+        padding: 0 20px 24px;
+        margin-top: 20px;
+    }
 
-.cv-atual {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: #444;
-}
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
 
-.cv-atual-label {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: #eef7f5;
-    border: 1px solid #cbe7e1;
-    color: #0d5f52;
-    font-weight: 600;
-}
+    .side-panel {
+        align-items: center;
+    }
 
-.cv-atual-link {
-    color: #1f7aec;
-    text-decoration: none;
-    font-weight: 500;
-    word-break: break-all;
-}
+    .side-top {
+        justify-content: center;
+    }
 
-.cv-atual-link:hover {
-    text-decoration: underline;
-}
+    .form-group {
+        grid-template-columns: 1fr;
+        row-gap: 4px;
+        align-items: flex-start;
+    }
 
-.cv-atual-none {
-    color: #777;
+    .form-admin {
+        max-width: 100%;
+    }
 }
-
 
 @media (max-width: 480px) {
     #header {

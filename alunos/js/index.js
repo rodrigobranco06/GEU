@@ -31,8 +31,7 @@ if (perfilOverlay) {
   });
 }
 
-// Ação de logout (por agora só consola;
-// se quiseres podes redirecionar para login.html / login.php)
+// Ação de logout
 if (perfilLogout) {
   perfilLogout.addEventListener("click", function () {
     console.log("Log out clicado");
@@ -41,31 +40,20 @@ if (perfilLogout) {
 }
 
 
-
 // -------- LISTAGEM / PESQUISA DE ALUNOS --------
-// (funciona na página de "Ver Alunos")
-
 document.addEventListener("DOMContentLoaded", () => {
-  // procura o input de pesquisa e o corpo da tabela
-  const searchInput = document.querySelector(".search-area input[type='text']");
-  const tabelaBody  = document.querySelector(".tabela-alunos tbody");
+  const searchInput = document.getElementById("search-input");
+  const tabelaBody  = document.getElementById("alunos-table-body");
 
-  // Se a página não tiver estes elementos (outra página qualquer), não faz nada
-  if (!searchInput || !tabelaBody) {
-    return;
-  }
+  if (!searchInput || !tabelaBody) return;
 
   async function carregarAlunos(term = "") {
     try {
       const params = new URLSearchParams();
-      if (term) {
-        params.set("search", term);
-      }
+      if (term) params.set("search", term);
 
       const response = await fetch("fetchAlunos.php?" + params.toString(), {
-        headers: {
-          "Accept": "application/json"
-        }
+        headers: { "Accept": "application/json" }
       });
 
       if (!response.ok) {
@@ -75,44 +63,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const dados = await response.json();
 
-      // Limpa a tabela
+      // Limpar tabela
       tabelaBody.innerHTML = "";
 
-      // Preenche com os alunos recebidos
+      // Se não houver resultados
+      if (!Array.isArray(dados) || dados.length === 0) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td colspan="5" style="text-align:center;">Sem resultados</td>`;
+        tabelaBody.appendChild(tr);
+        return;
+      }
+
+      // Renderizar linhas
       dados.forEach((aluno) => {
         const tr = document.createElement("tr");
         tr.classList.add("linha-click");
 
         tr.addEventListener("click", () => {
+          // ✅ verAluno.php espera ?id=
           window.location.href = `verAluno.php?id_aluno=${encodeURIComponent(aluno.id_aluno)}`;
         });
 
         tr.innerHTML = `
           <td>${aluno.id_aluno}</td>
           <td>${aluno.nome_aluno}</td>
-          <td>${aluno.curso_desc      ?? "Sem curso"}</td>
-          <td>${aluno.nome_empresa    ?? "Sem empresa"}</td>
-          <td>${aluno.estado_pedido   ?? "Esperando empresa"}</td>
+          <td>${aluno.curso_desc ?? "Sem curso"}</td>
+          <td>${aluno.nome_empresa ?? "Sem empresa"}</td>
+          <td>${aluno.estado_pedido ?? "Esperando empresa"}</td>
         `;
 
         tabelaBody.appendChild(tr);
       });
+
     } catch (erro) {
       console.error("Erro ao obter alunos:", erro);
     }
   }
 
-  // Carregamento inicial (sem filtro)
+  // Primeira carga
   carregarAlunos();
 
-  // Debounce da pesquisa para não enviar pedido a cada tecla
+  // Debounce
   let timeoutId;
   searchInput.addEventListener("input", () => {
     const term = searchInput.value.trim();
-
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      carregarAlunos(term);
-    }, 300);
+    timeoutId = setTimeout(() => carregarAlunos(term), 300);
   });
 });

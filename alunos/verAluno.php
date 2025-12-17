@@ -3,30 +3,22 @@
 
 include 'modelsAlunos.php';
 
-// Garantir que vem um id válido por GET
-if (!isset($_GET['id']) || !ctype_digit($_GET['id'])) {
+if (!isset($_GET['id_aluno']) || !ctype_digit($_GET['id_aluno'])) {
     header('Location: index.php');
     exit;
 }
 
-$idAluno = (int) $_GET['id'];
+$idAluno = (int) $_GET['id_aluno'];
 
-// Buscar dados do aluno
 $aluno = getAlunoById($idAluno);
 
 if (!$aluno) {
-    // Se não existir, volta à listagem
     header('Location: index.php');
     exit;
 }
 
-// Campos auxiliares
-$cvPath   = $aluno['cv'] ?? null;
-$cvLabel  = $cvPath ? basename($cvPath) : 'Sem CV';
-
-$linkedin = $aluno['linkedin'] ?? '';
-$github   = $aluno['github'] ?? '';
-
+$cvPath  = $aluno['cv'] ?? null;
+$cvLabel = $cvPath ? basename($cvPath) : 'Sem CV';
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -69,31 +61,23 @@ $github   = $aluno['github'] ?? '';
         </nav>
 
         <section class="content-grid">
-            <!-- Coluna esquerda: formulário só de leitura -->
             <form class="form-aluno">
 
                 <div class="form-group">
                     <label for="codigo">Código Aluno</label>
-                    <input id="codigo" type="text"
-                           value="<?= htmlspecialchars($aluno['id_aluno']) ?>" readonly>
+                    <input id="codigo" type="text" value="<?= htmlspecialchars($aluno['id_aluno']) ?>" readonly>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input id="password" type="text"
-                           value="******** (não visível)" readonly>
-                </div>
+                <!-- ✅ removido campo password -->
 
                 <div class="form-group">
                     <label for="nome">Nome Aluno</label>
-                    <input id="nome" type="text"
-                           value="<?= htmlspecialchars($aluno['nome']) ?>" readonly>
+                    <input id="nome" type="text" value="<?= htmlspecialchars($aluno['nome'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="dataNascimento">Data nascimento</label>
-                    <input id="dataNascimento" type="text"
-                           value="<?= htmlspecialchars($aluno['data_nascimento']) ?>" readonly>
+                    <input id="dataNascimento" type="text" value="<?= htmlspecialchars($aluno['data_nascimento'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
@@ -108,42 +92,37 @@ $github   = $aluno['github'] ?? '';
 
                 <div class="form-group">
                     <label for="nacionalidade">Nacionalidade</label>
-                    <input id="nacionalidade" type="text"
-                           value="<?= htmlspecialchars($aluno['nacionalidade_desc'] ?? '') ?>" readonly>
+                    <input id="nacionalidade" type="text" value="<?= htmlspecialchars($aluno['nacionalidade_desc'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="nif">NIF</label>
-                    <input id="nif" type="text"
-                           value="<?= htmlspecialchars($aluno['nif'] ?? '') ?>" readonly>
+                    <input id="nif" type="text" value="<?= htmlspecialchars($aluno['nif'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cc">Número CC</label>
-                    <input id="cc" type="text"
-                           value="<?= htmlspecialchars($aluno['numero_cc'] ?? '') ?>" readonly>
+                    <input id="cc" type="text" value="<?= htmlspecialchars($aluno['numero_cc'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="curso">Curso</label>
-                    <input id="curso" type="text"
-                           value="<?= htmlspecialchars($aluno['curso_desc'] ?? '') ?>" readonly>
+                    <input id="curso" type="text" value="<?= htmlspecialchars($aluno['curso_desc'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="turmaId">Turma ID</label>
                     <div class="select-wrapper">
                         <select id="turmaId" disabled>
-                            <option><?= htmlspecialchars($aluno['turma_codigo'] ?? '') ?></option>
+                            <option><?= htmlspecialchars($aluno['turma_id'] ?? '') ?></option>
                         </select>
                         <span class="chevron">▾</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="anoCurricular">Ano curricular</label>
-                    <input id="anoCurricular" type="text"
-                           value="" readonly>
+                    <label for="codigoTurma">Código Turma</label>
+                    <input id="codigoTurma" type="text" value="<?= htmlspecialchars($aluno['turma_codigo'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
@@ -158,99 +137,69 @@ $github   = $aluno['github'] ?? '';
 
                 <div class="form-group">
                     <label for="escola">Escola</label>
-                    <input id="escola" type="text"
-                           value="<?= htmlspecialchars($aluno['escola_desc'] ?? '') ?>" readonly>
+                    <input id="escola" type="text" value="<?= htmlspecialchars($aluno['escola_desc'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="emailInstitucional">Email institucional</label>
-                    <input id="emailInstitucional" type="text"
-                           value="<?= htmlspecialchars($aluno['email_institucional'] ?? '') ?>" readonly>
+                    <input id="emailInstitucional" type="text" value="<?= htmlspecialchars($aluno['email_institucional'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="emailPessoal">Email pessoal</label>
-                    <input id="emailPessoal" type="text"
-                           value="<?= htmlspecialchars($aluno['email_pessoal'] ?? '') ?>" readonly>
+                    <input id="emailPessoal" type="text" value="<?= htmlspecialchars($aluno['email_pessoal'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="morada">Morada</label>
-                    <input id="morada" type="text"
-                           value="<?= htmlspecialchars($aluno['morada'] ?? '') ?>" readonly>
+                    <input id="morada" type="text" value="<?= htmlspecialchars($aluno['morada'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cp">Código-Postal</label>
-                    <input id="cp" type="text"
-                           value="<?= htmlspecialchars($aluno['codigo_postal'] ?? '') ?>" readonly>
+                    <input id="cp" type="text" value="<?= htmlspecialchars($aluno['codigo_postal'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cidade">Cidade</label>
-                    <input id="cidade" type="text"
-                           value="<?= htmlspecialchars($aluno['cidade'] ?? '') ?>" readonly>
+                    <input id="cidade" type="text" value="<?= htmlspecialchars($aluno['cidade'] ?? '') ?>" readonly>
                 </div>
 
-                <!-- Estes campos de estágio/empresa ainda não estão ligados à BD -->
+                <!-- ✅ CV com download -->
                 <div class="form-group">
-                    <label for="idEstagio">ID estágio</label>
-                    <input id="idEstagio" type="text" value="" readonly>
-                </div>
+                    <label>CV</label>
 
-                <div class="form-group">
-                    <label for="profOrientador">Professor orientador</label>
-                    <input id="profOrientador" type="text" value="" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="idEmpresa">ID empresa</label>
-                    <input id="idEmpresa" type="text" value="" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="nomeEmpresa">Nome empresa</label>
-                    <input id="nomeEmpresa" type="text" value="" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="estadoEstagio">Estado estágio</label>
-                    <input id="estadoEstagio" type="text" value="" readonly>
-                </div>
-
-                <div class="form-group">
-                    <label for="cv">CV</label>
-                    <?php if ($cvPath): ?>
-                        <input id="cv" type="text"
-                               value="<?= htmlspecialchars($cvLabel) ?>" readonly>
+                    <?php if (!empty($cvPath)): ?>
+                        <a
+                            href="../<?= htmlspecialchars($cvPath) ?>"
+                            class="btn-download"
+                            download
+                        >
+                            Transferir CV (<?= htmlspecialchars($cvLabel) ?>)
+                        </a>
                     <?php else: ?>
-                        <input id="cv" type="text" value="Sem CV" readonly>
+                        <input type="text" value="Sem CV" readonly>
                     <?php endif; ?>
                 </div>
 
                 <div class="form-group">
                     <label for="linkedin">LinkedIn</label>
-                    <input id="linkedin" type="text"
-                           value="<?= htmlspecialchars($linkedin) ?>" readonly>
+                    <input id="linkedin" type="text" value="<?= htmlspecialchars($aluno['linkedin'] ?? '') ?>" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="portfolio">Portefólio (GitHub)</label>
-                    <input id="portfolio" type="text"
-                           value="<?= htmlspecialchars($github) ?>" readonly>
+                    <input id="portfolio" type="text" value="<?= htmlspecialchars($aluno['github'] ?? '') ?>" readonly>
                 </div>
 
             </form>
 
-            <!-- Coluna direita: botões + imagem -->
             <aside class="side-panel">
                 <div class="side-top">
-                    <a href="editarAluno.php?id=<?= urlencode($aluno['id_aluno']) ?>" class="btn-editar" type="button">
+                    <a href="editarAluno.php?id_aluno=<?= urlencode($aluno['id_aluno']) ?>" class="btn-editar" type="button">
                         Editar
                     </a>
-                    <a class="btn-voltar" href="index.php">
-                        Voltar
-                    </a>
+                    <a class="btn-voltar" href="index.php">Voltar</a>
                 </div>
 
                 <div class="side-image-wrapper">
@@ -260,7 +209,6 @@ $github   = $aluno['github'] ?? '';
         </section>
     </main>
 
-    <!-- ======= RODAPÉ ======= -->
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
@@ -284,7 +232,6 @@ $github   = $aluno['github'] ?? '';
         </div>
     </footer>
 
-    <!-- ======= MODAL PERFIL / CONTA ======= -->
     <div id="perfil-overlay" class="perfil-overlay">
         <div class="perfil-card">
             <div class="perfil-banner"></div>
@@ -295,13 +242,11 @@ $github   = $aluno['github'] ?? '';
 
             <div class="perfil-content">
                 <div class="perfil-role">Aluno</div>
-                <div class="perfil-name"><?= htmlspecialchars($aluno['nome']) ?></div>
+                <div class="perfil-name"><?= htmlspecialchars($aluno['nome'] ?? '') ?></div>
 
                 <div class="perfil-row">
                     <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
-                    <span class="perfil-row-text">
-                        <?= htmlspecialchars($aluno['email_institucional'] ?? '') ?>
-                    </span>
+                    <span class="perfil-row-text"><?= htmlspecialchars($aluno['email_institucional'] ?? '') ?></span>
                 </div>
 
                 <a href="../verPerfil.php" class="perfil-row">
@@ -314,14 +259,11 @@ $github   = $aluno['github'] ?? '';
                     <span class="perfil-logout-text">Log out</span>
                 </a>
 
-                <button type="button" class="perfil-voltar-btn">
-                    Voltar
-                </button>
+                <button type="button" class="perfil-voltar-btn">Voltar</button>
             </div>
         </div>
     </div>
 
     <script src="js/verAluno.js"></script>
-
 </body>
 </html>

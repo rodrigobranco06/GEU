@@ -70,20 +70,21 @@ $alunos = getTodosAlunos();
                         <th>Estado do estágio</th>
                     </tr>
                 </thead>
+
                 <tbody id="alunos-table-body">
                     <?php foreach ($alunos as $al): ?>
                         <tr
                             class="linha-click"
-                            onclick="window.location='verAluno.php?id=<?= $aluno['id_aluno'] ?>'">
-                            <td><?= htmlspecialchars($aluno['id_aluno']) ?></td>
+                            onclick="window.location='verAluno.php?id_aluno=<?= (int)$al['id_aluno'] ?>'">
+                            <td><?= htmlspecialchars($al['id_aluno']) ?></td>
                             <td><?= htmlspecialchars($al['nome_aluno']) ?></td>
                             <td><?= htmlspecialchars($al['curso_desc'] ?? 'Sem curso') ?></td>
                             <td><?= htmlspecialchars($al['nome_empresa'] ?? 'Sem empresa') ?></td>
                             <td><?= htmlspecialchars($al['estado_pedido'] ?? 'Esperando empresa') ?></td>
                         </tr>
-                        
                     <?php endforeach; ?>
                 </tbody>
+
             </table>
         </section>
     </main>

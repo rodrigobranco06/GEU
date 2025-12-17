@@ -145,7 +145,8 @@ function getAlunoById(int $idAluno) {
             n.nacionalidade_desc,
             c.curso_desc,
             e.escola_desc,
-            t.id_turma AS turma_codigo
+            t.id_turma AS turma_id,
+            t.codigo   AS turma_codigo
         FROM aluno a
         LEFT JOIN utilizador u
             ON a.utilizador_id = u.id_utilizador

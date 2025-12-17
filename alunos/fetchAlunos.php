@@ -3,14 +3,11 @@
 
 include 'modelsAlunos.php';
 
-// Cabeçalho JSON
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
-// Termo de pesquisa vindo por GET (?search=...)
 $search_term = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-// Vai buscar alunos filtrados
 $alunos = getAlunos($search_term);
 
-// Devolve JSON
 echo json_encode($alunos);
+exit;

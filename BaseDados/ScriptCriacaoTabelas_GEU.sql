@@ -231,3 +231,17 @@ CREATE TABLE fase_avaliacao (
   CONSTRAINT fase_avaliacao_pedido_fk 
     FOREIGN KEY (id_pedido_estagio) REFERENCES pedido_estagio (id_pedido_estagio)
 );
+
+-- CRIAÇÃO DA TABELA DE ADMINISTRADORES
+CREATE TABLE administrador (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    email_institucional VARCHAR(150) NOT NULL,
+    utilizador_id INT NOT NULL,
+
+    CONSTRAINT fk_admin_utilizador
+        FOREIGN KEY (utilizador_id)
+        REFERENCES utilizador(id_utilizador)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
