@@ -53,6 +53,7 @@ $turmas = $stmtTurmas->fetchAll(PDO::FETCH_ASSOC);
             <a href="professores/index.php" class="nav-link">Professores</a>
             <a href="empresas/index.php" class="nav-link">Empresas</a>
             <a href="index.php" class="nav-link active">Turmas</a>
+            <a href="administradores/index.php" class="nav-link">Administradores</a>
 
             <button id="btn-conta" class="btn-conta">
                 <img src="img/img_conta.png" alt="Conta">

@@ -43,6 +43,7 @@ if (!empty($professor['data_nascimento'])) {
         <a href="index.php" class="nav-link active">Professores</a>
         <a href="../empresas/index.php" class="nav-link">Empresas</a>
         <a href="../index.php" class="nav-link">Turmas</a>
+        <a href="../administradores/index.php" class="nav-link">Administradores</a>
 
         <button class="btn-conta" id="btn-conta">
             <img src="../img/img_conta.png" alt="Conta">

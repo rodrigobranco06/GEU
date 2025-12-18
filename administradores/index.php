@@ -28,7 +28,7 @@ $admins = getTodosAdministradores();
         <a href="../empresas/index.php" class="nav-link">Empresas</a>
         <a href="../index.php" class="nav-link">Turmas</a>
         <a href="index.php" class="nav-link active">Administradores</a>
-
+        
         <button class="btn-conta" id="btn-conta">
             <img src="../img/img_conta.png" alt="Conta">
         </button>

@@ -34,6 +34,7 @@ $escolas        = listarEscolas();
             <a href="../professores/index.php" class="nav-link">Professores</a>
             <a href="../empresas/index.php" class="nav-link">Empresas</a>
             <a href="../index.php" class="nav-link">Turmas</a>
+            <a href="../index.php" class="nav-link">Administradores</a>
 
             <button class="btn-conta" id="btn-conta">
                 <img src="../img/img_conta.png" alt="Conta">
