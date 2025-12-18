@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once 'db.php';
 
 // 1. Redirecionamento de segurança
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -7,9 +8,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit();
 }
 
-require_once 'db.php';
 $conexao = estabelecerConexao();
-
 $user_id = $_SESSION['id_utilizador'];
 $cargo   = $_SESSION['cargo']; 
 
@@ -76,9 +75,6 @@ $professores = $conexao->query("SELECT id_professor, nome FROM professor ORDER B
 
             <?php if ($cargo === 'Administrador'): ?>
                 <a href="professores/index.php" class="nav-link">Professores</a>
-            <?php endif; ?>
-
-            <?php if ($cargo === 'Administrador'): ?>
                 <a href="alunos/index.php" class="nav-link">Alunos</a>
             <?php endif; ?>
 
@@ -142,7 +138,7 @@ $professores = $conexao->query("SELECT id_professor, nome FROM professor ORDER B
                         <?php endforeach; ?>
                     </select>
                     
-                    <div class="modal-buttons">
+                    <div class="modal-buttons" style="position: static; margin-top: 20px;">
                         <button class="modal-btn criar" type="submit">Criar</button>
                         <button class="modal-btn voltar" type="button" id="btn-fechar-modal">Voltar</button>
                     </div>
@@ -178,6 +174,20 @@ $professores = $conexao->query("SELECT id_professor, nome FROM professor ORDER B
             </div>
         </div>
     </div>
+
+    <hr>
+    <footer id="footer">
+        <div class="contactos">
+            <h3>Contactos</h3>
+            <p><img src="img/img_email.png" alt="Email"> <strong>Email:</strong> geral@ipsantarem.pt</p>
+            <p><img src="img/img_telemovel.png" alt="Telefone"> <strong>Telefone:</strong> +351 243 309 520</p>
+            <p><img src="img/img_localizacao.png" alt="Endereço"> <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém</p>
+        </div>
+        <div class="logos">
+            <img src="img/Logo.png" alt="GEU">
+            <img src="img/img_confinanciado.png" alt="Confinanciado">
+        </div>
+    </footer>
 
     <script src="js/index.js"></script>
 </body>
