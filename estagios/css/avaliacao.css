@@ -349,9 +349,6 @@ body {
     text-align: center;
 }
 
-.upload-btn::before {
-    content: "Adicionar documento";
-}
 
 .modal.show {
     display: flex;

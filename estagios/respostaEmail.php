@@ -18,29 +18,27 @@ if ($id_pedido <= 0) {
     die("Pedido de estágio inválido.");
 }
 
-// 3. Procurar dados completos
-$sql = "SELECT p.id_pedido_estagio, a.id_aluno, a.nome as aluno_nome, a.email_institucional, 
-               c.curso_desc, t.ano_curricular,
-               fc.numero_ucs_atraso, fc.estado_confirmacao, fc.data_confirmacao
+// 3. Procurar dados completos (JOIN com empresa para preenchimento automático)
+$sql = "SELECT p.*, a.nome as aluno_nome, a.id_aluno, 
+               e.id_empresa, e.nome as empresa_nome, e.email as empresa_email, e.nome_responsavel,
+               fr.resposta_empresa, fr.data_resposta
         FROM pedido_estagio p
         JOIN aluno a ON p.aluno_id = a.id_aluno
-        JOIN curso c ON a.curso_id = c.id_curso
-        JOIN turma t ON a.turma_id = t.id_turma
-        LEFT JOIN fase_confirmacao fc ON p.id_pedido_estagio = fc.id_pedido_estagio
-        WHERE p.id_pedido_estagio = :id_pedido";
+        LEFT JOIN empresa e ON p.empresa_id = e.id_empresa
+        LEFT JOIN fase_resposta fr ON p.id_pedido_estagio = fr.id_pedido_estagio
+        WHERE p.id_pedido_estagio = :id";
 
 $stmt = $conexao->prepare($sql);
-$stmt->execute([':id_pedido' => $id_pedido]);
+$stmt->execute([':id' => $id_pedido]);
 $dados = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$dados) {
     die("Pedido não encontrado.");
 }
 
-// 4. Lógica do Perfil Dinâmico (Necessária para preencher o Modal abaixo)
+// 4. Lógica do Perfil Dinâmico (Modal de Conta)
 $nome_exibicao = "Utilizador";
 $email_exibicao = "Email não disponível";
-
 try {
     if ($cargoLogado === 'Aluno') {
         $stmtP = $conexao->prepare("SELECT nome, email_institucional FROM aluno WHERE utilizador_id = ?");
@@ -65,15 +63,13 @@ try {
 
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GEU — Pedido de estágio: Confirmar dados</title>
-    <link rel="stylesheet" href="css/confirmarDados.css" />
+    <title>GEU — Pedido de estágio: Resposta ao Email</title>
+    <link rel="stylesheet" href="css/respostaEmail.css" />
     <link rel="stylesheet" href="../css/index.css" />
 </head>
-
 <body>
 
     <header id="header">
@@ -108,23 +104,23 @@ try {
 
     <main id="main-content">
         <nav class="steps">
-            <a class="step active" href="confirmarDados.php?id_pedido_estagio=<?= $id_pedido ?>">Confirmar Dados</a>
+            <a class="step" href="confirmarDados.php?id_pedido_estagio=<?= $id_pedido ?>">Confirmar Dados</a>
             <a class="step" href="escolhaAreaEmpresa.php?id_pedido_estagio=<?= $id_pedido ?>">Escolha de área e empresa</a>
             <a class="step" href="envioEmail.php?id_pedido_estagio=<?= $id_pedido ?>">Envio de email</a>
-            <a class="step" href="respostaEmail.php?id_pedido_estagio=<?= $id_pedido ?>">Resposta ao email</a>
+            <a class="step active" href="#">Resposta ao email</a>
             <a class="step" href="planoEstagio.php?id_pedido_estagio=<?= $id_pedido ?>">Plano estágio</a>
             <a class="step" href="avaliacao.php?id_pedido_estagio=<?= $id_pedido ?>">Avaliação</a>
         </nav>
 
-        <form action="processarConfirmarDados.php" method="POST" id="form-principal">
+        <form action="processarRespostaEmail.php" method="POST">
             <input type="hidden" name="id_pedido_estagio" value="<?= $id_pedido ?>">
 
             <div class="page-head">
                 <h1 class="titulo"><?= htmlspecialchars($dados['aluno_nome']) ?> - <?= htmlspecialchars($dados['id_aluno']) ?></h1>
                 <div class="acoes">
-                    <a class="btn-outline" href="../aluno.php?id_aluno=<?= $dados['id_aluno'] ?>">Voltar</a>
-                    <?php if (in_array($cargoLogado, ['Professor', 'Administrador']) && $dados['estado_confirmacao'] !== 'Confirmado'): ?>
-                        <button class="btn-primary" type="button" id="btn-confirmar">Confirmar Dados</button>
+                    <a class="btn-outline" href="envioEmail.php?id_pedido_estagio=<?= $id_pedido ?>">Voltar</a>
+                    <?php if (in_array($cargoLogado, ['Professor', 'Administrador']) && $dados['resposta_empresa'] !== 'Aceite'): ?>
+                        <button class="btn-primary" type="button" id="btn-confirmar">Guardar resposta ao email</button>
                     <?php endif; ?>
                 </div>
             </div>
@@ -132,27 +128,27 @@ try {
             <section class="card">
                 <ul class="kv">
                     <li><span class="k">Número de pedido:</span><input class="v" value="<?= $id_pedido ?>" readonly></li>
-                    <li><span class="k">Código Aluno:</span><input class="v" value="<?= $dados['id_aluno'] ?>" readonly></li>
-                    <li><span class="k">Nome Aluno:</span><input class="v" value="<?= htmlspecialchars($dados['aluno_nome']) ?>" readonly></li>
-                    <li><span class="k">Curso:</span><input class="v" value="<?= htmlspecialchars($dados['curso_desc']) ?>" readonly></li>
-                    <li><span class="k">Ano curricular:</span><input class="v" value="<?= $dados['ano_curricular'] ?>" readonly></li>
+                    <li><span class="k">Código empresa:</span><input class="v" value="<?= $dados['id_empresa'] ?? '---' ?>" readonly></li>
+                    <li><span class="k">Nome empresa:</span><input class="v" value="<?= htmlspecialchars($dados['empresa_nome'] ?? '---') ?>" readonly></li>
+                    <li><span class="k">Email:</span><input class="v" value="<?= htmlspecialchars($dados['empresa_email'] ?? '---') ?>" readonly></li>
+                    <li><span class="k">Nome do responsável da empresa:</span><input class="v" value="<?= htmlspecialchars($dados['nome_responsavel'] ?? '---') ?>" readonly></li>
                     <li>
-                        <span class="k">Número de UC’s em atraso:</span>
-                        <?php if (in_array($cargoLogado, ['Professor', 'Administrador']) && $dados['estado_confirmacao'] !== 'Confirmado'): ?>
-                            <input type="number" name="ucs_atraso" class="v" value="<?= $dados['numero_ucs_atraso'] ?? '0' ?>" min="0" required style="border: 1px solid #1aa179; background: #fff;">
-                        <?php else: ?>
-                            <input class="v" value="<?= $dados['numero_ucs_atraso'] ?? '0' ?>" readonly>
-                        <?php endif; ?>
+                        <span class="k">Resposta ao email:</span>
+                        <span class="select-wrap">
+                            <select name="resposta_empresa" class="v select" <?= ($dados['resposta_empresa'] === 'Aceite') ? 'disabled' : '' ?>>
+                                <option value="Aguarda Resposta" <?= ($dados['resposta_empresa'] == 'Aguarda Resposta' || !$dados['resposta_empresa']) ? 'selected' : '' ?>>Aguarda Resposta</option>
+                                <option value="Aceite" <?= ($dados['resposta_empresa'] == 'Aceite') ? 'selected' : '' ?>>Aceite</option>
+                                <option value="Recusado" <?= ($dados['resposta_empresa'] == 'Recusado') ? 'selected' : '' ?>>Recusado</option>
+                            </select>
+                            <span class="chev" aria-hidden="true">▾</span>
+                        </span>
                     </li>
-                    <li><span class="k">Email aluno:</span><input class="v" value="<?= htmlspecialchars($dados['email_institucional']) ?>" readonly></li>
-                    <li><span class="k">Estado de confirmação:</span><input class="v" value="<?= $dados['estado_confirmacao'] ?? 'Pendente' ?>" readonly></li>
-                    <li><span class="k">Data confirmação:</span><input class="v" value="<?= $dados['data_confirmacao'] ? date('d/m/Y', strtotime($dados['data_confirmacao'])) : '---' ?>" readonly></li>
                 </ul>
             </section>
 
             <div id="popup-salvar" class="popup-overlay" style="display:none;">
                 <div class="popup-box">
-                    <p class="popup-text">Deseja confirmar as informações do aluno e avançar para a próxima fase?</p>
+                    <p class="popup-text">Deseja salvar a resposta da empresa?</p>
                     <div class="popup-actions">
                         <button type="button" class="popup-btn popup-cancel" id="btn-cancelar">Cancelar</button>
                         <button type="submit" class="popup-btn popup-confirm">Sim</button>
@@ -161,32 +157,6 @@ try {
             </div>
         </form>
     </main>
-
-    <div id="perfil-overlay" class="perfil-overlay">
-        <div class="perfil-card">
-            <div class="perfil-banner"></div>
-            <div class="perfil-avatar">
-                <img src="../img/img_conta.png" alt="Avatar" class="perfil-avatar-img">
-            </div>
-            <div class="perfil-content">
-                <div class="perfil-role"><?= htmlspecialchars($cargoLogado) ?></div>
-                <div class="perfil-name"><?= htmlspecialchars($nome_exibicao) ?></div>
-                <div class="perfil-row">
-                    <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
-                    <span class="perfil-row-text"><?= htmlspecialchars($email_exibicao) ?></span>
-                </div>
-                <a href="../verPerfil.php" class="perfil-row">
-                    <img src="../img/img_definicoes.png" alt="Definições" class="perfil-row-img">
-                    <span class="perfil-row-text">Definições de conta</span>
-                </a>
-                <a href="../logout.php" class="perfil-logout-row">
-                    <img src="../img/img_sair.png" alt="Sair" class="perfil-back-img">
-                    <span class="perfil-logout-text">Log out</span>
-                </a>
-                <button type="button" class="perfil-voltar-btn" onclick="document.getElementById('perfil-overlay').classList.remove('show')">Voltar</button>
-            </div>
-        </div>
-    </div>
 
     <footer id="footer">
         <div class="contactos">
@@ -209,6 +179,30 @@ try {
             <img src="../img/img_confinanciado.png" alt="Confinanciado">
         </div>
     </footer>
+
+    <div id="perfil-overlay" class="perfil-overlay">
+        <div class="perfil-card">
+            <div class="perfil-banner"></div>
+            <div class="perfil-avatar"><img src="../img/img_conta.png" alt="Avatar" class="perfil-avatar-img"></div>
+            <div class="perfil-content">
+                <div class="perfil-role"><?= htmlspecialchars($cargoLogado) ?></div>
+                <div class="perfil-name"><?= htmlspecialchars($nome_exibicao) ?></div>
+                <div class="perfil-row">
+                    <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
+                    <span class="perfil-row-text"><?= htmlspecialchars($email_exibicao) ?></span>
+                </div>
+                <a href="../verPerfil.php" class="perfil-row">
+                    <img src="../img/img_definicoes.png" alt="Definições" class="perfil-row-img">
+                    <span class="perfil-row-text">Definições de conta</span>
+                </a>
+                <a href="../logout.php" class="perfil-logout-row">
+                    <img src="../img/img_sair.png" alt="Sair" class="perfil-back-img">
+                    <span class="perfil-logout-text">Log out</span>
+                </a>
+                <button type="button" class="perfil-voltar-btn" onclick="document.getElementById('perfil-overlay').classList.remove('show')">Voltar</button>
+            </div>
+        </div>
+    </div>
 
     <script src="../js/index.js"></script>
     <script>

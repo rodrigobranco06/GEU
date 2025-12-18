@@ -1,0 +1,250 @@
+<?php
+session_start();
+include '../db.php'; // Preferência por include mantida
+
+// 1. Verificação de segurança
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: ../login.php");
+    exit();
+}
+
+$conexao = estabelecerConexao();
+$cargoLogado = $_SESSION['cargo'];
+$idUserLogado = $_SESSION['id_utilizador'];
+
+// 2. Obter ID do pedido via URL
+$id_pedido = isset($_GET['id_pedido_estagio']) ? (int)$_GET['id_pedido_estagio'] : 0;
+if ($id_pedido <= 0) {
+    die("Pedido de estágio inválido.");
+}
+
+// 3. Procurar dados do Pedido, Aluno, Empresa e CVs
+$sql = "SELECT p.*, a.nome as aluno_nome, a.id_aluno, a.cv as cv_perfil,
+               e.id_empresa, e.nome as empresa_nome, e.email as empresa_email, e.nome_responsavel,
+               fe.cv as cv_fase, fe.estado_envio_email, fe.data_envio_email
+        FROM pedido_estagio p
+        JOIN aluno a ON p.aluno_id = a.id_aluno
+        LEFT JOIN empresa e ON p.empresa_id = e.id_empresa
+        LEFT JOIN fase_email fe ON p.id_pedido_estagio = fe.id_pedido_estagio
+        WHERE p.id_pedido_estagio = :id";
+
+$stmt = $conexao->prepare($sql);
+$stmt->execute([':id' => $id_pedido]);
+$dados = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$dados) {
+    die("Pedido não encontrado.");
+}
+
+// Determinar qual CV mostrar (Prioridade para o específico da fase)
+$cv_exibicao = $dados['cv_fase'] ?: $dados['cv_perfil'];
+
+// 4. Lógica do Perfil Dinâmico (Modal de Conta)
+$nome_exibicao = "Utilizador";
+$email_exibicao = "Email não disponível";
+try {
+    if ($cargoLogado === 'Aluno') {
+        $stmtP = $conexao->prepare("SELECT nome, email_institucional FROM aluno WHERE utilizador_id = ?");
+    } elseif ($cargoLogado === 'Professor') {
+        $stmtP = $conexao->prepare("SELECT nome, email_institucional FROM professor WHERE utilizador_id = ?");
+    } elseif ($cargoLogado === 'Administrador') {
+        $stmtP = $conexao->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
+    } elseif ($cargoLogado === 'Empresa') {
+        $stmtP = $conexao->prepare("SELECT nome, email FROM empresa WHERE utilizador_id = ?");
+    }
+    
+    if (isset($stmtP)) {
+        $stmtP->execute([$idUserLogado]);
+        $resPerfil = $stmtP->fetch(PDO::FETCH_ASSOC);
+        if ($resPerfil) {
+            $nome_exibicao = $resPerfil['nome'];
+            $email_exibicao = $resPerfil['email_institucional'] ?? $resPerfil['email'] ?? 'Email não disponível';
+        }
+    }
+} catch (PDOException $e) { error_log($e->getMessage()); }
+?>
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GEU — Pedido de estágio: Envio de email</title>
+    <link rel="stylesheet" href="css/envioEmail.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+</head>
+<body>
+
+    <header id="header">
+        <div class="header-logo">
+            <a href="../index.php"><img src="../img/Logo.png" alt="GEU"></a>
+        </div>
+
+        <nav class="nav-menu">
+            <?php if ($cargoLogado === 'Administrador'): ?>
+                <a href="../administradores/index.php" class="nav-link">Administradores</a>
+            <?php endif; ?>
+
+            <?php if ($cargoLogado === 'Administrador' || $cargoLogado === 'Professor'): ?>
+                <a href="../empresas/index.php" class="nav-link">Empresas</a>
+            <?php endif; ?>
+
+            <?php if ($cargoLogado === 'Administrador'): ?>
+                <a href="../professores/index.php" class="nav-link">Professores</a>
+                <a href="../alunos/index.php" class="nav-link">Alunos</a>
+            <?php endif; ?>
+
+            <a href="../index.php" class="nav-link active">Turmas</a>
+
+            <button class="btn-conta" id="btn-conta">
+                <img src="../img/img_conta.png" alt="Conta">
+            </button>
+            <a href="../logout.php" class="btn-sair">Sair</a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <nav class="steps">
+            <a class="step" href="confirmarDados.php?id_pedido_estagio=<?= $id_pedido ?>">Confirmar Dados</a>
+            <a class="step" href="escolhaAreaEmpresa.php?id_pedido_estagio=<?= $id_pedido ?>">Escolha de área e empresa</a>
+            <a class="step active" href="#">Envio de email</a>
+            <a class="step" href="respostaEmail.php?id_pedido_estagio=<?= $id_pedido ?>">Resposta ao email</a>
+            <a class="step" href="planoEstagio.php?id_pedido_estagio=<?= $id_pedido ?>">Plano estágio</a>
+            <a class="step" href="avaliacao.php?id_pedido_estagio=<?= $id_pedido ?>">Avaliação</a>
+        </nav>
+
+        <div class="page-head">
+            <h1 class="titulo"><?= htmlspecialchars($dados['aluno_nome']) ?> - <?= htmlspecialchars($dados['id_aluno']) ?></h1>
+            <div class="acoes">
+                <a class="btn-outline" href="escolhaAreaEmpresa.php?id_pedido_estagio=<?= $id_pedido ?>">Voltar</a>
+                <?php if (in_array($cargoLogado, ['Professor', 'Administrador']) && $dados['estado_envio_email'] !== 'Enviado'): ?>
+                    <button class="btn-primary" type="button" id="btn-confirmar-envio">Definir email como enviado</button>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <section class="card">
+            <ul class="kv">
+                <li><span class="k">Número de pedido:</span><input class="v" value="<?= $id_pedido ?>" readonly></li>
+                <li><span class="k">Nome empresa:</span><input class="v" value="<?= htmlspecialchars($dados['empresa_nome'] ?? '---') ?>" readonly></li>
+                <li><span class="k">Email:</span><input class="v" value="<?= htmlspecialchars($dados['empresa_email'] ?? '---') ?>" readonly></li>
+                <li><span class="k">Responsável empresa:</span><input class="v" value="<?= htmlspecialchars($dados['nome_responsavel'] ?? '---') ?>" readonly></li>
+                <li>
+                    <span class="k">CV do aluno:</span>
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                        <?php if ($cv_exibicao): ?>
+                            <a href="../uploads/cv/<?= $cv_exibicao ?>" target="_blank" class="upload-btn" style="text-decoration:none; flex: 1; text-align: center;">
+                                Ver CV (<?= htmlspecialchars($cv_exibicao) ?>)
+                            </a>
+                        <?php endif; ?>
+                        
+                        <?php if ($cargoLogado === 'Professor' || $cargoLogado === 'Administrador'): ?>
+                            <button class="upload-btn" type="button" onclick="openModal()" style="flex: 1;">
+                                <?= $cv_exibicao ? 'Substituir CV' : 'Inserir CV' ?>
+                            </button>
+                        <?php endif; ?>
+                    </div>
+                </li>
+                <li><span class="k">Estado de envio:</span><input class="v" value="<?= $dados['estado_envio_email'] ?? 'Pendente' ?>" readonly></li>
+                <li><span class="k">Data de envio do email:</span><input class="v" value="<?= $dados['data_envio_email'] ? date('d/m/Y H:i', strtotime($dados['data_envio_email'])) : '---' ?>" readonly></li>
+            </ul>
+        </section>
+
+        <div id="uploadModal" class="modal" style="display:none;">
+          <div class="upload-card">
+            <form action="processarEnvioEmail.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="id_pedido_estagio" value="<?= $id_pedido ?>">
+                <input type="hidden" name="acao" value="upload_cv">
+                <div class="upload-header">
+                  <button class="upload-back" type="button" onclick="closeModal()">&#x2039;</button>
+                  <h2>Upload CV</h2>
+                </div>
+                <label for="fileInput" class="upload-panel">
+                  <div class="upload-cloud">☁</div>
+                  <p class="upload-text" id="fileNameDisplay">Selecione o ficheiro PDF</p>
+                  <button class="upload-plus" type="button" onclick="document.getElementById('fileInput').click()">+</button>
+                </label>
+                <input type="file" id="fileInput" name="cv_file" hidden accept=".pdf" onchange="displayFileName()">
+                <button type="submit" class="btn-primary" style="width:100%; margin-top:15px;">Guardar no Pedido</button>
+            </form>
+          </div>
+        </div>
+
+        <div id="popup-salvar" class="popup-overlay" style="display:none;">
+            <div class="popup-box">
+                <p class="popup-text">Confirmar que o email foi enviado com o CV selecionado?</p>
+                <div class="popup-actions">
+                    <button type="button" class="popup-btn popup-cancel" onclick="document.getElementById('popup-salvar').style.display='none'">Cancelar</button>
+                    <form action="processarEnvioEmail.php" method="POST" style="display:inline;">
+                        <input type="hidden" name="id_pedido_estagio" value="<?= $id_pedido ?>">
+                        <input type="hidden" name="cv_atual" value="<?= $cv_exibicao ?>">
+                        <input type="hidden" name="acao" value="confirmar_envio">
+                        <button type="submit" class="popup-btn popup-confirm">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer">
+        <div class="contactos">
+            <h3>Contactos</h3>
+            <p>
+                <img src="../img/img_email.png" alt="Email">
+                <strong>Email:</strong> geral@ipsantarem.pt
+            </p>
+            <p>
+                <img src="../img/img_telemovel.png" alt="Telefone">
+                <strong>Telefone:</strong> +351 243 309 520
+            </p>
+            <p>
+                <img src="../img/img_localizacao.png" alt="Endereço">
+                <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém
+            </p>
+        </div>
+        <div class="logos">
+            <img src="../img/Logo.png" alt="GEU">
+            <img src="../img/img_confinanciado.png" alt="Confinanciado">
+        </div>
+    </footer>
+
+    <div id="perfil-overlay" class="perfil-overlay">
+        <div class="perfil-card">
+            <div class="perfil-banner"></div>
+            <div class="perfil-avatar"><img src="../img/img_conta.png" alt="Avatar" class="perfil-avatar-img"></div>
+            <div class="perfil-content">
+                <div class="perfil-role"><?= htmlspecialchars($cargoLogado) ?></div>
+                <div class="perfil-name"><?= htmlspecialchars($nome_exibicao) ?></div>
+                <div class="perfil-row">
+                    <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
+                    <span class="perfil-row-text"><?= htmlspecialchars($email_exibicao) ?></span>
+                </div>
+                <a href="../verPerfil.php" class="perfil-row">
+                    <img src="../img/img_definicoes.png" alt="Definições" class="perfil-row-img">
+                    <span class="perfil-row-text">Definições de conta</span>
+                </a>
+                <a href="../logout.php" class="perfil-logout-row">
+                    <img src="../img/img_sair.png" alt="Sair" class="perfil-back-img">
+                    <span class="perfil-logout-text">Log out</span>
+                </a>
+                <button type="button" class="perfil-voltar-btn" onclick="document.getElementById('perfil-overlay').classList.remove('show')">Voltar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/index.js"></script>
+    <script>
+        function openModal() { document.getElementById('uploadModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('uploadModal').style.display = 'none'; }
+        function displayFileName() {
+            const input = document.getElementById('fileInput');
+            const display = document.getElementById('fileNameDisplay');
+            display.innerText = input.files[0] ? input.files[0].name : "Selecione o ficheiro PDF";
+        }
+        const btnPop = document.getElementById('btn-confirmar-envio');
+        if(btnPop) btnPop.onclick = () => document.getElementById('popup-salvar').style.display = 'flex';
+        const btnConta = document.getElementById('btn-conta');
+        if(btnConta) btnConta.onclick = () => document.getElementById('perfil-overlay').classList.add('show');
+    </script>
+</body>
+</html>

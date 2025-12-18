@@ -55,37 +55,46 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // ====== GERAÇÃO AUTOMÁTICA DO CÓDIGO DA TURMA ======
+ // GERACAO AUTOMATICA DE CODIGO DE TURMA E NOME DA TURMA
+
+    // Localiza os inputs no DOM
     const inputCurso      = document.getElementById('curso');
+    const inputAnoCurric  = document.getElementById('ano-curricular');
     const inputAnoInicio  = document.getElementById('ano-inicio');
     const inputAnoFim     = document.getElementById('ano-fim');
     const inputCodigo     = document.getElementById('codigo-turma');
+    const inputNome       = document.getElementById('nome-turma');
 
-    console.log('inputs para código turma:', { inputCurso, inputAnoInicio, inputAnoFim, inputCodigo });
+    function atualizarCamposAutomaticos() {
+        const optionSelecionada = inputCurso.options[inputCurso.selectedIndex];
+        // Obtém a sigla diretamente do atributo data que definimos no PHP
+        const sigla = optionSelecionada ? optionSelecionada.getAttribute('data-sigla').trim().toUpperCase() : '';
+        
+        const anoCurric = inputAnoCurric.value.trim();
+        const anoIni    = inputAnoInicio.value.trim();
+        const anoFim    = inputAnoFim.value.trim();
 
-    if (!inputCurso || !inputAnoInicio || !inputAnoFim || !inputCodigo) {
-        console.warn('Algum dos inputs não foi encontrado, geração de código desativada.');
-        return;
-    }
+        if (sigla && anoIni && anoFim) {
+            // Gera o Código: tpsi20242026
+            inputCodigo.value = sigla.toLowerCase() + anoIni + anoFim;
 
-    function gerarCodigoTurma() {
-        let curso    = inputCurso.value.trim().toLowerCase();
-        const anoIni = inputAnoInicio.value.trim();
-        const anoFim = inputAnoFim.value.trim();
-
-        if (curso && anoIni && anoFim) {
-            curso = curso
-                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
-                .replace(/\s+/g, ''); // remove espaços
-
-            const codigo = curso + anoIni + anoFim;
-            inputCodigo.value = codigo;
+            // Gera o Nome: TPSI - 2 (2024/2026)
+            if (anoCurric) {
+                inputNome.value = `${sigla} - ${anoCurric} (${anoIni}/${anoFim})`;
+            } else {
+                inputNome.value = '';
+            }
         } else {
             inputCodigo.value = '';
+            inputNome.value = '';
         }
     }
 
-    inputCurso.addEventListener('input', gerarCodigoTurma);
-    inputAnoInicio.addEventListener('input', gerarCodigoTurma);
-    inputAnoFim.addEventListener('input', gerarCodigoTurma);
+    // Adiciona os ouvintes de evento
+    if (inputCurso && inputAnoCurric && inputAnoInicio && inputAnoFim) {
+        inputCurso.addEventListener('change', atualizarCamposAutomaticos);
+        inputAnoCurric.addEventListener('input', atualizarCamposAutomaticos);
+        inputAnoInicio.addEventListener('input', atualizarCamposAutomaticos);
+        inputAnoFim.addEventListener('input', atualizarCamposAutomaticos);
+    }
 });

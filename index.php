@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db.php';
+include 'db.php'; // Substituído require_once por include conforme solicitado
 
 // 1. Redirecionamento de segurança
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
@@ -29,24 +29,65 @@ try {
 
     if (isset($stmt)) {
         $stmt->execute([$user_id]);
-        $dados = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($dados) {
-            $nome_exibicao = $dados['nome'];
-            $email_exibicao = $dados['email_institucional'] ?? $dados['email'];
+        $perfil = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($perfil) {
+            $nome_exibicao = $perfil['nome'];
+            $email_exibicao = $perfil['email_institucional'] ?? $perfil['email'];
         }
     }
 } catch (PDOException $e) {
     error_log($e->getMessage());
 }
 
-// --- DADOS PARA TURMAS E MODAIS ---
-$sqlTurmas = "SELECT t.id_turma, t.nome AS turma_nome, t.codigo, t.ano_inicio, p.nome AS professor_nome
-              FROM turma t LEFT JOIN professor p ON t.professor_id = p.id_professor
-              ORDER BY t.ano_inicio DESC";
-$turmas = $conexao->query($sqlTurmas)->fetchAll(PDO::FETCH_ASSOC);
+// --- LÓGICA DE FILTRAGEM DE TURMAS POR CARGO ---
+try {
+    $sqlTurmas = "SELECT DISTINCT t.id_turma, t.nome AS turma_nome, t.codigo, t.ano_inicio, p.nome AS professor_nome
+                  FROM turma t 
+                  LEFT JOIN professor p ON t.professor_id = p.id_professor";
 
-$cursos = $conexao->query("SELECT id_curso, curso_desc FROM curso ORDER BY curso_desc")->fetchAll(PDO::FETCH_ASSOC);
-$professores = $conexao->query("SELECT id_professor, nome FROM professor ORDER BY nome")->fetchAll(PDO::FETCH_ASSOC);
+    if ($cargo === 'Administrador') {
+        // Vê todas as turmas
+        $stmtT = $conexao->prepare($sqlTurmas . " ORDER BY t.ano_inicio DESC");
+        $stmtT->execute();
+    } 
+    elseif ($cargo === 'Professor') {
+        // Vê apenas as turmas que orienta
+        $sqlTurmas .= " JOIN professor prof_logado ON t.professor_id = prof_logado.id_professor 
+                        WHERE prof_logado.utilizador_id = ? ORDER BY t.ano_inicio DESC";
+        $stmtT = $conexao->prepare($sqlTurmas);
+        $stmtT->execute([$user_id]);
+    } 
+    elseif ($cargo === 'Aluno') {
+        // Vê apenas a sua turma
+        $sqlTurmas .= " JOIN aluno a ON t.id_turma = a.turma_id 
+                        WHERE a.utilizador_id = ? ORDER BY t.ano_inicio DESC";
+        $stmtT = $conexao->prepare($sqlTurmas);
+        $stmtT->execute([$user_id]);
+    } 
+    elseif ($cargo === 'Empresa') {
+        // Vê turmas que têm alunos com pedidos para esta empresa
+        $sqlTurmas .= " JOIN aluno a ON t.id_turma = a.turma_id
+                        JOIN pedido_estagio pe ON a.id_aluno = pe.aluno_id
+                        JOIN empresa e ON pe.empresa_id = e.id_empresa
+                        WHERE e.utilizador_id = ? ORDER BY t.ano_inicio DESC";
+        $stmtT = $conexao->prepare($sqlTurmas);
+        $stmtT->execute([$user_id]);
+    }
+
+    $turmas = $stmtT->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    error_log($e->getMessage());
+    $turmas = [];
+}
+
+// Dados para modais (apenas Admin/Professor)
+$cursos = [];
+$professores = [];
+if (in_array($cargo, ['Administrador', 'Professor'])) {
+    $cursos = $conexao->query("SELECT id_curso, curso_desc FROM curso ORDER BY curso_desc")->fetchAll(PDO::FETCH_ASSOC);
+    $professores = $conexao->query("SELECT id_professor, nome FROM professor ORDER BY nome")->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -89,46 +130,58 @@ $professores = $conexao->query("SELECT id_professor, nome FROM professor ORDER B
 
     <main id="main-content">
         <div class="main-header">
-            <h2 class="titulo-pagina">Turmas</h2>
+            <h2 class="titulo-pagina">Minhas Turmas</h2>
             <?php if ($cargo === 'Administrador' || $cargo === 'Professor'): ?>
                 <button class="btn-criar-turma">Criar Nova Turma</button>
             <?php endif; ?>
         </div>
 
         <div class="turmas-container">
-            <?php foreach ($turmas as $t): ?>
-                <a href="turma.php?id_turma=<?= $t['id_turma'] ?>" class="turma-link">
-                    <div class="turma-card">
-                        <h3 class="turma-nome"><?= htmlspecialchars($t['turma_nome']) ?></h3>
-                        <p class="turma-professor-label">Professor orientador</p>
-                        <p class="turma-professor-nome"><?= htmlspecialchars($t['professor_nome'] ?: 'Indefinido') ?></p>
-                    </div>
-                </a>
-            <?php endforeach; ?>
+            <?php if (empty($turmas)): ?>
+                <div class="sem-dados">Não foram encontradas turmas associadas ao seu perfil.</div>
+            <?php else: ?>
+                <?php foreach ($turmas as $t): ?>
+                    <a href="turma.php?id_turma=<?= $t['id_turma'] ?>" class="turma-link">
+                        <div class="turma-card">
+                            <h3 class="turma-nome"><?= htmlspecialchars($t['turma_nome']) ?></h3>
+                            <p class="turma-professor-label">Professor orientador</p>
+                            <p class="turma-professor-nome"><?= htmlspecialchars($t['professor_nome'] ?: 'Indefinido') ?></p>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </main>
 
-    <?php if ($cargo === 'Administrador' || $cargo === 'Professor'): ?>
+    <?php if (in_array($cargo, ['Administrador', 'Professor'])): ?>
     <div id="modal-criar-turma" class="modal-overlay" style="display:none;">
         <div class="modal-content-box">
             <div class="modal-flex">
                 <form class="modal-form" action="adicionarTurma.php" method="POST">
-                    <label>Curso:</label>
+                    <label>Curso (Sigla):</label>
                     <select name="curso_id" id="curso" required>
-                        <option value="" disabled selected>Selecione...</option>
+                        <option value="" disabled selected>Selecione o curso...</option>
                         <?php foreach ($cursos as $c): ?>
-                            <option value="<?= $c['id_curso'] ?>"><?= htmlspecialchars($c['curso_desc']) ?></option>
+                            <option value="<?= $c['id_curso'] ?>" data-sigla="<?= htmlspecialchars($c['curso_desc']) ?>">
+                                <?= htmlspecialchars($c['curso_desc']) ?>
+                            </option>
                         <?php endforeach; ?>
                     </select>
 
+                    <label>Ano Curricular:</label>
+                    <input type="number" name="ano_curricular" id="ano-curricular" placeholder="Ex: 2" min="1" max="5" required>
+
                     <label>Ano Início:</label>
-                    <input type="number" name="ano_inicio" id="ano-inicio" required>
+                    <input type="number" name="ano_inicio" id="ano-inicio" placeholder="Ex: 2024" required>
+                    
                     <label>Ano Fim:</label>
-                    <input type="number" name="ano_fim" id="ano-fim">
+                    <input type="number" name="ano_fim" id="ano-fim" placeholder="Ex: 2026">
+                    
                     <label>Código Gerado:</label>
                     <input type="text" name="codigo" id="codigo-turma" readonly>
+                    
                     <label>Nome da Turma:</label>
-                    <input type="text" name="nome" required>
+                    <input type="text" name="nome" id="nome-turma" readonly required>
 
                     <label>Professor Orientador:</label>
                     <select name="professor_id">
@@ -138,7 +191,7 @@ $professores = $conexao->query("SELECT id_professor, nome FROM professor ORDER B
                         <?php endforeach; ?>
                     </select>
                     
-                    <div class="modal-buttons" style="position: static; margin-top: 20px;">
+                    <div class="modal-buttons">
                         <button class="modal-btn criar" type="submit">Criar</button>
                         <button class="modal-btn voltar" type="button" id="btn-fechar-modal">Voltar</button>
                     </div>
@@ -175,13 +228,21 @@ $professores = $conexao->query("SELECT id_professor, nome FROM professor ORDER B
         </div>
     </div>
 
-    <hr>
     <footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
-            <p><img src="img/img_email.png" alt="Email"> <strong>Email:</strong> geral@ipsantarem.pt</p>
-            <p><img src="img/img_telemovel.png" alt="Telefone"> <strong>Telefone:</strong> +351 243 309 520</p>
-            <p><img src="img/img_localizacao.png" alt="Endereço"> <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém</p>
+            <p>
+                <img src="img/img_email.png" alt="Email">
+                <strong>Email:</strong> geral@ipsantarem.pt
+            </p>
+            <p>
+                <img src="img/img_telemovel.png" alt="Telefone">
+                <strong>Telefone:</strong> +351 243 309 520
+            </p>
+            <p>
+                <img src="img/img_localizacao.png" alt="Endereço">
+                <strong>Endereço:</strong> Complexo Andaluz, Apartado 279, 2001-904 Santarém
+            </p>
         </div>
         <div class="logos">
             <img src="img/Logo.png" alt="GEU">

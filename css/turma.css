@@ -108,6 +108,23 @@ body {
   color: #0f1a1a;
 }
 
+.btn-outline {
+  background-color: #e8f5f2;
+  color: #0d5f52;
+  border: 1px solid #cbe7e1;
+  padding: 10px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-outline:hover {
+  filter: brightness(0.98);
+}
+
 .btn-editar, .btn-criar-turma {
   background-color: #1aa179;
   color: white;

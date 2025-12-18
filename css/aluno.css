@@ -405,6 +405,60 @@ body {
 }
 
 
+/* Ajuste no Card para suportar o botão à direita */
+.pedido-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 18px 20px;
+    background-color: #fff;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pedido-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card-content {
+    flex: 1; /* Ocupa todo o espaço disponível à esquerda */
+    text-decoration: none;
+    color: inherit;
+}
+
+.pedido-data {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* Estilo do Botão de Eliminar */
+.form-eliminar {
+    margin-left: 20px;
+}
+
+.btn-delete-card {
+    background-color: #fee2e2; /* Fundo avermelhado leve */
+    border: 1px solid #fecaca;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.btn-delete-card:hover {
+    background-color: #dc2626; /* Vermelho forte no hover */
+    border-color: #b91c1c;
+}
+
+.btn-delete-card:hover img {
+    filter: brightness(0) invert(1); /* Torna o ícone branco no hover */
+}
+
 /* ======= MEDIA QUERIES - RESPONSIVIDADE ======= */
 
 /* Tablets (até 1024px) */

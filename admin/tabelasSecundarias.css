@@ -1,0 +1,93 @@
+/* tabelasSecundarias.css */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.5;
+}
+
+#main-content {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.header-admin { margin-bottom: 30px; }
+.header-admin h1 { font-size: 28px; color: #0f172a; }
+.header-admin p { color: #64748b; }
+
+.btn-voltar {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #0f7a74;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Alertas */
+.alert { padding: 12px; border-radius: 6px; margin-bottom: 10px; font-size: 14px; }
+.erro { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+.sucesso { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+
+/* Grid e Cards */
+.painel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+}
+
+.card h2 { font-size: 18px; margin-bottom: 15px; color: #334155; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+
+/* Formulário Interno */
+.inline-form { display: flex; gap: 8px; margin-bottom: 20px; }
+.inline-form input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+}
+.inline-form input:focus { border-color: #0f7a74; }
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-add { background: #0f7a74; color: white; }
+.btn-add:hover { background: #0d6661; }
+
+/* Tabelas */
+.scroll-table { max-height: 300px; overflow-y: auto; border: 1px solid #f1f5f9; border-radius: 6px; }
+.lista { width: 100%; border-collapse: collapse; font-size: 13px; }
+.lista th { background: #f8fafc; position: sticky; top: 0; text-align: left; padding: 10px; color: #64748b; }
+.lista td { padding: 10px; border-bottom: 1px solid #f1f5f9; }
+
+.col-id { width: 50px; }
+.col-acoes { width: 80px; }
+
+.btn-del {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: underline;
+}
+
+.btn-del:hover { color: #b91c1c; }
