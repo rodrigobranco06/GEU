@@ -450,6 +450,37 @@ body {
     filter: brightness(0.96);
 }
 
+/* Alinhamento da password e checkbox na mesma linha */
+.password-inline {
+    display: flex;
+    align-items: center; /* Centra verticalmente o input e a label */
+    gap: 10px;
+    width: 100%;
+}
+
+.password-inline input {
+    flex: 1; /* Faz o input ocupar o espaço disponível */
+}
+
+.toggle-password-inline {
+    display: flex;
+    align-items: center; /* Centra o checkbox com o texto "Mostrar password" */
+    gap: 5px;
+    font-size: 12px;
+    color: #444;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Garante que o checkbox não herda alturas estranhas */
+.toggle-password-inline input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    cursor: pointer;
+}
+
 /* ======= RESPONSIVIDADE ======= */
 @media (max-width: 1024px) {
     #header {

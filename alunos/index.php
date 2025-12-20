@@ -1,7 +1,39 @@
 <?php
 // alunos/index.php
 
+session_start();
+
+// 1. Verificação de segurança: Logado + Cargo de Administrador
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['cargo'] !== 'Administrador') {
+    // Se não for admin, redireciona para a página principal ou login
+    header("Location: ../index.php"); 
+    exit();
+}
+
 include 'modelsAlunos.php';
+
+// --- LÓGICA PARA O MODAL (Dados do Admin logado) ---
+$user_id_logado = $_SESSION['id_utilizador'];
+$cargo          = $_SESSION['cargo']; 
+$nome_exibicao  = "Administrador";    
+$email_exibicao = "Email não disponível";
+
+try {
+    // A função estabelecerConexao() já está disponível via modelsAlunos.php
+    $db = estabelecerConexao();
+    
+    // Procurar os dados do Administrador que está a usar o sistema para o modal
+    $stmtLogado = $db->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
+    $stmtLogado->execute([$user_id_logado]);
+    $dadosLogado = $stmtLogado->fetch(PDO::FETCH_ASSOC);
+
+    if ($dadosLogado) {
+        $nome_exibicao = $dadosLogado['nome'];
+        $email_exibicao = $dadosLogado['email_institucional'];
+    }
+} catch (PDOException $e) {
+    error_log("Erro ao carregar dados do modal: " . $e->getMessage());
+}
 
 $alunos = getTodosAlunos();
 ?>
@@ -124,12 +156,12 @@ $alunos = getTodosAlunos();
             </div>
 
             <div class="perfil-content">
-                <div class="perfil-role">Aluno</div>
-                <div class="perfil-name">Rodrigo Branco</div>
+                <div class="perfil-role"><?= htmlspecialchars($cargo) ?></div>
+                <div class="perfil-name"><?= htmlspecialchars($nome_exibicao) ?></div>
 
                 <div class="perfil-row">
                     <img src="../img/img_email.png" alt="Email" class="perfil-row-img">
-                    <span class="perfil-row-text">240001087@esg.ipsantarem.pt</span>
+                    <span class="perfil-row-text"><?= htmlspecialchars($email_exibicao) ?></span>
                 </div>
 
                 <a href="../verPerfil.php" class="perfil-row">
@@ -137,7 +169,7 @@ $alunos = getTodosAlunos();
                     <span class="perfil-row-text">Definições de conta</span>
                 </a>
 
-                <a href="../login.php" class="perfil-logout-row">
+                <a href="../logout.php" class="perfil-logout-row">
                     <img src="../img/img_sair.png" alt="Sair" class="perfil-back-img">
                     <span class="perfil-logout-text">Log out</span>
                 </a>
@@ -148,6 +180,7 @@ $alunos = getTodosAlunos();
             </div>
         </div>
     </div>
+
 
     <script src="js/index.js"></script>
 </body>
