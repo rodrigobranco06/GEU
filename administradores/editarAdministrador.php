@@ -134,10 +134,6 @@ $erros = $erros ?? [];
                 <input id="emailInstitucional" name="emailInstitucional" type="email" value="<?= htmlspecialchars($admin['email_institucional'] ?? '') ?>">
             </div>
 
-            <div class="form-group">
-                <label for="emailPessoal">Email pessoal</label>
-                <input id="emailPessoal" name="emailPessoal" type="email" value="<?= htmlspecialchars($admin['email_pessoal'] ?? '') ?>">
-            </div>
 
             <div class="side-top side-top-inside-form">
                 <button class="btn-salvar" type="submit">Salvar</button>

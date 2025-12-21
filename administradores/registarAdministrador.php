@@ -2,12 +2,12 @@
 // administradores/registarAdministrador.php
 
 session_start();
-/*
+
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['cargo'] !== 'Administrador') {
     header("Location: ../index.php"); 
     exit();
 }
-*/
+
 
 include 'modelsAdministradores.php';
 
@@ -120,10 +120,6 @@ $erros = $erros ?? [];
                 <input id="emailInstitucional" name="emailInstitucional" type="email" value="<?= htmlspecialchars($_POST['emailInstitucional'] ?? '') ?>">
             </div>
 
-            <div class="form-group">
-                <label for="emailPessoal">Email pessoal</label>
-                <input id="emailPessoal" name="emailPessoal" type="email" value="<?= htmlspecialchars($_POST['emailPessoal'] ?? '') ?>">
-            </div>
 
             <div class="side-top side-top-inside-form">
                 <button class="btn-salvar" type="submit">Salvar</button>

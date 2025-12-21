@@ -109,11 +109,6 @@ if (!$admin) {
                 <input id="emailInst" type="text" value="<?= htmlspecialchars($admin['email_institucional'] ?? '') ?>" readonly>
             </div>
 
-            <div class="form-group">
-                <label for="emailPessoal">Email pessoal</label>
-                <input id="emailPessoal" type="text" value="<?= htmlspecialchars($admin['email_pessoal'] ?? '') ?>" readonly>
-            </div>
-
         </form>
 
         <aside class="side-panel">
