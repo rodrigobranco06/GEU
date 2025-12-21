@@ -2,11 +2,12 @@
 // administradores/registarAdministrador.php
 
 session_start();
-
+/*
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['cargo'] !== 'Administrador') {
     header("Location: ../index.php"); 
     exit();
 }
+*/
 
 include 'modelsAdministradores.php';
 
