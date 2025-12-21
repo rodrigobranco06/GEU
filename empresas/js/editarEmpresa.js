@@ -1,41 +1,35 @@
-// -------- MODAL PERFIL / CONTA --------
-const btnConta       = document.getElementById("btn-conta");
-const perfilOverlay  = document.getElementById("perfil-overlay");
-const perfilVoltar   = perfilOverlay ? perfilOverlay.querySelector(".perfil-voltar-btn") : null;
-const perfilLogout   = perfilOverlay ? perfilOverlay.querySelector(".perfil-logout-row") : null;
+document.addEventListener("DOMContentLoaded", () => {
+    const btnConta = document.getElementById("btn-conta");
+    const perfilOverlay = document.getElementById("perfil-overlay");
 
-if (!btnConta || !perfilOverlay) {
-  console.warn("Botão de conta ou overlay de perfil não encontrado.");
-}
+    if (btnConta && perfilOverlay) {
+        // Abrir modal
+        btnConta.addEventListener("click", () => {
+            perfilOverlay.classList.add("show");
+        });
 
-// Abrir modal de perfil
-if (btnConta && perfilOverlay) {
-  btnConta.addEventListener("click", function () {
-    perfilOverlay.classList.add("show");
-  });
-}
+        // Fechar ao clicar no botão "Voltar"
+        const perfilVoltar = perfilOverlay.querySelector(".perfil-voltar-btn");
+        if (perfilVoltar) {
+            perfilVoltar.addEventListener("click", () => {
+                perfilOverlay.classList.remove("show");
+            });
+        }
 
-// Fechar ao clicar em "Voltar"
-if (perfilVoltar && perfilOverlay) {
-  perfilVoltar.addEventListener("click", function () {
-    perfilOverlay.classList.remove("show");
-  });
-}
-
-// Fechar ao clicar fora do cartão
-if (perfilOverlay) {
-  perfilOverlay.addEventListener("click", function (e) {
-    if (e.target === perfilOverlay) {
-      perfilOverlay.classList.remove("show");
+        // Fechar ao clicar fora do cartão (no fundo escuro)
+        perfilOverlay.addEventListener("click", (e) => {
+            if (e.target === perfilOverlay) {
+                perfilOverlay.classList.remove("show");
+            }
+        });
     }
-  });
-}
 
-// Ação de logout (por agora só consola;
-// se quiseres podes redirecionar para login.html)
-if (perfilLogout) {
-  perfilLogout.addEventListener("click", function () {
-    console.log("Log out clicado");
-    // window.location.href = "../login.html";
-  });
-}
+    // Lógica de Logout
+    const perfilLogout = document.querySelector(".perfil-logout-row");
+    if (perfilLogout) {
+        perfilLogout.addEventListener("click", function() {
+            console.log("Log out clicado");
+            // window.location.href = "../logout.php";
+        });
+    }
+});

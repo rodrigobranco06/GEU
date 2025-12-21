@@ -63,26 +63,34 @@ $cvLabel = $cvPath ? basename($cvPath) : 'Sem CV';
 <body>
 
     <!-- ======= CABEÇALHO ======= -->
-    <header id="header">
+<header id="header">
         <div class="header-logo">
-            <a href="../index.php">
-                <img src="../img/Logo.png" alt="Gestão de Estágios Universitários">
-            </a>
+            <a href="index.php"><img src="../img/Logo.png" alt="GEU"></a>
         </div>
 
         <nav class="nav-menu">
-            <a href="index.php" class="nav-link active">Alunos</a>
-            <a href="../professores/index.php" class="nav-link">Professores</a>
-            <a href="../empresas/index.php" class="nav-link">Empresas</a>
-            <a href="../index.php" class="nav-link">Turmas</a>
-            <a href="../index.php" class="nav-link">Administradores</a>
+            <?php if ($cargo === 'Administrador'): ?>
+                <a href="../administradores/index.php" class="nav-link">Administradores</a>
+            <?php endif; ?>
 
-            <button class="btn-conta" id="btn-conta">
+            <?php if ($cargo === 'Administrador' || $cargo === 'Professor'): ?>
+                <a href="../empresas/index.php" class="nav-link">Empresas</a>
+            <?php endif; ?>
+
+            <?php if ($cargo === 'Administrador'): ?>
+                <a href="../professores/index.php" class="nav-link">Professores</a>
+                <a href="../alunos/index.php" class="nav-link active">Alunos</a>
+            <?php endif; ?>
+
+            <a href="../index.php" class="nav-link">Turmas</a>
+
+            <button id="btn-conta" class="btn-conta">
                 <img src="../img/img_conta.png" alt="Conta">
             </button>
-            <a href="../login.php" class="btn-sair">Sair</a>
+            <a href="logout.php" class="btn-sair">Sair</a>
         </nav>
-    </header>
+</header>
+
 
     <!-- ======= CONTEÚDO PRINCIPAL ======= -->
     <main id="main-content">
