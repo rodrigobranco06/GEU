@@ -7,8 +7,8 @@
 }
 
 body {
-    background-color: #fff;
-    color: #222;
+    background-color: #ffffff;
+    color: #222222;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -19,9 +19,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 40px;
+    padding-right: 40px;
     border-bottom: 1px solid #e2e2e2;
-    background-color: white;
+    background-color: #ffffff;
     flex-wrap: wrap;
     gap: 15px;
 }
@@ -39,7 +42,7 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: #333;
+    color: #333333;
     font-weight: 500;
     position: relative;
     padding-bottom: 4px;
@@ -47,11 +50,11 @@ body {
 }
 
 .nav-link:hover {
-    color: #000;
+    color: #000000;
 }
 
 .nav-link.active {
-    color: #000;
+    color: #000000;
     font-weight: 600;
 }
 
@@ -62,7 +65,7 @@ body {
     bottom: 0;
     width: 100%;
     height: 2px;
-    background-color: #000;
+    background-color: #000000;
 }
 
 .btn-conta {
@@ -78,9 +81,12 @@ body {
 
 .btn-sair {
     background-color: #2f2f2f;
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 8px 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
     border-radius: 6px;
     cursor: pointer;
     font-weight: 500;
@@ -89,15 +95,16 @@ body {
 }
 
 .btn-sair:hover {
-    background-color: #000;
-    text-decoration: none;
+    background-color: #000000;
 }
 
 /* ======= CONTEÚDO PRINCIPAL ======= */
 #main-content {
     flex: 1;
     margin-top: 30px;
-    padding: 0 60px 40px;
+    padding-left: 60px;
+    padding-right: 60px;
+    padding-bottom: 40px; /* Garante distância dos botões para o footer */
 }
 
 /* ======= SUBTABS ======= */
@@ -112,7 +119,7 @@ body {
 
 .subtab-link {
     text-decoration: none;
-    color: #444;
+    color: #444444;
     font-size: 14px;
     font-weight: 500;
     padding-bottom: 4px;
@@ -120,11 +127,11 @@ body {
 }
 
 .subtab-link:hover {
-    color: #000;
+    color: #000000;
 }
 
 .subtab-link.active {
-    color: #000;
+    color: #000000;
     font-weight: 600;
 }
 
@@ -135,14 +142,7 @@ body {
     bottom: -2px;
     width: 100%;
     height: 2px;
-    background-color: #000;
-}
-
-.empresa-titulo {
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 10px;
-    margin-bottom: 12px;
+    background-color: #000000;
 }
 
 /* ======= LAYOUT PRINCIPAL ======= */
@@ -151,11 +151,11 @@ body {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
     gap: 40px;
     align-items: flex-start;
-    padding-bottom: 20px;
+    margin-top: 20px;
 }
 
-/* ======= FORMULÁRIO EDITÁVEL ======= */
-.form-empresa {
+/* ======= FORMULÁRIO ======= */
+.form-professor {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -171,44 +171,76 @@ body {
 
 .form-group label {
     font-size: 13px;
-    color: #333;
+    color: #333333;
 }
 
 .form-group input {
     height: 28px;
-    padding: 3px 8px;
+    padding-left: 8px;
+    padding-right: 8px;
     border: 1px solid #dcdfe4;
     border-radius: 4px;
     font-size: 13px;
-    color: #333;
+    color: #333333;
     outline: none;
-    background-color: #fff;
+    background-color: #ffffff;
 }
 
 .form-group input:focus {
     border-color: #1aa179;
 }
 
-/* ======= COLUNA DIREITA ======= */
-.side-panel {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 20px;
+/* Selects */
+.select-wrapper {
+    position: relative;
+    width: 100%;
 }
 
+.select-wrapper select {
+    width: 100%;
+    height: 28px;
+    padding-left: 8px;
+    padding-right: 26px;
+    border: 1px solid #dcdfe4;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #333333;
+    background-color: #ffffff;
+    outline: none;
+    appearance: none;
+}
+
+.select-wrapper select:focus {
+    border-color: #1aa179;
+}
+
+.chevron {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #666666;
+    pointer-events: none;
+}
+
+/* ======= BOTÕES DE AÇÃO ======= */
 .side-top {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+    margin-top: 20px; /* Cria respiro acima dos botões */
 }
 
 .btn-salvar {
     background-color: #1aa179;
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 10px 26px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 26px;
+    padding-right: 26px;
     border-radius: 25px;
     cursor: pointer;
     font-size: 14px;
@@ -221,21 +253,49 @@ body {
     background-color: #148e69;
 }
 
+.btn-eliminar {
+    background-color: #c0392b;
+    color: #ffffff;
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-eliminar:hover {
+    background-color: #e74c3c;
+}
+
 .btn-voltar {
     background-color: #e8f5f2;
     color: #0d5f52;
     border: 1px solid #cbe7e1;
-    padding: 10px 24px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 24px;
+    padding-right: 24px;
     border-radius: 25px;
     cursor: pointer;
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
-    display: inline-block;
 }
 
 .btn-voltar:hover {
     filter: brightness(0.98);
+}
+
+/* ======= COLUNA DIREITA ======= */
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
 }
 
 .side-image-wrapper {
@@ -252,9 +312,12 @@ body {
 
 /* ======= RODAPÉ ======= */
 #footer {
-    background-color: #fff;
+    background-color: #ffffff;
     border-top: 1px solid #e2e2e2;
-    padding: 30px 40px;
+    padding-top: 30px;
+    padding-bottom: 30px; /* Removido espaço excessivo */
+    padding-left: 40px;
+    padding-right: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -265,12 +328,12 @@ body {
     font-size: 16px;
     font-weight: bold;
     margin-bottom: 30px;
-    color: #333;
+    color: #333333;
 }
 
 .contactos {
     font-size: 14px;
-    color: #333;
+    color: #333333;
     line-height: 1.6;
 }
 
@@ -352,7 +415,10 @@ body {
 }
 
 .perfil-content {
-    padding: 52px 24px 24px;
+    padding-top: 52px;
+    padding-bottom: 24px;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 .perfil-role {
@@ -373,7 +439,7 @@ body {
     font-size: 16px;
     margin-bottom: 10px;
     text-decoration: none;
-    color: #000;
+    color: #000000;
 }
 
 .perfil-row-img {
@@ -391,22 +457,24 @@ body {
     margin-top: 16px;
     border: none;
     border-radius: 6px;
-    background: #f0f0f0;
+    background-color: #f0f0f0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 18px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 18px;
+    padding-right: 18px;
     font-size: 20px;
     cursor: pointer;
     text-decoration: none;
-    color: #000;
+    color: #000000;
     position: relative;
 }
 
 .perfil-back-img {
     width: 30px;
     height: 30px;
-    object-fit: contain;
     position: absolute;
     left: 18px;
 }
@@ -421,10 +489,11 @@ body {
     margin-top: 18px;
     border: none;
     border-radius: 6px;
-    padding: 12px 0;
+    padding-top: 12px;
+    padding-bottom: 12px;
     font-size: 20px;
     font-weight: 600;
-    background: #0f7a74;
+    background-color: #0f7a74;
     color: #ffffff;
     cursor: pointer;
 }
@@ -435,14 +504,10 @@ body {
 
 /* ======= RESPONSIVIDADE ======= */
 @media (max-width: 1024px) {
-    #header {
-        padding: 15px 30px;
+    #header, #main-content {
+        padding-left: 30px;
+        padding-right: 30px;
     }
-
-    #main-content {
-        padding: 0 30px 30px;
-    }
-
     .content-grid {
         grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
         gap: 30px;
@@ -451,97 +516,50 @@ body {
 
 @media (max-width: 768px) {
     #header {
-        padding: 15px 20px;
+        padding-left: 20px;
+        padding-right: 20px;
         justify-content: center;
     }
-
-    .header-logo {
+    .header-logo, .nav-menu {
         width: 100%;
         text-align: center;
+        justify-content: center;
         margin-bottom: 10px;
     }
-
-    .nav-menu {
-        width: 100%;
-        justify-content: center;
-        gap: 15px;
-    }
-
     #main-content {
-        padding: 0 20px 24px;
+        padding-left: 20px;
+        padding-right: 20px;
         margin-top: 20px;
     }
-
     .content-grid {
         grid-template-columns: 1fr;
     }
-
     .side-panel {
         align-items: center;
     }
-
     .side-top {
         justify-content: center;
     }
-
     .form-group {
         grid-template-columns: 1fr;
         row-gap: 4px;
         align-items: flex-start;
     }
-
-    .form-empresa {
-        max-width: 100%;
-    }
 }
 
 @media (max-width: 480px) {
     #header {
-        padding: 10px 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
-
-    .header-logo img {
-        height: 40px;
-    }
-
-    .nav-menu {
-        gap: 10px;
-        font-size: 14px;
-    }
-
-    .btn-conta img {
-        width: 22px;
-        height: 22px;
-    }
-
-    .btn-sair {
-        padding: 6px 12px;
-        font-size: 13px;
-    }
-
     #main-content {
-        padding: 0 15px 20px;
+        padding-bottom: 20px;
     }
-
     #footer {
-        padding: 20px 15px;
+        padding-top: 20px;
+        padding-bottom: 15px;
     }
-
-    .contactos {
-        font-size: 13px;
-    }
-
     .contactos h3 {
-        font-size: 15px;
         margin-bottom: 10px;
-    }
-
-    .contactos img {
-        width: 22px;
-        height: 22px;
-    }
-
-    .logos img {
-        height: 50px;
     }
 }

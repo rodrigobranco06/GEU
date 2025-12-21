@@ -48,7 +48,7 @@ $paises = listarPaises();
 <head>
     <meta charset="UTF-8">
     <title>GEU — Editar Empresa</title>
-    <link rel="stylesheet" href="../professores/css/editarProfessor.css">
+    <link rel="stylesheet" href="css/editarEmpresa.css">
 </head>
 <body>
 <header id="header">
@@ -203,7 +203,10 @@ $paises = listarPaises();
     </section>
 
 
-    <footer id="footer">
+    
+</main>
+
+<footer id="footer">
         <div class="contactos">
             <h3>Contactos</h3>
             <p><img src="../img/img_email.png" alt="Email"><strong>Email:</strong> geral@ipsantarem.pt</p>
@@ -251,7 +254,6 @@ $paises = listarPaises();
             </div>
         </div>
     </div>
-</main>
 
 <script src="js/editarEmpresa.js"></script>
 </body>

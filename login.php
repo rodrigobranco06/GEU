@@ -2,7 +2,7 @@
 session_start();
 // Se já estiver logado, redireciona para a dashboard correta
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    // Lógica de redirecionamento automático se necessário
+    // Redirecionamento pode ser feito aqui
 }
 ?>
 <!DOCTYPE html>
@@ -46,20 +46,18 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
                     </div>
                 <?php endif; ?>
 
-                <label>Email</label><br>
-                <input id="email" name="email" type="email" placeholder="Nome de utilizador" required>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="Email de utilizador" required>
                 
                 <div class="password">
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" placeholder="Password" required>
-                    <button class="reveal" type="button" onclick="togglePassword()">👁️</button>
                 </div>
 
                 <div class="form-row">
-                    <label class="remember">
-                        <input type="checkbox" name="remember"> Relembrar-me
+                    <label class="show-password-label">
+                        <input type="checkbox" id="togglePassword" onclick="verSenha()"> Ver password
                     </label>
-                    <a class="link" href="#">Esqueci-me da password</a>
                 </div>
 
                 <button class="btn" type="submit">Login</button>
@@ -72,9 +70,13 @@ if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
     </section>
 
     <script>
-        function togglePassword() {
-            const p = document.getElementById('password');
-            p.type = p.type === 'password' ? 'text' : 'password';
+        function verSenha() {
+            const passwordInput = document.getElementById('password');
+            const checkbox = document.getElementById('togglePassword');
+            
+            if (passwordInput && checkbox) {
+                passwordInput.type = checkbox.checked ? 'text' : 'password';
+            }
         }
     </script>
 </body>

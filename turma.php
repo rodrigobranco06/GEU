@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'db.php';
-include 'modelsTurma.php'; // Inclui o novo modelo
+include 'modelsTurma.php'; 
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: login.php");
@@ -10,12 +10,41 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 
 $conexao = estabelecerConexao();
 $idTurma = isset($_GET['id_turma']) ? (int)$_GET['id_turma'] : 0;
-$cargoUtilizador = $_SESSION['cargo'];
-$idUtilizador = $_SESSION['id_utilizador'];
+
+// Ajuste aqui: nomes das variáveis para coincidir com o que as funções esperam
+$idUtilizador = $_SESSION['id_utilizador']; 
+$cargoUtilizador = $_SESSION['cargo']; 
+
+// --- LÓGICA DO PERFIL DINÂMICO ---
+$nome_exibicao = "Utilizador";
+$email_exibicao = "Email não disponível";
+
+try {
+    if ($cargoUtilizador === 'Aluno') {
+        $stmt = $conexao->prepare("SELECT nome, email_institucional FROM aluno WHERE utilizador_id = ?");
+    } elseif ($cargoUtilizador === 'Professor') {
+        $stmt = $conexao->prepare("SELECT nome, email_institucional FROM professor WHERE utilizador_id = ?");
+    } elseif ($cargoUtilizador === 'Administrador') {
+        $stmt = $conexao->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
+    } elseif ($cargoUtilizador === 'Empresa') {
+        $stmt = $conexao->prepare("SELECT nome, email FROM empresa WHERE utilizador_id = ?");
+    }
+
+    if (isset($stmt)) {
+        $stmt->execute([$idUtilizador]);
+        $perfilDados = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($perfilDados) {
+            $nome_exibicao = $perfilDados['nome'];
+            $email_exibicao = $perfilDados['email_institucional'] ?? $perfilDados['email'];
+        }
+    }
+} catch (PDOException $e) {
+    error_log($e->getMessage());
+}
 
 if ($idTurma <= 0) { header('Location: index.php'); exit; }
 
-// Carregamento de dados via Model
+// Agora as variáveis $idUtilizador e $cargoUtilizador já existem e têm valor
 $perfil = getPerfilUtilizador($conexao, $idUtilizador, $cargoUtilizador);
 $turma  = getDadosTurma($conexao, $idTurma, $cargoUtilizador, $idUtilizador);
 

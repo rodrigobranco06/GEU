@@ -81,6 +81,7 @@ $admins = getTodosAdministradores();
     <nav class="subtabs">
         <a href="index.php" class="subtab-link active">Ver Administradores</a>
         <a href="registarAdministrador.php" class="subtab-link">Registar novo administrador</a>
+        <a href="../admin/tabelasSecundarias.php" class="subtab-link">Tabelas Secundárias</a>
     </nav>
 
     <section class="search-area">
