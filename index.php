@@ -1,8 +1,7 @@
 <?php
 session_start();
-include 'db.php'; // Substituído require_once por include conforme solicitado
+include 'db.php'; 
 
-// 1. Redirecionamento de segurança
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: login.php");
     exit();
@@ -12,7 +11,6 @@ $conexao = estabelecerConexao();
 $user_id = $_SESSION['id_utilizador'];
 $cargo   = $_SESSION['cargo']; 
 
-// --- LÓGICA DO PERFIL DINÂMICO ---
 $nome_exibicao = "Utilizador";
 $email_exibicao = "Email não disponível";
 
@@ -39,7 +37,6 @@ try {
     error_log($e->getMessage());
 }
 
-// --- LÓGICA DE FILTRAGEM DE TURMAS POR CARGO ---
 try {
     $sqlTurmas = "SELECT DISTINCT t.id_turma, t.nome AS turma_nome, t.codigo, t.ano_inicio, p.nome AS professor_nome
                   FROM turma t 
@@ -81,7 +78,6 @@ try {
     $turmas = [];
 }
 
-// Dados para modais (apenas Admin/Professor)
 $cursos = [];
 $professores = [];
 if (in_array($cargo, ['Administrador', 'Professor'])) {

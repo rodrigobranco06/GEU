@@ -51,7 +51,6 @@ if (!empty($_FILES['cv']['name'])) {
         $destino  = $uploadDir . $novoNome;
 
         if (move_uploaded_file($_FILES['cv']['tmp_name'], $destino)) {
-            // caminho relativo para gravar na BD
             $cvPath = 'uploads/cv/' . $novoNome;
         } else {
             $erros[] = 'Falha ao fazer upload do CV.';
@@ -80,7 +79,7 @@ if ($password === '') {
     $erros[] = 'A password é obrigatória.';
 }
 
-// Verificar se o id_aluno já existe
+// Verificar se o id_aluno existe
 if ($codigoAluno !== '' && ctype_digit($codigoAluno)) {
     if (alunoIdExiste((int)$codigoAluno)) {
         $erros[] = 'Já existe um aluno com esse código/ID.';
@@ -88,7 +87,6 @@ if ($codigoAluno !== '' && ctype_digit($codigoAluno)) {
 }
 
 if (!empty($erros)) {
-    // Volta ao formulário com erros e dados do POST
     include 'registarAluno.php';
     exit;
 }
@@ -105,7 +103,7 @@ try {
     $dadosAluno = [
         'id_aluno'           => (int)$codigoAluno,
         'nome'               => $nome,
-        'data_nascimento'    => $dataNascimento, // yyyy-mm-dd
+        'data_nascimento'    => $dataNascimento, 
         'sexo'               => $sexo,
         'nif'                => $nif,
         'numero_cc'          => $numeroCc,

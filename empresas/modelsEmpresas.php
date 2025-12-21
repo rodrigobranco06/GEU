@@ -25,7 +25,6 @@ function listarPaises(): array {
 
 function getTodasEmpresas(): array {
     $con = estabelecerConexao();
-    // Fazemos JOIN para mostrar o nome do Ramo em vez do ID
     $sql = '
         SELECT 
             e.id_empresa,
@@ -182,11 +181,9 @@ function deleteEmpresaEUtilizador(int $idEmpresa, ?int $idUtilizador): void {
     try {
         $con->beginTransaction();
         
-        // Apagar Empresa
         $stmt = $con->prepare('DELETE FROM empresa WHERE id_empresa = :id');
         $stmt->execute(['id' => $idEmpresa]);
         
-        // Apagar Utilizador associado
         if ($idUtilizador) {
             $stmt = $con->prepare('DELETE FROM utilizador WHERE id_utilizador = :id');
             $stmt->execute(['id' => $idUtilizador]);

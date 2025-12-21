@@ -11,14 +11,13 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSI
     exit();
 }
 
-// --- LÓGICA PARA O MODAL (Dados do Admin logado) ---
+// --- LÓGICA PARA O MODAL ---
 $user_id_logado = $_SESSION['id_utilizador'];
 $cargo          = $_SESSION['cargo']; 
 $nome_exibicao  = "Administrador";    
 $email_exibicao = "Email não disponível";
 
 try {
-    // A função estabelecerConexao() já está disponível via modelsAlunos.php
     $db = estabelecerConexao();
     
     // Procurar os dados do Administrador que está a usar o sistema para o modal

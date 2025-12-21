@@ -105,9 +105,7 @@ function criarUtilizadorAdministrador(string $username, string $password): int {
     return (int) $con->lastInsertId();
 }
 
-/**
- * NOTA: id_admin é AUTO_INCREMENT, por isso NÃO entra no INSERT.
- */
+
 function criarAdministrador(array $dados, int $utilizadorId): int {
     $con = estabelecerConexao();
 
@@ -159,7 +157,7 @@ function updatePasswordUtilizadorAdministrador(int $idUtilizador, string $novaPa
     $novaPassword = trim($novaPassword);
 
     if ($novaPassword === '') {
-        return; // não altera
+        return; 
     }
 
     $con = estabelecerConexao();

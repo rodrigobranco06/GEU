@@ -2,7 +2,6 @@
 session_start();
 require_once 'db.php';
 
-// Bloqueia acesso direto via URL
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: login.php");
     exit();
@@ -30,17 +29,14 @@ try {
             exit();
         }
 
-        // Sucesso: Guardar dados na Sessão
         $_SESSION['id_utilizador'] = $user['id_utilizador'];
-        $_SESSION['cargo'] = $user['tipo_utilizador']; // Aluno, Empresa, Professor, Administrador
+        $_SESSION['cargo'] = $user['tipo_utilizador']; 
         $_SESSION['logged_in'] = true;
 
-        // REDIRECIONAMENTO ÚNICO: Todos para a página principal
         header("Location: index.php");
         exit();
 
     } else {
-        // Credenciais erradas
         header("Location: login.php?erro=1");
         exit();
     }

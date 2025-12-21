@@ -14,7 +14,7 @@ $idUserLogado = $_SESSION['id_utilizador'];
 $id_pedido = isset($_GET['id_pedido_estagio']) ? (int)$_GET['id_pedido_estagio'] : 0;
 if ($id_pedido <= 0) die("Pedido de estágio inválido.");
 
-// 1. Procurar dados do Pedido, Aluno, Empresa, Professor e Avaliação
+// Procurar dados do Pedido, Aluno, Empresa, Professor e Avaliação
 $sql = "SELECT p.*, a.nome as aluno_nome, a.id_aluno, 
                e.id_empresa, e.nome as empresa_nome,
                prof.id_professor, prof.nome as prof_nome,
@@ -32,7 +32,7 @@ $dados = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$dados) die("Pedido não encontrado.");
 
-// 2. Lógica do Perfil Dinâmico para o Modal
+// Lógica do Perfil Dinâmico para o Modal
 $nome_exibicao = "Utilizador";
 $email_exibicao = "Email não disponível";
 try {

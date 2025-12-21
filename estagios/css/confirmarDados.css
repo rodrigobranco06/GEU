@@ -14,7 +14,7 @@ body {
   min-height: 100vh;
 }
 
-/* ======= CABEÇALHO (idêntico) ======= */
+/* ======= CABEÇALHO ======= */
 #header {
   display: flex;
   justify-content: space-between;
@@ -100,7 +100,7 @@ body {
   padding: 0 60px 40px;
 }
 
-/* Abas (fases) — simples, como uma barra de navegação */
+/* Abas (fases) */
 .steps {
   display: flex;
   gap: 22px;
@@ -139,7 +139,6 @@ body {
   background: #000;
 }
 
-/* Barra superior com título e botões */
 .page-head {
   display: flex;
   justify-content: space-between;
@@ -195,7 +194,6 @@ body {
   filter: brightness(0.98);
 }
 
-/* Cartão com dados (clean, inputs readonly finos) */
 .card {
   background: #fff;
   border: 1px solid #e5e5e5;
@@ -285,9 +283,8 @@ body {
   width: auto;
 }
 
-/* ======= MEDIA QUERIES ======= */
+/* ======= RESPONSIVIDADE ======= */
 
-/* Tablets (até 1024px) */
 @media (max-width: 1024px) {
   #header {
     padding: 15px 30px;
@@ -302,7 +299,6 @@ body {
   }
 }
 
-/* Tablets pequenos (até 768px) */
 @media (max-width: 768px) {
   #header {
     padding: 15px 20px;
@@ -341,7 +337,6 @@ body {
   }
 }
 
-/* Smartphones (até 480px) */
 @media (max-width: 480px) {
   #header {
     padding: 10px 15px;
@@ -467,8 +462,8 @@ body {
     display: none;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-top: 80px;        /* distância ao topo */
-    padding-right: 60px;      /* distância à direita similar ao header */
+    padding-top: 80px;        
+    padding-right: 60px;      
     background: rgba(0, 0, 0, 0.35);
     z-index: 2500;
 }
@@ -494,7 +489,7 @@ body {
     background-position: center;
 }
 
-/* avatar circular a “sair” do banner */
+/* avatar circular a sair do banner */
 .perfil-avatar {
     position: absolute;
     top: 50px;
@@ -509,7 +504,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para a imagem de avatar */
 .perfil-avatar-img {
     width: 32px;
     height: 32px;
@@ -552,7 +546,6 @@ body {
     flex: 1;
 }
 
-/* === AQUI ESTÁ A CORREÇÃO DO BOTÃO LOGOUT === */
 .perfil-logout-row {
     width: 100%;
     margin-top: 16px;
@@ -561,31 +554,28 @@ body {
     background: #f0f0f0;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza o texto */
+    justify-content: center; 
     padding: 12px 18px;
     font-size: 20px;
     cursor: pointer;
     text-decoration: none;
     color: #000;
-    position: relative; /* Importante para o ícone absoluto funcionar */
+    position: relative; 
 }
 
-/* Ícone fixo à esquerda (absoluto) */
 .perfil-back-img {
     width: 30px;
     height: 30px;
     object-fit: contain;
     position: absolute;
-    left: 18px; /* Mantém a mesma distância da margem que o padding */
+    left: 18px; 
 }
 
 .perfil-logout-text {
-    /* Sem flex:1 para garantir que fica no centro exato */
     text-align: center;
     font-weight: 500;
 }
 
-/* Botão Voltar em verde */
 .perfil-voltar-btn {
     width: 100%;
     margin-top: 18px;
@@ -605,7 +595,6 @@ body {
 
 
 
-/* Responsivo: telas pequenas */
 @media (max-width: 600px) {
   .popup-box {
     min-width: 0;

@@ -1,4 +1,7 @@
--- TABELAS BASE
+-- ==========================================================
+-- 1. TABELAS DE DOMÍNIO (AUXILIARES)
+-- ==========================================================
+
 CREATE TABLE pais (
   id_pais INT AUTO_INCREMENT PRIMARY KEY,
   pais_desc VARCHAR(100) NOT NULL
@@ -34,16 +37,32 @@ CREATE TABLE area_cientifica (
   area_cientifica_desc VARCHAR(150) NOT NULL
 );
 
+-- ==========================================================
+-- 2. NÚCLEO DE UTILIZADORES
+-- ==========================================================
+
 CREATE TABLE utilizador (
   id_utilizador INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(80) NOT NULL,
   password_hash TEXT NOT NULL,
   tipo_utilizador VARCHAR(40) NOT NULL,
   estado_conta VARCHAR(40) NOT NULL,
-  data_criacao TIMESTAMP NOT NULL
+  data_criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- PROFESSOR
+-- ==========================================================
+-- 3. ENTIDADES PRINCIPAIS (DEPENDENTES DE UTILIZADOR)
+-- ==========================================================
+
+CREATE TABLE administrador (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    email_institucional VARCHAR(150) NOT NULL,
+    utilizador_id INT NOT NULL,
+    CONSTRAINT fk_admin_utilizador FOREIGN KEY (utilizador_id) 
+        REFERENCES utilizador(id_utilizador) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE professor (
   id_professor INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(150) NOT NULL,
@@ -60,16 +79,15 @@ CREATE TABLE professor (
   nacionalidade_id INT,
   escola_id INT,
   especializacao_id INT,
-  CONSTRAINT professor_utilizador_fk 
-    FOREIGN KEY (utilizador_id) REFERENCES utilizador (id_utilizador),
-  CONSTRAINT professor_nacionalidade_fk 
-    FOREIGN KEY (nacionalidade_id) REFERENCES nacionalidade (id_nacionalidade),
-  CONSTRAINT professor_escola_fk 
-    FOREIGN KEY (escola_id) REFERENCES escola (id_escola),
-  CONSTRAINT professor_especializacao_fk 
-    FOREIGN KEY (especializacao_id) REFERENCES especializacao (id_especializacao)
+  CONSTRAINT professor_utilizador_fk FOREIGN KEY (utilizador_id) 
+    REFERENCES utilizador (id_utilizador) ON DELETE CASCADE,
+  CONSTRAINT professor_nacionalidade_fk FOREIGN KEY (nacionalidade_id) 
+    REFERENCES nacionalidade (id_nacionalidade),
+  CONSTRAINT professor_escola_fk FOREIGN KEY (escola_id) 
+    REFERENCES escola (id_escola),
+  CONSTRAINT professor_especializacao_fk FOREIGN KEY (especializacao_id) 
+    REFERENCES especializacao (id_especializacao)
 );
-
 
 CREATE TABLE turma (
   id_turma INT AUTO_INCREMENT PRIMARY KEY,
@@ -80,15 +98,12 @@ CREATE TABLE turma (
   ano_curricular INT,
   curso_id INT NOT NULL,
   professor_id INT,
-  CONSTRAINT turma_curso_fk 
-    FOREIGN KEY (curso_id) REFERENCES curso (id_curso),
-  CONSTRAINT turma_professor_fk 
-    FOREIGN KEY (professor_id) REFERENCES professor (id_professor)
+  CONSTRAINT turma_curso_fk FOREIGN KEY (curso_id) 
+    REFERENCES curso (id_curso),
+  CONSTRAINT turma_professor_fk FOREIGN KEY (professor_id) 
+    REFERENCES professor (id_professor) ON DELETE SET NULL
 );
 
-
-
--- ALUNO
 CREATE TABLE aluno (
   id_aluno INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(150) NOT NULL,
@@ -110,19 +125,18 @@ CREATE TABLE aluno (
   curso_id INT,
   escola_id INT,
   turma_id INT,
-  CONSTRAINT aluno_utilizador_fk 
-    FOREIGN KEY (utilizador_id) REFERENCES utilizador (id_utilizador),
-  CONSTRAINT aluno_nacionalidade_fk 
-    FOREIGN KEY (nacionalidade_id) REFERENCES nacionalidade (id_nacionalidade),
-  CONSTRAINT aluno_curso_fk 
-    FOREIGN KEY (curso_id) REFERENCES curso (id_curso),
-  CONSTRAINT aluno_escola_fk 
-    FOREIGN KEY (escola_id) REFERENCES escola (id_escola),
-  CONSTRAINT aluno_turma_fk 
-    FOREIGN KEY (turma_id) REFERENCES turma (id_turma)
+  CONSTRAINT aluno_utilizador_fk FOREIGN KEY (utilizador_id) 
+    REFERENCES utilizador (id_utilizador) ON DELETE CASCADE,
+  CONSTRAINT aluno_nacionalidade_fk FOREIGN KEY (nacionalidade_id) 
+    REFERENCES nacionalidade (id_nacionalidade),
+  CONSTRAINT aluno_curso_fk FOREIGN KEY (curso_id) 
+    REFERENCES curso (id_curso),
+  CONSTRAINT aluno_escola_fk FOREIGN KEY (escola_id) 
+    REFERENCES escola (id_escola),
+  CONSTRAINT aluno_turma_fk FOREIGN KEY (turma_id) 
+    REFERENCES turma (id_turma) ON DELETE SET NULL
 );
 
--- EMPRESA
 CREATE TABLE empresa (
   id_empresa INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(200) NOT NULL,
@@ -142,15 +156,18 @@ CREATE TABLE empresa (
   pais_id INT,
   utilizador_id INT,
   ramo_atividade_id INT,
-  CONSTRAINT empresa_pais_fk 
-    FOREIGN KEY (pais_id) REFERENCES pais (id_pais),
-  CONSTRAINT empresa_utilizador_fk 
-    FOREIGN KEY (utilizador_id) REFERENCES utilizador (id_utilizador),
-  CONSTRAINT empresa_ramo_fk 
-    FOREIGN KEY (ramo_atividade_id) REFERENCES ramo_atividade (id_ramo_atividade)
+  CONSTRAINT empresa_utilizador_fk FOREIGN KEY (utilizador_id) 
+    REFERENCES utilizador (id_utilizador) ON DELETE CASCADE,
+  CONSTRAINT empresa_pais_fk FOREIGN KEY (pais_id) 
+    REFERENCES pais (id_pais),
+  CONSTRAINT empresa_ramo_fk FOREIGN KEY (ramo_atividade_id) 
+    REFERENCES ramo_atividade (id_ramo_atividade)
 );
 
--- PEDIDO DE ESTÁGIO
+-- ==========================================================
+-- 4. GESTÃO DE ESTÁGIOS E FASES
+-- ==========================================================
+
 CREATE TABLE pedido_estagio (
   id_pedido_estagio INT AUTO_INCREMENT PRIMARY KEY,
   estado_pedido VARCHAR(40) NOT NULL,
@@ -160,24 +177,23 @@ CREATE TABLE pedido_estagio (
   aluno_id INT NOT NULL,
   professor_id INT,
   empresa_id INT,
-  CONSTRAINT pedido_aluno_fk 
-    FOREIGN KEY (aluno_id) REFERENCES aluno (id_aluno),
-  CONSTRAINT pedido_professor_fk 
-    FOREIGN KEY (professor_id) REFERENCES professor (id_professor),
-  CONSTRAINT pedido_empresa_fk 
-    FOREIGN KEY (empresa_id) REFERENCES empresa (id_empresa)
+  CONSTRAINT pedido_aluno_fk FOREIGN KEY (aluno_id) 
+    REFERENCES aluno (id_aluno) ON DELETE CASCADE,
+  CONSTRAINT pedido_professor_fk FOREIGN KEY (professor_id) 
+    REFERENCES professor (id_professor) ON DELETE SET NULL,
+  CONSTRAINT pedido_empresa_fk FOREIGN KEY (empresa_id) 
+    REFERENCES empresa (id_empresa) ON DELETE SET NULL
 );
 
-
--- FASES DO PEDIDO
+-- TABELAS DE FASES (RELAÇÃO 1:1 COM O PEDIDO)
 
 CREATE TABLE fase_confirmacao (
   id_pedido_estagio INT PRIMARY KEY,
   numero_ucs_atraso VARCHAR(60),
   estado_confirmacao VARCHAR(40),
   data_confirmacao DATE,
-  CONSTRAINT fase_confirmacao_pedido_fk 
-    FOREIGN KEY (id_pedido_estagio) REFERENCES pedido_estagio (id_pedido_estagio)
+  CONSTRAINT fase_confirmacao_pedido_fk FOREIGN KEY (id_pedido_estagio) 
+    REFERENCES pedido_estagio (id_pedido_estagio) ON DELETE CASCADE
 );
 
 CREATE TABLE fase_area (
@@ -188,10 +204,10 @@ CREATE TABLE fase_area (
   estado_definicao_area VARCHAR(40),
   data_definicao_area DATE,
   area_cientifica_id INT,
-  CONSTRAINT fase_area_pedido_fk 
-    FOREIGN KEY (id_pedido_estagio) REFERENCES pedido_estagio (id_pedido_estagio),
-  CONSTRAINT fase_area_area_fk 
-    FOREIGN KEY (area_cientifica_id) REFERENCES area_cientifica (id_area_cientifica)
+  CONSTRAINT fase_area_pedido_fk FOREIGN KEY (id_pedido_estagio) 
+    REFERENCES pedido_estagio (id_pedido_estagio) ON DELETE CASCADE,
+  CONSTRAINT fase_area_area_fk FOREIGN KEY (area_cientifica_id) 
+    REFERENCES area_cientifica (id_area_cientifica)
 );
 
 CREATE TABLE fase_email (
@@ -200,8 +216,8 @@ CREATE TABLE fase_email (
   cv TEXT,
   estado_envio_email VARCHAR(40),
   data_envio_email TIMESTAMP,
-  CONSTRAINT fase_email_pedido_fk 
-    FOREIGN KEY (id_pedido_estagio) REFERENCES pedido_estagio (id_pedido_estagio)
+  CONSTRAINT fase_email_pedido_fk FOREIGN KEY (id_pedido_estagio) 
+    REFERENCES pedido_estagio (id_pedido_estagio) ON DELETE CASCADE
 );
 
 CREATE TABLE fase_resposta (
@@ -209,8 +225,8 @@ CREATE TABLE fase_resposta (
   resposta_empresa VARCHAR(40),
   mensagem_recebida TEXT,
   data_resposta TIMESTAMP,
-  CONSTRAINT fase_resposta_pedido_fk 
-    FOREIGN KEY (id_pedido_estagio) REFERENCES pedido_estagio (id_pedido_estagio)
+  CONSTRAINT fase_resposta_pedido_fk FOREIGN KEY (id_pedido_estagio) 
+    REFERENCES pedido_estagio (id_pedido_estagio) ON DELETE CASCADE
 );
 
 CREATE TABLE fase_plano (
@@ -218,8 +234,8 @@ CREATE TABLE fase_plano (
   plano_estagio TEXT,
   data_inicio DATE,
   data_fim DATE,
-  CONSTRAINT fase_plano_pedido_fk 
-    FOREIGN KEY (id_pedido_estagio) REFERENCES pedido_estagio (id_pedido_estagio)
+  CONSTRAINT fase_plano_pedido_fk FOREIGN KEY (id_pedido_estagio) 
+    REFERENCES pedido_estagio (id_pedido_estagio) ON DELETE CASCADE
 );
 
 CREATE TABLE fase_avaliacao (
@@ -228,20 +244,6 @@ CREATE TABLE fase_avaliacao (
   relatorio TEXT,
   observacoes TEXT,
   data_avaliacao DATE,
-  CONSTRAINT fase_avaliacao_pedido_fk 
-    FOREIGN KEY (id_pedido_estagio) REFERENCES pedido_estagio (id_pedido_estagio)
-);
-
--- CRIAÇÃO DA TABELA DE ADMINISTRADORES
-CREATE TABLE administrador (
-    id_admin INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(150) NOT NULL,
-    email_institucional VARCHAR(150) NOT NULL,
-    utilizador_id INT NOT NULL,
-
-    CONSTRAINT fk_admin_utilizador
-        FOREIGN KEY (utilizador_id)
-        REFERENCES utilizador(id_utilizador)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+  CONSTRAINT fase_avaliacao_pedido_fk FOREIGN KEY (id_pedido_estagio) 
+    REFERENCES pedido_estagio (id_pedido_estagio) ON DELETE CASCADE
 );

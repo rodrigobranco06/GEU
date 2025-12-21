@@ -3,9 +3,7 @@
 
 session_start();
 
-// 1. Verificação de segurança: Logado + Cargo de Administrador
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['cargo'] !== 'Administrador') {
-    // Se não for admin, redireciona para a página principal ou login
     header("Location: ../index.php"); 
     exit();
 }
@@ -13,17 +11,14 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSI
 
 include 'modelsProfessores.php';
 
-// --- LÓGICA PARA O MODAL (Dados do Admin logado) ---
 $user_id_logado = $_SESSION['id_utilizador'];
 $cargo          = $_SESSION['cargo']; 
 $nome_exibicao  = "Administrador";    
 $email_exibicao = "Email não disponível";
 
 try {
-    // A função estabelecerConexao() já está disponível via modelsAlunos.php
     $db = estabelecerConexao();
     
-    // Procurar os dados do Administrador que está a usar o sistema para o modal
     $stmtLogado = $db->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
     $stmtLogado->execute([$user_id_logado]);
     $dadosLogado = $stmtLogado->fetch(PDO::FETCH_ASSOC);
@@ -49,7 +44,6 @@ if (!$professor) {
     die('Professor não encontrado.');
 }
 
-// Formatar data para DD/MM/YYYY
 $dataNascimentoFormatada = '';
 if (!empty($professor['data_nascimento'])) {
     $dataNascimentoFormatada = date('d/m/Y', strtotime($professor['data_nascimento']));
@@ -101,7 +95,6 @@ if (!empty($professor['data_nascimento'])) {
     </nav>
 
     <section class="content-grid">
-        <!-- Coluna esquerda: “formulário” só de leitura -->
         <form class="form-professor">
 
             <div class="form-group">
@@ -248,7 +241,6 @@ if (!empty($professor['data_nascimento'])) {
 
         </form>
 
-        <!-- Coluna direita: botões + imagem -->
         <aside class="side-panel">
             <div class="side-top">
                 <a

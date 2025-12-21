@@ -14,7 +14,6 @@ $resposta = $_POST['resposta_empresa'];
 try {
     $conexao->beginTransaction();
 
-    // 1. Atualizar ou Inserir na tabela fase_resposta (campos: resposta_empresa, data_resposta)
     $stmtCheck = $conexao->prepare("SELECT id_pedido_estagio FROM fase_resposta WHERE id_pedido_estagio = ?");
     $stmtCheck->execute([$id_pedido]);
     
@@ -26,14 +25,11 @@ try {
         $conexao->prepare($sql)->execute([$id_pedido, $resposta]);
     }
 
-    // 2. Lógica de fluxo do pedido principal
     if ($resposta === 'Aceite') {
         $proxima_fase = 'Plano estágio';
     } elseif ($resposta === 'Recusado') {
-        // Se recusado, o fluxo volta para a escolha de empresa
         $proxima_fase = 'Escolha de área e empresa';
         
-        // Limpar dados de envio anteriores para permitir novo ciclo
         $conexao->prepare("DELETE FROM fase_email WHERE id_pedido_estagio = ?")->execute([$id_pedido]);
     } else {
         $proxima_fase = 'Resposta ao email';

@@ -42,7 +42,6 @@ $cidade            = trim($_POST['cidade'] ?? '');
 $linkedin          = trim($_POST['linkedin'] ?? '');
 $github            = trim($_POST['github'] ?? '');
 
-// Validações mínimas (ajusta ao teu gosto)
 if ($nome === '') {
     $erros[] = 'O nome do aluno é obrigatório.';
 }
@@ -50,7 +49,6 @@ if ($emailInst === '') {
     $erros[] = 'O email institucional é obrigatório.';
 }
 
-// Upload do CV (opcional) — se não vier, mantém o atual
 $cvPath = $alunoAtual['cv'] ?? null;
 
 if (!empty($_FILES['cv']['name'])) {
@@ -65,19 +63,17 @@ if (!empty($_FILES['cv']['name'])) {
     if (!in_array($ext, $permitidas, true)) {
         $erros[] = 'O CV tem de ser um ficheiro PDF, DOC ou DOCX.';
     } else {
-        // limpar nome do aluno (sem acentos, espaços e símbolos)
         $nomeLimpo = $nome !== '' ? $nome : ($alunoAtual['nome'] ?? '');
         $nomeLimpo = iconv('UTF-8', 'ASCII//TRANSLIT', $nomeLimpo);
         $nomeLimpo = preg_replace('/[^a-zA-Z0-9]/', '_', $nomeLimpo);
         $nomeLimpo = preg_replace('/_+/', '_', $nomeLimpo);
         $nomeLimpo = trim($nomeLimpo, '_');
 
-        // nome final: cv_codigoAluno_nomeAluno.ext
         $novoNome = 'cv_' . $idAluno . '_' . strtolower($nomeLimpo) . '.' . $ext;
         $destino  = $uploadDir . $novoNome;
 
         if (move_uploaded_file($_FILES['cv']['tmp_name'], $destino)) {
-            $cvPath = 'uploads/cv/' . $novoNome; // caminho relativo para BD
+            $cvPath = 'uploads/cv/' . $novoNome; 
         } else {
             $erros[] = 'Falha ao fazer upload do CV.';
         }
@@ -93,7 +89,6 @@ try {
     $con = estabelecerConexao();
     $con->beginTransaction();
 
-    // ✅ Só altera password se vier preenchida
     if ($novaPassword !== '') {
         updatePasswordUtilizadorAluno((int)$alunoAtual['id_utilizador'], $novaPassword);
     }
@@ -110,7 +105,7 @@ try {
         'codigo_postal'       => $codigoPostal,
         'cidade'              => $cidade,
         'situacao_academica'  => $situacaoAcademica,
-        'cv'                  => $cvPath, // ✅ caminho gravado na BD
+        'cv'                  => $cvPath, 
         'linkedin'            => $linkedin,
         'github'              => $github,
         'nacionalidade_id'    => $nacionalidadeId !== '' ? (int)$nacionalidadeId : null,

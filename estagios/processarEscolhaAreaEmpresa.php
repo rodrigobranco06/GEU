@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../db.php'; // Preferência por include mantida
+include '../db.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['logged_in'])) {
     header("Location: ../index.php");
@@ -20,11 +20,9 @@ $cidade = $_POST['cidade'];
 try {
     $conexao->beginTransaction();
 
-    // 1. Atualizar empresa_id na tabela principal PEDIDO_ESTAGIO
     $stmtP = $conexao->prepare("UPDATE pedido_estagio SET empresa_id = ?, fase_atual = 'Envio de email', data_ultima_atualizacao = NOW() WHERE id_pedido_estagio = ?");
     $stmtP->execute([$id_empresa, $id_pedido]);
 
-    // 2. Gravar os dados na tabela FASE_AREA seguindo rigorosamente o teu SQL
     $stmtCheck = $conexao->prepare("SELECT id_pedido_estagio FROM fase_area WHERE id_pedido_estagio = ?");
     $stmtCheck->execute([$id_pedido]);
     

@@ -3,26 +3,21 @@
 
 session_start();
 
-// 1. Verificação de segurança: Logado + Cargo de Administrador
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['cargo'] !== 'Administrador') {
-    // Se não for admin, redireciona para a página principal ou login
     header("Location: ../index.php"); 
     exit();
 }
 
 include 'modelsProfessores.php';
 
-// --- LÓGICA PARA O MODAL (Dados do Admin logado) ---
 $user_id_logado = $_SESSION['id_utilizador'];
 $cargo          = $_SESSION['cargo']; 
 $nome_exibicao  = "Administrador";    
 $email_exibicao = "Email não disponível";
 
 try {
-    // A função estabelecerConexao() já está disponível via modelsAlunos.php
     $db = estabelecerConexao();
     
-    // Procurar os dados do Administrador que está a usar o sistema para o modal
     $stmtLogado = $db->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
     $stmtLogado->execute([$user_id_logado]);
     $dadosLogado = $stmtLogado->fetch(PDO::FETCH_ASSOC);
@@ -36,7 +31,6 @@ try {
 }
 
 
-// Se vier de updateProfessor.php, $idProfessor já está definido
 if (!isset($idProfessor)) {
     $idProfessor = (int) ($_GET['id_professor'] ?? 0);
 }
@@ -51,7 +45,6 @@ if (!$professor) {
     die('Professor não encontrado.');
 }
 
-// listas para selects
 $nacionalidades   = listarNacionalidades();
 $escolas          = listarEscolas();
 $especializacoes  = listarEspecializacoes();

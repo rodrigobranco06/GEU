@@ -49,7 +49,7 @@ $alunos = getTodosAlunos();
 
 <body>
 
-    <!-- ======= CABEÇALHO ======= -->
+<!-- ======= CABEÇALHO ======= -->
 <header id="header">
         <div class="header-logo">
             <a href="index.php"><img src="../img/Logo.png" alt="GEU"></a>
@@ -82,7 +82,7 @@ $alunos = getTodosAlunos();
     <!-- ======= CONTEÚDO PRINCIPAL ======= -->
     <main id="main-content">
 
-        <!-- Tabs internas (Ver / Registar) -->
+        <!-- Tabs internas -->
         <nav class="subtabs">
             <a href="index.php" class="subtab-link active">Ver Alunos</a>
             <a href="registarAluno.php" class="subtab-link">Registar novo aluno</a>

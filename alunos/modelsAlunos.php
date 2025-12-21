@@ -4,10 +4,7 @@
 include '../db.php';
 include '../utils.php';
 
-/**
- * Se este ficheiro já foi incluído neste request, não voltar a declarar funções.
- * Isto evita o "Cannot redeclare listarCursos()" mesmo com vários includes.
- */
+
 if (function_exists('listarCursos')) {
     return;
 }

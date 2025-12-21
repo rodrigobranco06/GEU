@@ -24,7 +24,6 @@ try {
             $diretorio = "../uploads/relatorios/";
             if (!is_dir($diretorio)) mkdir($diretorio, 0777, true);
 
-            // Eliminar ficheiro antigo se existir
             if (!empty($res['relatorio']) && file_exists($diretorio . $res['relatorio'])) {
                 unlink($diretorio . $res['relatorio']);
             }

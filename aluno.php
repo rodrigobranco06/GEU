@@ -15,21 +15,18 @@ $idUserLogado = $_SESSION['id_utilizador'];
 $idAluno = isset($_GET['id_aluno']) ? (int)$_GET['id_aluno'] : 0;
 if ($idAluno <= 0) die('ID de aluno inválido.');
 
-// Validação de segurança via Model
 if ($cargoLogado === 'Aluno') {
     if (!verificarAcessoAluno($conexao, $idAluno, $idUserLogado)) {
         die("Acesso negado.");
     }
 }
 
-// Carregamento de dados via Model
 $dadosAluno = getDadosAluno($conexao, $idAluno);
 if (!$dadosAluno) die("Aluno não encontrado.");
 
 $pedidos = getPedidosEstagio($conexao, $idAluno, $cargoLogado, $idUserLogado);
 $perfilLogado = getPerfilLogado($conexao, $idUserLogado, $cargoLogado);
 
-// Links e UI
 $linkVoltar = ($dadosAluno['turma_id']) ? "turma.php?id_turma=" . $dadosAluno['turma_id'] : "index.php";
 
 function getEstadoClass($estado) {

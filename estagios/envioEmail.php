@@ -1,8 +1,7 @@
 <?php
 session_start();
-include '../db.php'; // Preferência por include mantida
+include '../db.php'; 
 
-// 1. Verificação de segurança
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: ../login.php");
     exit();
@@ -12,13 +11,13 @@ $conexao = estabelecerConexao();
 $cargoLogado = $_SESSION['cargo'];
 $idUserLogado = $_SESSION['id_utilizador'];
 
-// 2. Obter ID do pedido via URL
+// Obter ID do pedido via URL
 $id_pedido = isset($_GET['id_pedido_estagio']) ? (int)$_GET['id_pedido_estagio'] : 0;
 if ($id_pedido <= 0) {
     die("Pedido de estágio inválido.");
 }
 
-// 3. Procurar dados do Pedido, Aluno, Empresa e CVs
+// Procurar dados do Pedido, Aluno, Empresa e CVs
 $sql = "SELECT p.*, a.nome as aluno_nome, a.id_aluno, a.cv as cv_perfil,
                e.id_empresa, e.nome as empresa_nome, e.email as empresa_email, e.nome_responsavel,
                fe.cv as cv_fase, fe.estado_envio_email, fe.data_envio_email
@@ -36,10 +35,9 @@ if (!$dados) {
     die("Pedido não encontrado.");
 }
 
-// Determinar qual CV mostrar (Prioridade para o específico da fase)
 $cv_exibicao = $dados['cv_fase'] ?: $dados['cv_perfil'];
 
-// 4. Lógica do Perfil Dinâmico (Modal de Conta)
+// Lógica do Perfil Dinâmico
 $nome_exibicao = "Utilizador";
 $email_exibicao = "Email não disponível";
 try {

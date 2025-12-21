@@ -15,7 +15,6 @@ $acao = $_POST['acao'] ?? '';
 $github = $_POST['github'] ?? null;
 $linkedin = $_POST['linkedin'] ?? null;
 
-// Apenas Alunos e Empresas têm estes campos na base de dados
 if (!in_array($cargo, ['Aluno', 'Empresa'])) {
     header("Location: verPerfil.php");
     exit();

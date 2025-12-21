@@ -3,26 +3,22 @@
 
 session_start();
 
-// 1. Verificação de segurança: Logado + Cargo de Administrador
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['cargo'] !== 'Administrador') {
-    // Se não for admin, redireciona para a página principal ou login
     header("Location: ../index.php"); 
     exit();
 }
 
 include 'modelsAlunos.php';
 
-// --- LÓGICA PARA O MODAL (Dados do Admin logado) ---
+// --- LÓGICA PARA O MODAL ---
 $user_id_logado = $_SESSION['id_utilizador'];
 $cargo          = $_SESSION['cargo']; 
 $nome_exibicao  = "Administrador";    
 $email_exibicao = "Email não disponível";
 
 try {
-    // A função estabelecerConexao() já está disponível via modelsAlunos.php
     $db = estabelecerConexao();
     
-    // Procurar os dados do Administrador que está a usar o sistema para o modal
     $stmtLogado = $db->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
     $stmtLogado->execute([$user_id_logado]);
     $dadosLogado = $stmtLogado->fetch(PDO::FETCH_ASSOC);
@@ -35,7 +31,6 @@ try {
     error_log("Erro ao carregar dados do modal: " . $e->getMessage());
 }
 
-// $erros pode vir do addAluno.php (include em caso de erro)
 $erros = $erros ?? [];
 
 $nacionalidades = listarNacionalidades();
@@ -53,7 +48,7 @@ $escolas        = listarEscolas();
 </head>
 <body>
 
-    <!-- ======= CABEÇALHO ======= -->
+<!-- ======= CABEÇALHO ======= -->
 <header id="header">
         <div class="header-logo">
             <a href="index.php"><img src="../img/Logo.png" alt="GEU"></a>
@@ -403,12 +398,6 @@ $escolas        = listarEscolas();
 
             <!-- Coluna direita: botão + imagem -->
             <aside class="side-panel">
-                <div class="side-top">
-                    <button class="btn-salvar" type="submit" form="formRegistoAluno">
-                        Salvar
-                    </button>
-                </div>
-
                 <div class="side-image-wrapper">
                     <img src="../img/img_registarAluno.png" alt="Ilustração registar aluno">
                 </div>

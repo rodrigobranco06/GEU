@@ -2,7 +2,6 @@
 session_start();
 include '../db.php';
 
-// 1. Verificação de segurança
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: ../login.php");
     exit();
@@ -12,13 +11,12 @@ $conexao = estabelecerConexao();
 $cargoLogado = $_SESSION['cargo'];
 $idUserLogado = $_SESSION['id_utilizador'];
 
-// 2. Obter ID do pedido via URL
 $id_pedido = isset($_GET['id_pedido_estagio']) ? (int)$_GET['id_pedido_estagio'] : 0;
 if ($id_pedido <= 0) {
     die("Pedido de estágio inválido.");
 }
 
-// 3. Procurar dados completos (JOIN com empresa para preenchimento automático)
+// Procurar dados completos (JOIN com empresa para preenchimento automático)
 $sql = "SELECT p.*, a.nome as aluno_nome, a.id_aluno, 
                e.id_empresa, e.nome as empresa_nome, e.email as empresa_email, e.nome_responsavel,
                fr.resposta_empresa, fr.data_resposta
@@ -36,7 +34,7 @@ if (!$dados) {
     die("Pedido não encontrado.");
 }
 
-// 4. Lógica do Perfil Dinâmico (Modal de Conta)
+// Lógica do Perfil Dinâmico 
 $nome_exibicao = "Utilizador";
 $email_exibicao = "Email não disponível";
 try {

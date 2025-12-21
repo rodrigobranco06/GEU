@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Ler dados
 $nome       = trim($_POST['nome'] ?? '');
 $password   = trim($_POST['password'] ?? '');
-$email      = trim($_POST['email'] ?? ''); // Email será o username
+$email      = trim($_POST['email'] ?? ''); 
 $nif        = trim($_POST['nif'] ?? '');
 $telefone   = trim($_POST['telefone'] ?? '');
 $ramoId     = $_POST['ramo_id'] ?? '';
@@ -45,10 +45,10 @@ try {
     $conexao = estabelecerConexao();
     $conexao->beginTransaction();
 
-    // 1. Criar Utilizador
+    // Criar Utilizador
     $idUtilizador = criarUtilizadorEmpresa($email, $password);
 
-    // 2. Criar Empresa
+    // Criar Empresa
     $dadosEmpresa = [
         'nome' => $nome,
         'nif' => $nif,

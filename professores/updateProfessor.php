@@ -20,7 +20,6 @@ if (!$professor) {
 
 $erros = [];
 
-// Ler dados do formulário
 $nome             = trim($_POST['nomeProf'] ?? '');
 $dataNascimentoDb = $_POST['data_nascimento'] ?? null;
 $sexo             = trim($_POST['sexo'] ?? '');
@@ -37,7 +36,6 @@ $nacionalidadeId  = $_POST['nacionalidade_id']  ?? '';
 $escolaId         = $_POST['escola_id']         ?? '';
 $especializacaoId = $_POST['especializacao_id'] ?? '';
 
-// Validações básicas (podes reforçar se quiseres)
 if ($nome === '') {
     $erros[] = 'O nome do professor é obrigatório.';
 }
@@ -62,7 +60,6 @@ $dadosUpdate = [
 ];
 
 if (!empty($erros)) {
-    // Voltar ao formulário com erros
     include 'editarProfessor.php';
     exit;
 }

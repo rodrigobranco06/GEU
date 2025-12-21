@@ -1,8 +1,6 @@
 <?php
 session_start();
-// Se já estiver logado, redireciona para a dashboard correta
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    // Redirecionamento pode ser feito aqui
 }
 ?>
 <!DOCTYPE html>

@@ -11,11 +11,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 $conexao = estabelecerConexao();
 $idTurma = isset($_GET['id_turma']) ? (int)$_GET['id_turma'] : 0;
 
-// Ajuste aqui: nomes das variáveis para coincidir com o que as funções esperam
 $idUtilizador = $_SESSION['id_utilizador']; 
 $cargoUtilizador = $_SESSION['cargo']; 
 
-// --- LÓGICA DO PERFIL DINÂMICO ---
 $nome_exibicao = "Utilizador";
 $email_exibicao = "Email não disponível";
 
@@ -44,7 +42,6 @@ try {
 
 if ($idTurma <= 0) { header('Location: index.php'); exit; }
 
-// Agora as variáveis $idUtilizador e $cargoUtilizador já existem e têm valor
 $perfil = getPerfilUtilizador($conexao, $idUtilizador, $cargoUtilizador);
 $turma  = getDadosTurma($conexao, $idTurma, $cargoUtilizador, $idUtilizador);
 
@@ -52,7 +49,6 @@ if (!$turma) { die("Acesso negado ou turma inexistente."); }
 
 $alunos = getAlunosTurma($conexao, $idTurma, $cargoUtilizador, $idUtilizador);
 
-// Dados para o modal de edição (Apenas Admin)
 $cursos = [];
 $professores = [];
 if ($cargoUtilizador === 'Administrador') {
@@ -242,7 +238,6 @@ function obterClasseEstado($estado) {
             }
         }
 
-        // Geração automática do nome no modal
         const inputCurso = document.getElementById('curso');
         const inputAnoC = document.getElementById('ano-curricular');
         const inputAnoI = document.getElementById('ano-inicio');

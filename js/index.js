@@ -51,13 +51,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (perfilLogout) {
         perfilLogout.addEventListener("click", function () {
             console.log("Log out clicado");
-            // window.location.href = "../login.html";
         });
     }
 
  // GERACAO AUTOMATICA DE CODIGO DE TURMA E NOME DA TURMA
 
-    // Localiza os inputs no DOM
     const inputCurso      = document.getElementById('curso');
     const inputAnoCurric  = document.getElementById('ano-curricular');
     const inputAnoInicio  = document.getElementById('ano-inicio');
@@ -67,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function atualizarCamposAutomaticos() {
         const optionSelecionada = inputCurso.options[inputCurso.selectedIndex];
-        // Obtém a sigla diretamente do atributo data que definimos no PHP
         const sigla = optionSelecionada ? optionSelecionada.getAttribute('data-sigla').trim().toUpperCase() : '';
         
         const anoCurric = inputAnoCurric.value.trim();
@@ -75,10 +72,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const anoFim    = inputAnoFim.value.trim();
 
         if (sigla && anoIni && anoFim) {
-            // Gera o Código: tpsi20242026
             inputCodigo.value = sigla.toLowerCase() + anoIni + anoFim;
 
-            // Gera o Nome: TPSI - 2 (2024/2026)
             if (anoCurric) {
                 inputNome.value = `${sigla} - ${anoCurric} (${anoIni}/${anoFim})`;
             } else {
@@ -90,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Adiciona os ouvintes de evento
     if (inputCurso && inputAnoCurric && inputAnoInicio && inputAnoFim) {
         inputCurso.addEventListener('change', atualizarCamposAutomaticos);
         inputAnoCurric.addEventListener('input', atualizarCamposAutomaticos);

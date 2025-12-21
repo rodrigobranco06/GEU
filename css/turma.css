@@ -141,11 +141,10 @@ body {
   background-color: #148e69;
 }
 
-/* ======= LISTAGEM DE TURMAS (Para o index.php) ======= */
 
 .turmas-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 22px;
   padding-bottom: 40px;
 }
@@ -160,10 +159,10 @@ body {
   background: white;
   border: 1px solid #e6e6e6;
   border-radius: 8px;
-  padding: 24px; /* Mais espaçamento interno */
+  padding: 24px; 
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  height: 100%; /* Garante altura igual */
+  height: 100%; 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -202,7 +201,7 @@ body {
 }
 
 
-/* ======= GRELHA DE ALUNOS (Para o turma.php) ======= */
+/* ======= GRELHA DE ALUNOS ======= */
 .alunos-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -498,7 +497,6 @@ body {
   z-index: 9999;
 }
 
-/* ===== Caixa do modal ===== */
 .modal-content-box {
   width: 780px;
   background: white;
@@ -507,14 +505,12 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* Layout principal */
 .modal-flex {
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 
-/* Form */
 .modal-form {
   width: 100%;
   display: flex;
@@ -535,13 +531,11 @@ body {
   width: 100%;
 }
 
-/* Imagem */
 .modal-img {
   padding-top: 20px;
   width: 260px;
 }
 
-/* Botões no canto inferior esquerdo */
 .modal-buttons {
   margin-top: 18px;
   display: flex;
@@ -549,7 +543,6 @@ body {
   gap: 22px;
 }
 
-/* Estilo dos botões */
 .modal-btn {
   padding: 10px 32px;
   border-radius: 25px;

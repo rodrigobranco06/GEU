@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
             perfilOverlay.classList.add("show");
         });
 
-        // Fechar ao clicar no botão "Voltar"
+        // Fechar ao clicar no botão Voltar
         const perfilVoltar = perfilOverlay.querySelector(".perfil-voltar-btn");
         if (perfilVoltar) {
             perfilVoltar.addEventListener("click", () => {
@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (perfilLogout) {
         perfilLogout.addEventListener("click", function() {
             console.log("Log out clicado");
-            // window.location.href = "../logout.php";
         });
     }
 });

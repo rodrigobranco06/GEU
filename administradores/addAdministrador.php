@@ -30,7 +30,7 @@ if ($emailInstitucional === '') {
     $erros[] = 'O email institucional é obrigatório.';
 }
 
-// Se houver erros -> guardar e redirecionar (SEM include)
+// Se houver erros -> guardar e redirecionar
 if (!empty($erros)) {
     $_SESSION['erros_admin'] = $erros;
     $_SESSION['old_admin'] = [
@@ -59,7 +59,7 @@ try {
 
     $con->commit();
 
-    header('Location: verAdministrador.php?id_admin=' . urlencode((string)$idAdminNovo));
+    header('Location: index.php');
     exit;
 
 } catch (PDOException $e) {

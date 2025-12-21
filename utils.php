@@ -1,7 +1,6 @@
 <?php 
     // utils.php 
 
-    // Para facilitar o debug das variáveis 
     function show_var( $var, $var_name ) 
     {
         echo "<section>";

@@ -241,7 +241,6 @@ body {
     background: #fff;
 }
 
-/* Overlay escuro */
 .modal {
     display: none;
     position: fixed;
@@ -254,7 +253,6 @@ body {
     justify-content: center;
 }
 
-/* Cartão branco central */
 .upload-card {
     background: #ffffff;
     padding: 16px 20px 24px;
@@ -265,7 +263,6 @@ body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* Header: seta + título */
 .upload-header {
     display: flex;
     align-items: center;
@@ -291,7 +288,6 @@ body {
     cursor: pointer;
 }
 
-/* Área tracejada de upload */
 .upload-panel {
     display: flex;
     flex-direction: column;
@@ -354,7 +350,7 @@ body {
     display: flex;
 }
 
-/* ======= SELECT PERSONALIZADO ======= */
+/* ======= SELECT ======= */
 .select-wrap {
     position: relative;
     display: inline-block;
@@ -497,8 +493,8 @@ body {
     display: none;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-top: 80px;        /* distância ao topo */
-    padding-right: 60px;      /* distância à direita similar ao header */
+    padding-top: 80px;       
+    padding-right: 60px;      
     background: rgba(0, 0, 0, 0.35);
     z-index: 2500;
 }
@@ -524,7 +520,7 @@ body {
     background-position: center;
 }
 
-/* avatar circular a “sair” do banner */
+/* avatar circular a sair do banner */
 .perfil-avatar {
     position: absolute;
     top: 50px;
@@ -539,7 +535,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para a imagem de avatar */
 .perfil-avatar-img {
     width: 32px;
     height: 32px;
@@ -582,7 +577,6 @@ body {
     flex: 1;
 }
 
-/* === AQUI ESTÁ A CORREÇÃO DO BOTÃO LOGOUT === */
 .perfil-logout-row {
     width: 100%;
     margin-top: 16px;
@@ -591,31 +585,28 @@ body {
     background: #f0f0f0;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza o texto */
+    justify-content: center; 
     padding: 12px 18px;
     font-size: 20px;
     cursor: pointer;
     text-decoration: none;
     color: #000;
-    position: relative; /* Importante para o ícone absoluto funcionar */
+    position: relative; 
 }
 
-/* Ícone fixo à esquerda (absoluto) */
 .perfil-back-img {
     width: 30px;
     height: 30px;
     object-fit: contain;
     position: absolute;
-    left: 18px; /* Mantém a mesma distância da margem que o padding */
+    left: 18px; 
 }
 
 .perfil-logout-text {
-    /* Sem flex:1 para garantir que fica no centro exato */
     text-align: center;
     font-weight: 500;
 }
 
-/* Botão Voltar em verde */
 .perfil-voltar-btn {
     width: 100%;
     margin-top: 18px;
@@ -634,7 +625,6 @@ body {
 }
 
 
-/* Responsivo para o perfil */
 @media (max-width: 600px) {
   .perfil-overlay {
     justify-content: center;

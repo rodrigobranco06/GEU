@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // -------- MODAL EDITAR TURMA --------
     const modalEditar = document.getElementById("modal-editar-turma");
     const btnAbrirEditar = document.querySelector(".btn-editar");
-    // Selecionamos o botão de cancelar/voltar dentro do modal de edição
     const btnFecharEditar = document.querySelector("#modal-editar-turma .modal-btn.voltar");
 
     if (modalEditar && btnAbrirEditar) {
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // Fechar ao clicar fora do conteúdo (no overlay escuro)
         modalEditar.addEventListener("click", (e) => {
             if (e.target === modalEditar) {
                 modalEditar.style.display = "none";

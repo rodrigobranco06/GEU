@@ -17,7 +17,6 @@ try {
     if ($acao === 'upload_plano') {
         if (isset($_FILES['plano_file']) && $_FILES['plano_file']['error'] === UPLOAD_ERR_OK) {
             
-            // 1. Obter dados do aluno e verificar se já existe um plano antigo
             $stmtDados = $conexao->prepare("
                 SELECT a.id_aluno, a.nome, fp.plano_estagio 
                 FROM pedido_estagio p 
@@ -32,7 +31,6 @@ try {
 
             $diretorio = "../uploads/planos/";
             
-            // 2. Se já existir um ficheiro físico, vamos removê-lo para garantir a substituição
             if (!empty($resultado['plano_estagio'])) {
                 $ficheiroAntigo = $diretorio . $resultado['plano_estagio'];
                 if (file_exists($ficheiroAntigo)) {
@@ -40,13 +38,11 @@ try {
                 }
             }
 
-            // 3. Gerar novo nome (adicionamos o time() para evitar cache do browser)
             $nomeLimpo = str_replace(' ', '_', preg_replace('/[^A-Za-z0-9 ]/', '', $resultado['nome']));
             $novoNome = "plano_" . $resultado['id_aluno'] . "_" . $nomeLimpo . "_" . time() . ".pdf";
 
             if (!is_dir($diretorio)) mkdir($diretorio, 0777, true);
 
-            // 4. Mover novo ficheiro
             if (move_uploaded_file($_FILES['plano_file']['tmp_name'], $diretorio . $novoNome)) {
                 $stmtCheck = $conexao->prepare("SELECT id_pedido_estagio FROM fase_plano WHERE id_pedido_estagio = ?");
                 $stmtCheck->execute([$id_pedido]);
@@ -59,7 +55,6 @@ try {
             }
         }
     } else {
-        // Lógica de guardar datas (permanece igual)
         $data_inicio = $_POST['data_inicio'];
         $data_fim = $_POST['data_fim'];
 

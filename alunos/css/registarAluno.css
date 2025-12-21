@@ -148,12 +148,11 @@ body {
 }
 
 /* ======= FORMULÁRIO ======= */
-/* UM CAMPO POR LINHA, COM LABEL À ESQUERDA E INPUT À DIREITA */
 .form-aluno {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-width: 520px; /* podes aumentar/diminuir conforme gostares */
+    max-width: 520px; 
 }
 
 .form-group {
@@ -182,7 +181,7 @@ body {
     border-color: #1aa179;
 }
 
-/* Select estilizado com label ao lado também */
+/* Select */
 .select-wrapper {
     position: relative;
     width: 100%;
@@ -314,8 +313,8 @@ body {
     display: none;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-top: 80px;        /* distância ao topo */
-    padding-right: 60px;      /* distância à direita similar ao header */
+    padding-top: 80px;        
+    padding-right: 60px;      
     background: rgba(0, 0, 0, 0.35);
     z-index: 2500;
 }
@@ -341,7 +340,6 @@ body {
     background-position: center;
 }
 
-/* avatar circular a “sair” do banner */
 .perfil-avatar {
     position: absolute;
     top: 50px;
@@ -356,7 +354,6 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para a imagem de avatar */
 .perfil-avatar-img {
     width: 32px;
     height: 32px;
@@ -399,7 +396,6 @@ body {
     flex: 1;
 }
 
-/* === AQUI ESTÁ A CORREÇÃO DO BOTÃO LOGOUT === */
 .perfil-logout-row {
     width: 100%;
     margin-top: 16px;
@@ -408,31 +404,28 @@ body {
     background: #f0f0f0;
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza o texto */
+    justify-content: center; 
     padding: 12px 18px;
     font-size: 20px;
     cursor: pointer;
     text-decoration: none;
     color: #000;
-    position: relative; /* Importante para o ícone absoluto funcionar */
+    position: relative; 
 }
 
-/* Ícone fixo à esquerda (absoluto) */
 .perfil-back-img {
     width: 30px;
     height: 30px;
     object-fit: contain;
     position: absolute;
-    left: 18px; /* Mantém a mesma distância da margem que o padding */
+    left: 18px; 
 }
 
 .perfil-logout-text {
-    /* Sem flex:1 para garantir que fica no centro exato */
     text-align: center;
     font-weight: 500;
 }
 
-/* Botão Voltar em verde */
 .perfil-voltar-btn {
     width: 100%;
     margin-top: 18px;
@@ -453,18 +446,18 @@ body {
 /* Alinhamento da password e checkbox na mesma linha */
 .password-inline {
     display: flex;
-    align-items: center; /* Centra verticalmente o input e a label */
+    align-items: center; 
     gap: 10px;
     width: 100%;
 }
 
 .password-inline input {
-    flex: 1; /* Faz o input ocupar o espaço disponível */
+    flex: 1; 
 }
 
 .toggle-password-inline {
     display: flex;
-    align-items: center; /* Centra o checkbox com o texto "Mostrar password" */
+    align-items: center;
     gap: 5px;
     font-size: 12px;
     color: #444;
@@ -473,7 +466,6 @@ body {
     user-select: none;
 }
 
-/* Garante que o checkbox não herda alturas estranhas */
 .toggle-password-inline input[type="checkbox"] {
     width: 14px;
     height: 14px;
@@ -532,7 +524,6 @@ body {
         justify-content: center;
     }
 
-    /* em mobile, label por cima para caber melhor */
     .form-group {
         grid-template-columns: 1fr;
         row-gap: 4px;

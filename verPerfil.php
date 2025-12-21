@@ -14,7 +14,6 @@ $idUser = $_SESSION['id_utilizador'];
 
 $dados = getDadoscompletosPerfil($conexao, $idUser, $cargo);
 
-// Lógica de labels dinâmicas para respeitar o teu esquema
 $email_valor = ($cargo === 'Empresa') ? $dados['email'] : $dados['email_institucional'];
 ?>
 
@@ -187,25 +186,20 @@ $email_valor = ($cargo === 'Empresa') ? $dados['email'] : $dados['email_instituc
     <?php endif; ?>
 
     <script>
-        // Esta função tem de estar aqui para ser global e imediata
         function fecharModaisForcado() {
-            // 1. Esconde os modais
             document.querySelectorAll('.popup-overlay').forEach(p => p.classList.remove('show'));
             
-            // 2. Limpa a URL (remove o ?sucesso=...)
             if (window.history.replaceState) {
                 const url = window.location.pathname;
                 window.history.replaceState({}, '', url);
             }
         }
 
-        // Fechar ao clicar fora (no fundo)
         window.onclick = function(event) {
             if (event.target.classList.contains('popup-overlay')) {
                 fecharModaisForcado();
             }
             
-            // Lógica do Modal de Conta
             const modalConta = document.getElementById("perfil-overlay");
             if (event.target == modalConta) {
                 modalConta.classList.remove("show");

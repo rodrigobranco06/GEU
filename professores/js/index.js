@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Função utilitária para "escapar" o texto e prevenir XSS no frontend
     function htmlspecialchars(str) {
         if (typeof str !== 'string') return str;
         return str.replace(/&/g, '&amp;')
@@ -17,9 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (searchInput && tableBody) {
         
-        /**
-         * Gera uma linha <tr> HTML para um professor.
-         */
+       
         const createTableRow = (prof) => {
             const id = prof.id_professor || '';
             const nome = prof.nome_professor ? htmlspecialchars(prof.nome_professor) : '';
@@ -36,11 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         };
         
-        /**
-         * Busca e renderiza a lista de professores filtrada via AJAX.
-         */
         const fetchAndRenderProfessores = (searchTerm) => {
-            // URL para o ficheiro PHP
             const url = `fetchProfessores.php?search=${encodeURIComponent(searchTerm)}`;
 
             fetch(url)
@@ -51,16 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     return response.json();
                 })
                 .then(professores => {
-                    // Limpa o conteúdo atual da tabela
                     tableBody.innerHTML = '';
                     
                     if (professores.length === 0) {
-                        // Mensagem se não encontrar resultados
                         tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 20px;">Nenhum professor encontrado.</td></tr>';
                         return;
                     }
 
-                    // Gera o HTML para os novos professores
                     let newHtml = '';
                     professores.forEach(prof => {
                         newHtml += createTableRow(prof);
@@ -73,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         };
 
-        // Adiciona um listener para o evento 'input'
         searchInput.addEventListener('input', (event) => {
             const searchTerm = event.target.value.trim();
             fetchAndRenderProfessores(searchTerm);
@@ -118,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (perfilLogout) {
         perfilLogout.addEventListener("click", function () {
             console.log("Log out clicado");
-            // window.location.href = "../login.html";
         });
     }
 

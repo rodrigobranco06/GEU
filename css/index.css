@@ -50,7 +50,6 @@ body {
     color: #000;
 }
 
-/* Linha por baixo do link ativo */
 .nav-link.active {
     color: #000;
     font-weight: 600;
@@ -101,7 +100,6 @@ body {
     padding: 0 60px;
 }
 
-/* Linha superior com título e botão */
 .main-header {
     display: flex;
     justify-content: space-between;
@@ -111,14 +109,12 @@ body {
     gap: 15px;
 }
 
-/* Título à esquerda */
 .titulo-pagina {
     font-size: 24px;
     font-weight: 600;
     color: #000;
 }
 
-/* Botão no canto superior direito */
 .btn-criar-turma {
     background-color: #1aa179;
     color: white;
@@ -136,7 +132,7 @@ body {
     background-color: #148e69;
 }
 
-/* Cards das turmas — alinhados abaixo do título */
+/* Cards das turmas */
 .turmas-container {
     display: flex;
     flex-wrap: wrap;
@@ -391,9 +387,8 @@ body {
     }
 }
 
-/* ======= MEDIA QUERIES - RESPONSIVIDADE ======= */
+/* ======= RESPONSIVIDADE ======= */
 
-/* Tablets (até 1024px) */
 @media (max-width: 1024px) {
     #header {
         padding: 15px 30px;
@@ -412,7 +407,6 @@ body {
     }
 }
 
-/* Tablets pequenos (até 768px) */
 @media (max-width: 768px) {
     #header {
         padding: 15px 20px;
@@ -475,7 +469,6 @@ body {
     }
 }
 
-/* Smartphones (até 480px) */
 @media (max-width: 480px) {
     #header {
         padding: 10px 15px;
@@ -556,7 +549,6 @@ body {
     z-index: 9999;
 }
 
-/* ===== Caixa do modal ===== */
 .modal-content-box {
     width: 980px;
     max-width: 95vw;
@@ -565,19 +557,16 @@ body {
     padding: 20px 28px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     
-    /* ALTERAÇÃO: Habilita posicionamento absoluto para os botões e cria espaço em baixo */
     position: relative;
     padding-bottom: 80px;
 }
 
-/* Layout principal */
 .modal-flex {
     display: flex;
     justify-content: space-between;
     gap: 20px;
 }
 
-/* Form */
 .modal-form {
     width: 100%;
     display: flex;
@@ -597,7 +586,6 @@ body {
     font-size: 14px;
 }
 
-/* Imagem */
 .modal-img {
     padding-top: 20px;
     width: 260px;
@@ -605,9 +593,7 @@ body {
     object-fit: contain; 
 }
 
-/* Botões no canto inferior direito */
 .modal-buttons {
-    /* ALTERAÇÃO: Posicionamento Absoluto */
     position: absolute;
     bottom: 20px;
     right: 28px;
@@ -617,7 +603,6 @@ body {
     gap: 22px;
 }
 
-/* Estilo dos botões */
 .modal-btn {
     padding: 10px 32px;
     border-radius: 25px;

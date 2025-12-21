@@ -15,7 +15,7 @@ if (btnConta && perfilOverlay) {
   });
 }
 
-// Fechar ao clicar em "Voltar"
+// Fechar ao clicar em Voltar
 if (perfilVoltar && perfilOverlay) {
   perfilVoltar.addEventListener("click", function () {
     perfilOverlay.classList.remove("show");
@@ -35,7 +35,6 @@ if (perfilOverlay) {
 if (perfilLogout) {
   perfilLogout.addEventListener("click", function () {
     console.log("Log out clicado");
-    // window.location.href = "../login.php";
   });
 }
 
@@ -63,10 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const dados = await response.json();
 
-      // Limpar tabela
       tabelaBody.innerHTML = "";
 
-      // Se não houver resultados
       if (!Array.isArray(dados) || dados.length === 0) {
         const tr = document.createElement("tr");
         tr.innerHTML = `<td colspan="5" style="text-align:center;">Sem resultados</td>`;
@@ -74,13 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Renderizar linhas
       dados.forEach((aluno) => {
         const tr = document.createElement("tr");
         tr.classList.add("linha-click");
 
         tr.addEventListener("click", () => {
-          // ✅ verAluno.php espera ?id=
           window.location.href = `verAluno.php?id_aluno=${encodeURIComponent(aluno.id_aluno)}`;
         });
 
@@ -100,10 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Primeira carga
   carregarAlunos();
 
-  // Debounce
   let timeoutId;
   searchInput.addEventListener("input", () => {
     const term = searchInput.value.trim();

@@ -1,9 +1,6 @@
 <?php
 // modelsTurma.php
 
-/**
- * Obtém os dados completos de uma turma, incluindo a descrição do curso.
- */
 function getDadosTurma(PDO $conexao, $idTurma, $cargo, $idUtilizador) {
     $sql = "SELECT t.*, c.curso_desc FROM turma t 
              LEFT JOIN curso c ON t.curso_id = c.id_curso 
@@ -21,9 +18,6 @@ function getDadosTurma(PDO $conexao, $idTurma, $cargo, $idUtilizador) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-/**
- * Procura os alunos de uma turma com filtros de visibilidade baseados no cargo.
- */
 function getAlunosTurma(PDO $conexao, $idTurma, $cargo, $idUtilizador) {
     $sql = "SELECT DISTINCT a.id_aluno, a.nome, 
               (SELECT pe.estado_pedido FROM pedido_estagio pe 
@@ -53,9 +47,6 @@ function getAlunosTurma(PDO $conexao, $idTurma, $cargo, $idUtilizador) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-/**
- * Obtém os dados de perfil para o modal de conta.
- */
 function getPerfilUtilizador(PDO $conexao, $idUtilizador, $cargo) {
     $tabela = strtolower($cargo);
     $campoEmail = ($cargo === 'Empresa') ? 'email' : 'email_institucional';

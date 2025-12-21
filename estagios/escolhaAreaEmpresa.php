@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../db.php'; // Preferência por include mantida
+include '../db.php';
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: ../login.php");
@@ -14,7 +14,7 @@ $idUserLogado = $_SESSION['id_utilizador'];
 $id_pedido = isset($_GET['id_pedido_estagio']) ? (int)$_GET['id_pedido_estagio'] : 0;
 if ($id_pedido <= 0) die("Pedido de estágio inválido.");
 
-// 1. Procurar dados do Pedido, Aluno, Professor e o estado da fase_area
+// Procurar dados do Pedido, Aluno, Professor e o estado da fase_area
 $sql = "SELECT p.*, a.nome as aluno_nome, a.id_aluno, 
                prof.id_professor, prof.nome as prof_nome,
                fa.cidade as area_cidade, fa.data_inicio_prevista, fa.data_fim_prevista, 
@@ -33,11 +33,11 @@ $dados = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$dados) die("Pedido não encontrado.");
 
-// 2. Procurar Áreas e Empresas para os Selects
+// Procurar Áreas e Empresas para os Selects
 $areas = $conexao->query("SELECT * FROM area_cientifica ORDER BY area_cientifica_desc ASC")->fetchAll(PDO::FETCH_ASSOC);
 $empresas = $conexao->query("SELECT id_empresa, nome, cidade FROM empresa ORDER BY nome ASC")->fetchAll(PDO::FETCH_ASSOC);
 
-// 3. Lógica do Perfil Dinâmico
+// Lógica do Perfil Dinâmico
 $nome_exibicao = "Utilizador";
 $email_exibicao = "Email não disponível";
 try {

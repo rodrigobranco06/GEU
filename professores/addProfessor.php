@@ -48,7 +48,6 @@ if ($password === '') {
     $erros[] = 'A password é obrigatória.';
 }
 
-// Verificar se o id_professor já existe
 if ($codigoProf !== '' && ctype_digit($codigoProf)) {
     if (professorIdExiste((int)$codigoProf)) {
         $erros[] = 'Já existe um professor com esse código/ID.';
@@ -56,7 +55,6 @@ if ($codigoProf !== '' && ctype_digit($codigoProf)) {
 }
 
 if (!empty($erros)) {
-    // Volta ao formulário com erros e dados do POST
     include 'registarProfessor.php';
     exit;
 }
@@ -65,7 +63,6 @@ try {
     $conexao = estabelecerConexao();
     $conexao->beginTransaction();
 
-    // Vamos usar o email institucional como username
     $username = $emailInst;
 
     $idUtilizador = criarUtilizadorProfessor($username, $password);
@@ -73,7 +70,7 @@ try {
     $dadosProfessor = [
         'id_professor'        => (int)$codigoProf,
         'nome'                => $nome,
-        'data_nascimento'     => $dataNascimento, // yyyy-mm-dd
+        'data_nascimento'     => $dataNascimento, 
         'sexo'                => $sexo,
         'nif'                 => $nif,
         'numero_cc'           => $numeroCc,

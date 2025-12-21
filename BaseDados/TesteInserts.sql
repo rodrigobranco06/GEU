@@ -44,10 +44,10 @@ INSERT INTO professor (
     'Morada de teste',
     '2000-000',
     'Santarém',
-    1,  -- id_utilizador
-    1,  -- id_nacionalidade
-    1,  -- id_escola
-    1   -- id_especializacao
+    1,  
+    1,  
+    1,  
+    1   
 );
 
 INSERT INTO turma (
@@ -64,7 +64,7 @@ INSERT INTO turma (
     2024,
     2026,
     2,
-    1,          -- id_curso para TPSI (ajusta se for outro)
-    240001462   -- id_professor
+    1,          
+    240001462   
 );
 

@@ -21,7 +21,6 @@ try {
     $conexao->beginTransaction();
 
     if ($acao === 'criar_pedido') {
-        // Procurar o professor_id da turma do aluno
         $stmtT = $conexao->prepare("SELECT professor_id FROM turma WHERE id_turma = (SELECT turma_id FROM aluno WHERE id_aluno = ?)");
         $stmtT->execute([$idAluno]);
         $resTurma = $stmtT->fetch(PDO::FETCH_ASSOC);
@@ -42,8 +41,6 @@ try {
         $idPedido = (int)($_POST['id_pedido'] ?? 0);
         
         if ($idPedido > 0) {
-            // ORDEM IMPORTANTE: Apagar primeiro todas as tabelas filhas (Child rows)
-            // Caso contrário, a Integrity Constraint Violation voltará a acontecer
             $conexao->prepare("DELETE FROM fase_confirmacao WHERE id_pedido_estagio = ?")->execute([$idPedido]);
             $conexao->prepare("DELETE FROM fase_area WHERE id_pedido_estagio = ?")->execute([$idPedido]);
             $conexao->prepare("DELETE FROM fase_email WHERE id_pedido_estagio = ?")->execute([$idPedido]);
@@ -51,7 +48,6 @@ try {
             $conexao->prepare("DELETE FROM fase_plano WHERE id_pedido_estagio = ?")->execute([$idPedido]);
             $conexao->prepare("DELETE FROM fase_avaliacao WHERE id_pedido_estagio = ?")->execute([$idPedido]);
 
-            // Por fim, apagar o registo pai
             $conexao->prepare("DELETE FROM pedido_estagio WHERE id_pedido_estagio = ?")->execute([$idPedido]);
         }
     }

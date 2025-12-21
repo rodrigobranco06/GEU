@@ -3,28 +3,22 @@
 
 session_start();
 
-// 1. Verificação de segurança (Apenas Administradores)
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || $_SESSION['cargo'] !== 'Administrador') {
     header("Location: ../index.php"); 
     exit();
 }
 
-// 2. Carregar o modelo de alunos
-// NOTA: Como não queres include_once nem mexer no db.php, 
-// removemos o include '../db.php' aqui porque o modelsAlunos.php já o inclui.
 include 'modelsAlunos.php';
 
-// --- LÓGICA PARA O MODAL (Dados do Admin logado) ---
+// --- LÓGICA PARA O MODAL ---
 $user_id_logado = $_SESSION['id_utilizador'];
 $cargo          = $_SESSION['cargo']; 
 $nome_exibicao  = "Administrador";    
 $email_exibicao = "Email não disponível";
 
 try {
-    // A função estabelecerConexao() já está disponível via modelsAlunos.php
     $db = estabelecerConexao();
     
-    // Procurar os dados do Administrador que está a usar o sistema para o modal
     $stmtLogado = $db->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
     $stmtLogado->execute([$user_id_logado]);
     $dadosLogado = $stmtLogado->fetch(PDO::FETCH_ASSOC);
@@ -37,7 +31,6 @@ try {
     error_log("Erro ao carregar dados do modal: " . $e->getMessage());
 }
 
-// --- LÓGICA DO ALUNO A EDITAR ---
 if (!isset($_GET['id_aluno']) || !ctype_digit($_GET['id_aluno'])) {
     header('Location: index.php');
     exit;
@@ -46,14 +39,12 @@ if (!isset($_GET['id_aluno']) || !ctype_digit($_GET['id_aluno'])) {
 $idAluno = (int) $_GET['id_aluno'];
 $erros = $erros ?? [];
 
-// Obter dados do aluno via modelo
 $aluno = getAlunoById($idAluno);
 if (!$aluno) {
     header('Location: index.php');
     exit;
 }
 
-// Carregar listas para os selects do formulário
 $nacionalidades = listarNacionalidades();
 $cursos         = listarCursos();
 $turmas         = listarTurmas();
@@ -135,7 +126,6 @@ $cvLabel = $cvPath ? basename($cvPath) : null;
                 <input type="text" value="<?= htmlspecialchars($aluno['id_aluno']) ?>" readonly>
             </div>
 
-            <!-- ✅ NOVA PASSWORD (placeholder + checkbox alinhada) -->
             <div class="form-group">
                 <label for="novaPassword">Nova Password <span class="opcional">(opcional)</span></label>
 
@@ -295,7 +285,6 @@ $cvLabel = $cvPath ? basename($cvPath) : null;
                 <input id="cidade" name="cidade" type="text" value="<?= htmlspecialchars($aluno['cidade'] ?? '') ?>">
             </div>
 
-            <!-- ✅ CV (bonito + link) -->
             <div class="form-group">
                 <label for="cv">CV <span class="opcional">(opcional)</span></label>
 
@@ -420,7 +409,6 @@ $cvLabel = $cvPath ? basename($cvPath) : null;
         </div>
     </div>
 
-<!-- Mantive o teu script exatamente como estava, só funciona com as classes novas -->
 <script>
   // mostrar/ocultar password
   const toggle = document.getElementById("togglePassword");

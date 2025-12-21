@@ -105,11 +105,8 @@ if (perfilOverlay) {
   });
 }
 
-// Ação de logout (por agora só consola;
-// se quiseres podes redirecionar para login.html)
 if (perfilLogout) {
   perfilLogout.addEventListener("click", function () {
     console.log("Log out clicado");
-    // window.location.href = "../login.html";
   });
 }

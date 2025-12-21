@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../db.php'; // Preferência por include mantida
+include '../db.php'; 
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: ../login.php");
@@ -14,7 +14,6 @@ $idUserLogado = $_SESSION['id_utilizador'];
 $id_pedido = isset($_GET['id_pedido_estagio']) ? (int)$_GET['id_pedido_estagio'] : 0;
 if ($id_pedido <= 0) die("Pedido de estágio inválido.");
 
-// Consulta SQL para preencher os dados automaticamente
 $sql = "SELECT p.*, a.nome as aluno_nome, a.id_aluno, 
                e.id_empresa, e.nome as empresa_nome, e.email as empresa_email,
                fp.plano_estagio, fp.data_inicio, fp.data_fim

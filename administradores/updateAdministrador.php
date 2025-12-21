@@ -32,7 +32,7 @@ if ($nome === '') $erros[] = 'O nome é obrigatório.';
 if ($emailInstitucional === '') $erros[] = 'O email institucional é obrigatório.';
 
 if (!empty($erros)) {
-    $id_admin = $idAdmin; // opcional (não usado aqui)
+    $id_admin = $idAdmin;
     include 'editarAdministrador.php';
     exit;
 }

@@ -20,7 +20,7 @@ if ($id_pedido <= 0) die("Erro: ID de pedido inválido.");
 try {
     $conexao->beginTransaction();
 
-    // 1. Atualizar ou Inserir na tabela fase_confirmacao (Guarda aqui as UC's deste estágio)
+    // Atualizar ou Inserir na tabela fase_confirmacao
     $stmtCheck = $conexao->prepare("SELECT id_pedido_estagio FROM fase_confirmacao WHERE id_pedido_estagio = ?");
     $stmtCheck->execute([$id_pedido]);
     
@@ -39,7 +39,7 @@ try {
         $stmtFC->execute([$id_pedido, $ucs_atraso]);
     }
 
-    // 2. Atualizar o pedido para a próxima fase
+    // Atualizar o pedido para a próxima fase
     $sqlPedido = "UPDATE pedido_estagio 
                   SET fase_atual = 'Escolha de área e empresa', 
                       data_ultima_atualizacao = NOW(),

@@ -14,7 +14,7 @@ body {
     min-height: 100vh;
 }
 
-/* ======= CABEÇALHO (Padronizado com Index) ======= */
+/* ======= CABEÇALHO ======= */
 #header {
     display: flex;
     justify-content: space-between;
@@ -323,7 +323,7 @@ body {
     color: #ef4444;
 }
 
-/* ======= RODAPÉ (Padronizado) ======= */
+/* ======= RODAPÉ ======= */
 #footer {
     background-color: #ffffff;
     border-top: 1px solid #e2e2e2;

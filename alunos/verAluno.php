@@ -109,7 +109,6 @@ $cvLabel = $cvPath ? basename($cvPath) : 'Sem CV';
                     <input id="codigo" type="text" value="<?= htmlspecialchars($aluno['id_aluno']) ?>" readonly>
                 </div>
 
-                <!-- ✅ removido campo password -->
 
                 <div class="form-group">
                     <label for="nome">Nome Aluno</label>
@@ -206,7 +205,6 @@ $cvLabel = $cvPath ? basename($cvPath) : 'Sem CV';
                     <input id="cidade" type="text" value="<?= htmlspecialchars($aluno['cidade'] ?? '') ?>" readonly>
                 </div>
 
-                <!-- ✅ CV com download -->
                 <div class="form-group">
                     <label>CV</label>
 
