@@ -294,10 +294,6 @@ $especializacoes  = listarEspecializacoes();
                     Salvar
                 </button>
             </div>
-
-            <div class="side-image-wrapper">
-                <img src="../img/img_registarAluno.png" alt="Ilustração registar professor">
-            </div>
         </aside>
     </section>
 </main>

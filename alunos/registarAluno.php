@@ -396,12 +396,6 @@ $escolas        = listarEscolas();
 
             </form>
 
-            <!-- Coluna direita: botão + imagem -->
-            <aside class="side-panel">
-                <div class="side-image-wrapper">
-                    <img src="../img/img_registarAluno.png" alt="Ilustração registar aluno">
-                </div>
-            </aside>
         </section>
     </main>
 

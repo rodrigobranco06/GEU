@@ -340,13 +340,7 @@ $cvLabel = $cvPath ? basename($cvPath) : null;
 
         </form>
 
-        <aside class="side-panel">
-            
-
-            <div class="side-image-wrapper">
-                <img src="../img/img_registarAluno.png" alt="Ilustração aluno">
-            </div>
-        </aside>
+        
     </section>
 </main>
 

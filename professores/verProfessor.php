@@ -253,10 +253,6 @@ if (!empty($professor['data_nascimento'])) {
                     Voltar
                 </a>
             </div>
-
-            <div class="side-image-wrapper">
-                <img src="../img/img_registarAluno.png" alt="Ilustração professor">
-            </div>
         </aside>
     </section>
 </main>

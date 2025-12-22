@@ -99,7 +99,6 @@ if (!$empresa) die('Empresa não encontrada.');
                 <a href="editarEmpresa.php?id_empresa=<?= $idEmpresa ?>" class="btn-editar">Editar</a>
                 <a class="btn-voltar" href="index.php">Voltar</a>
             </div>
-            <div class="side-image-wrapper"><img src="../img/img_registarAluno.png" alt="Ilustração"></div>
         </aside>
     </section>
 </main>

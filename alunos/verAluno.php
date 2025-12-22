@@ -241,9 +241,6 @@ $cvLabel = $cvPath ? basename($cvPath) : 'Sem CV';
                     <a class="btn-voltar" href="index.php">Voltar</a>
                 </div>
 
-                <div class="side-image-wrapper">
-                    <img src="../img/img_registarAluno.png" alt="Ilustração aluno">
-                </div>
             </aside>
         </section>
     </main>

@@ -183,11 +183,7 @@ $paises = listarPaises();
             </div>
         </form>
 
-        <aside class="side-panel">
-            <div class="side-image-wrapper">
-                <img src="../img/img_registarAluno.png" alt="Ilustração">
-            </div>
-        </aside>
+        
     </section>
 </main>
 
