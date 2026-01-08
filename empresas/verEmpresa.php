@@ -78,7 +78,7 @@ if (!$empresa) die('Empresa não encontrada.');
             <button id="btn-conta" class="btn-conta">
                 <img src="../img/img_conta.png" alt="Conta">
             </button>
-            <a href="logout.php" class="btn-sair">Sair</a>
+            <a href="../logout.php" class="btn-sair">Sair</a>
         </nav>
 </header>
 

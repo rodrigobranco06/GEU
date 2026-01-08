@@ -7,7 +7,7 @@ function estabelecerConexao()
         $dbname = 'geu';
         $hostname = 'localhost';
         $username = 'root';
-        $pass = '';
+        $pass = 'root';
         $port = 3307;
     } else {
         // Ambiente de produção (Hostinger)

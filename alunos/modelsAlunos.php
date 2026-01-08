@@ -1,13 +1,12 @@
 <?php
 // alunos/modelsAlunos.php
 
-include '../db.php';
-include '../utils.php';
+if (!defined('MODELS_ALUNOS_LOADED')) {
+    define('MODELS_ALUNOS_LOADED', true);
 
+    include '../db.php';
+    include '../utils.php';
 
-if (function_exists('listarCursos')) {
-    return;
-}
 
 /* ============================================================
    LISTAS SECUNDÁRIAS (SELECTS)
@@ -375,4 +374,5 @@ function deleteAlunoEUtilizador(int $idAluno, ?int $idUtilizador = null): void {
         }
         die('Erro ao eliminar aluno: ' . $e->getMessage());
     }
+}
 }

@@ -1,7 +1,10 @@
 <?php
 // professores/modelsProfessores.php
 
-include '../db.php';
+if (!defined('MODELS_PROFESSORES_LOADED')) {
+    define('MODELS_PROFESSORES_LOADED', true);
+
+include '../db.php';    
 include '../utils.php';
 
 /* ============================================================
@@ -263,3 +266,5 @@ function deleteProfessorEUtilizador(int $idProfessor, ?int $idUtilizador = null)
         die('Erro ao eliminar professor: ' . $e->getMessage());
     }
 }
+}
+
