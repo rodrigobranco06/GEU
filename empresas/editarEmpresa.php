@@ -18,22 +18,22 @@ $email_exibicao = "Email não disponível";
 
 try {
     $db = estabelecerConexao();
-    $dados = null; 
+    $dados = null;
 
     if ($cargo === 'Administrador') {
-        $stmt = $db->prepare("SELECT nome, email_institucional as email FROM administrador WHERE utilizador_id = ?");
+        $stmt = $db->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
         $stmt->execute([$user_id_logado]);
         $dados = $stmt->fetch(PDO::FETCH_ASSOC);
     } 
     elseif ($cargo === 'Professor') {
-        $stmt = $db->prepare("SELECT nome, email FROM professores WHERE utilizador_id = ?");
+        $stmt = $db->prepare("SELECT nome, email_institucional FROM professor WHERE utilizador_id = ?");
         $stmt->execute([$user_id_logado]);
         $dados = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     if ($dados) {
         $nome_exibicao = $dados['nome'];
-        $email_exibicao = $dados['email'];
+        $email_exibicao = $dados['email_institucional'];
     }
 
 } catch (PDOException $e) {
