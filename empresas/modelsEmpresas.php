@@ -1,6 +1,9 @@
 <?php
 // empresas/modelsEmpresas.php
 
+if (!defined('MODELS_EMPRESAS_LOADED')) {
+    define('MODELS_EMPRESAS_LOADED', true);
+
 include '../db.php';
 
 /* ============================================================
@@ -194,5 +197,7 @@ function deleteEmpresaEUtilizador(int $idEmpresa, ?int $idUtilizador): void {
         $con->rollBack();
         throw $e;
     }
+}
+
 }
 ?>

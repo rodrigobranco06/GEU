@@ -1,6 +1,9 @@
 <?php
 // administradores/modelsAdministradores.php
 
+if (!defined('MODELS_ADMINISTRADORES_LOADED')) {
+    define('MODELS_ADMINISTRADORES_LOADED', true);
+
 include '../db.php';
 include '../utils.php';
 
@@ -199,4 +202,5 @@ function deleteAdministradorEUtilizador(int $idAdmin, ?int $idUtilizador = null)
         }
         die('Erro ao eliminar administrador: ' . $e->getMessage());
     }
+}
 }
