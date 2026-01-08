@@ -12,22 +12,32 @@ include 'modelsEmpresas.php';
 
 $user_id_logado = $_SESSION['id_utilizador'];
 $cargo          = $_SESSION['cargo']; 
-$nome_exibicao  = "Administrador";    
+
+$nome_exibicao  = "Utilizador";    
 $email_exibicao = "Email não disponível";
 
 try {
     $db = estabelecerConexao();
-    
-    $stmtLogado = $db->prepare("SELECT nome, email_institucional FROM administrador WHERE utilizador_id = ?");
-    $stmtLogado->execute([$user_id_logado]);
-    $dadosLogado = $stmtLogado->fetch(PDO::FETCH_ASSOC);
+    $dados = null; 
 
-    if ($dadosLogado) {
-        $nome_exibicao = $dadosLogado['nome'];
-        $email_exibicao = $dadosLogado['email_institucional'];
+    if ($cargo === 'Administrador') {
+        $stmt = $db->prepare("SELECT nome, email_institucional as email FROM administrador WHERE utilizador_id = ?");
+        $stmt->execute([$user_id_logado]);
+        $dados = $stmt->fetch(PDO::FETCH_ASSOC);
+    } 
+    elseif ($cargo === 'Professor') {
+        $stmt = $db->prepare("SELECT nome, email FROM professores WHERE utilizador_id = ?");
+        $stmt->execute([$user_id_logado]);
+        $dados = $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    if ($dados) {
+        $nome_exibicao = $dados['nome'];
+        $email_exibicao = $dados['email'];
+    }
+
 } catch (PDOException $e) {
-    error_log("Erro ao carregar dados do modal: " . $e->getMessage());
+    error_log("Erro ao carregar dados do perfil: " . $e->getMessage());
 }
 
 
