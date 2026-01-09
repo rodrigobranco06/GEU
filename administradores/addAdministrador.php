@@ -30,6 +30,12 @@ if ($emailInstitucional === '') {
     $erros[] = 'O email institucional é obrigatório.';
 }
 
+if ($emailInstitucional !== '') {
+    if (verificarEmailExisteAdmin($emailInstitucional)) {
+        $erros[] = 'Este email já está registado no sistema.';
+    }
+}
+
 // Se houver erros -> guardar e redirecionar
 if (!empty($erros)) {
     $_SESSION['erros_admin'] = $erros;

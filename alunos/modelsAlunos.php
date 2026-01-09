@@ -168,6 +168,22 @@ function alunoIdExiste(int $idAluno): bool {
     return (bool) $stmt->fetchColumn();
 }
 
+
+function verificarEmailExiste(string $email): bool {
+    $con = estabelecerConexao();
+    // Verifica na tabela de utilizadores
+    $stmt = $con->prepare('SELECT 1 FROM utilizador WHERE username = :email');
+    $stmt->execute(['email' => $email]);
+    if ($stmt->fetchColumn()) {
+        return true;
+    }
+
+    // Verifica também na tabela de alunos para garantir consistência
+    $stmt2 = $con->prepare('SELECT 1 FROM aluno WHERE email_institucional = :email');
+    $stmt2->execute(['email' => $email]);
+    return (bool) $stmt2->fetchColumn();
+}
+
 /* ============================================================
    CRIAÇÃO
 ============================================================ */

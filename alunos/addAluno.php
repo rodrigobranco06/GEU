@@ -86,6 +86,13 @@ if ($codigoAluno !== '' && ctype_digit($codigoAluno)) {
     }
 }
 
+// === VALIDAÇÃO DE EMAIL ÚNICO ===
+if ($emailInst !== '') {
+    if (verificarEmailExiste($emailInst)) {
+        $erros[] = 'O email institucional já está registado na base de dados.';
+    }
+}
+
 if (!empty($erros)) {
     include 'registarAluno.php';
     exit;

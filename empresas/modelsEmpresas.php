@@ -28,17 +28,20 @@ function listarPaises(): array {
 
 function getTodasEmpresas(): array {
     $con = estabelecerConexao();
-    $sql = '
+    $sql = "
         SELECT 
             e.id_empresa,
             e.nome,
             e.email,
-            e.numero_estagios,
+            (SELECT COUNT(*) 
+                FROM pedido_estagio pe 
+                WHERE pe.empresa_id = e.id_empresa 
+                AND pe.estado_pedido = 'Concluído') AS numero_estagios,
             r.ramo_atividade_desc
         FROM empresa e
         LEFT JOIN ramo_atividade r ON e.ramo_atividade_id = r.id_ramo_atividade
         ORDER BY e.nome
-    ';
+    ";
     $stmt = $con->query($sql);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -50,7 +53,7 @@ function getEmpresaById(int $idEmpresa) {
             e.*,
             r.ramo_atividade_desc,
             p.pais_desc,
-            u.username AS email_login -- O username costuma ser o email
+            u.username AS email_login
         FROM empresa e
         LEFT JOIN ramo_atividade r ON e.ramo_atividade_id = r.id_ramo_atividade
         LEFT JOIN pais p ON e.pais_id = p.id_pais
@@ -61,6 +64,28 @@ function getEmpresaById(int $idEmpresa) {
     $stmt->execute(['id' => $idEmpresa]);
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+function verificarEmailExisteEmpresa(string $email): bool {
+    $con = estabelecerConexao();
+    
+    $stmt = $con->prepare('SELECT 1 FROM utilizador WHERE username = :email');
+    $stmt->execute(['email' => $email]);
+    if ($stmt->fetchColumn()) {
+        return true;
+    }
+
+    $stmt2 = $con->prepare('SELECT 1 FROM empresa WHERE email = :email');
+    $stmt2->execute(['email' => $email]);
+    return (bool)$stmt2->fetchColumn();
+}
+
+function empresaTemEstagios(int $idEmpresa): bool {
+        $con = estabelecerConexao();
+        // Verifica se existe algum pedido de estágio ligado a esta empresa
+        $stmt = $con->prepare('SELECT 1 FROM pedido_estagio WHERE empresa_id = :id LIMIT 1');
+        $stmt->execute(['id' => $idEmpresa]);
+        return (bool)$stmt->fetchColumn();
+    }
 
 /* ============================================================
    CRIAÇÃO (CREATE)

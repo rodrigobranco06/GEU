@@ -12,6 +12,13 @@ $empresa = getEmpresaById($idEmpresa);
 
 if (!$empresa) die('Empresa não encontrada.');
 
+if (empresaTemEstagios($idEmpresa)) {
+    $_SESSION['erro_sistema'] = "Não é possível eliminar a empresa '{$empresa['nome']}' pois tem histórico de estágios associados.";
+    
+    header("Location: editarEmpresa.php?id_empresa=" . $idEmpresa);
+    exit; 
+}
+
 $idUtilizador = isset($empresa['utilizador_id']) ? (int)$empresa['utilizador_id'] : null;
 
 deleteEmpresaEUtilizador($idEmpresa, $idUtilizador);

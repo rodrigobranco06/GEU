@@ -10,6 +10,12 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true || !in_arr
 
 include 'modelsEmpresas.php';
 
+$mensagemErro = '';
+if (isset($_SESSION['erro_sistema'])) {
+    $mensagemErro = $_SESSION['erro_sistema'];
+    unset($_SESSION['erro_sistema']); 
+}
+
 $user_id_logado = $_SESSION['id_utilizador'];
 $cargo          = $_SESSION['cargo']; 
 
@@ -91,9 +97,15 @@ $paises = listarPaises();
     </nav>
 
     <section class="content-grid">
+        
         <form class="form-professor" method="post" action="updateEmpresa.php?id_empresa=<?= $idEmpresa ?>">
             <input type="hidden" name="id_empresa" value="<?= $idEmpresa ?>">
 
+            <?php if (!empty($mensagemErro)): ?>
+                <div class="alert-erro">
+                    ⚠️ <?= htmlspecialchars($mensagemErro) ?>
+                </div>
+            <?php endif; ?>
             <h3>Dados Principais</h3>
             <div class="form-group">
                 <label>Nº Empresa (Auto)</label>
@@ -195,16 +207,21 @@ $paises = listarPaises();
 
             <div class="side-top side-top-inside-form">
                 <button class="btn-salvar" type="submit">Salvar</button>
-                <button class="btn-eliminar" type="submit" formaction="deleteEmpresa.php?id_empresa=<?= $idEmpresa ?>" onclick="return confirm('Apagar empresa e utilizador?');">Eliminar</button>
-                <a class="btn-voltar" href="verEmpresa.php?id_empresa=<?= $idEmpresa ?>">Voltar</a>
+                
+                <button 
+                    class="btn-eliminar" 
+                    type="submit" 
+                    formaction="deleteEmpresa.php" 
+                    onclick="return confirm('Tem a certeza? Se houver estágios, a operação será cancelada.');"
+                >
+                    Eliminar
+                </button>
+                
+                <a class="btn-voltar" href="index.php">Voltar</a>
             </div>
         </form>
         
-        
     </section>
-
-
-    
 </main>
 
 <footer id="footer">
@@ -221,7 +238,6 @@ $paises = listarPaises();
         </div>
     </footer>
 
-    <!-- ======= MODAL PERFIL / CONTA ======= -->
     <div id="perfil-overlay" class="perfil-overlay">
         <div class="perfil-card">
             <div class="perfil-banner"></div>

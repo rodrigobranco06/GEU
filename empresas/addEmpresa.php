@@ -36,6 +36,12 @@ if ($email === '') $erros[] = 'O email da empresa é obrigatório.';
 if ($password === '') $erros[] = 'A password é obrigatória.';
 if ($nif === '') $erros[] = 'O NIF é obrigatório.';
 
+if ($email !== '') {
+    if (verificarEmailExisteEmpresa($email)) {
+        $erros[] = 'Este email já está registado no sistema.';
+    }
+}
+
 if (!empty($erros)) {
     include 'registarEmpresa.php';
     exit;

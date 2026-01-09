@@ -84,6 +84,20 @@ function getProfessorById(int $idProfessor) {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function verificarEmailExisteProfessor(string $email): bool {
+    $con = estabelecerConexao();
+    // 1. Verifica na tabela de utilizadores (login)
+    $stmt = $con->prepare('SELECT 1 FROM utilizador WHERE username = :email');
+    $stmt->execute(['email' => $email]);
+    if ($stmt->fetchColumn()) {
+        return true;
+    }
+
+    // 2. Verifica na tabela de professores
+    $stmt2 = $con->prepare('SELECT 1 FROM professor WHERE email_institucional = :email');
+    $stmt2->execute(['email' => $email]);
+    return (bool)$stmt2->fetchColumn();
+}
 /* ============================================================
    CRIAÇÃO
 ============================================================ */

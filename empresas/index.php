@@ -110,7 +110,7 @@ $empresas = getTodasEmpresas();
                     <td><?= htmlspecialchars($emp['nome']) ?></td>
                     <td><?= htmlspecialchars($emp['ramo_atividade_desc'] ?? '—') ?></td>
                     <td><?= htmlspecialchars($emp['email']) ?></td>
-                    <td><?= htmlspecialchars($emp['numero_estagios'] ?? '0') ?></td>
+                    <td><?= htmlspecialchars($emp['numero_estagios']) ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

@@ -54,6 +54,12 @@ if ($codigoProf !== '' && ctype_digit($codigoProf)) {
     }
 }
 
+if ($emailInst !== '') {
+    if (verificarEmailExisteProfessor($emailInst)) {
+        $erros[] = 'O email institucional já está registado no sistema.';
+    }
+}
+
 if (!empty($erros)) {
     include 'registarProfessor.php';
     exit;
